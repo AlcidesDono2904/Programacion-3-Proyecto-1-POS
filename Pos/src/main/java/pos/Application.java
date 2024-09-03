@@ -15,6 +15,7 @@ public class Application {
         }
         catch (Exception ex) {};
 
+
         window = new JFrame();
         JTabbedPane tabbedPane = new JTabbedPane();
         window.setContentPane(tabbedPane);
