@@ -2,6 +2,7 @@ package pos.presentation.cajeros;
 
 import pos.Application;
 import pos.logic.Cajero;
+
 import pos.presentation.AbstractModel;
 
 import java.beans.PropertyChangeListener;
