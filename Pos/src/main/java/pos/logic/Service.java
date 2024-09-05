@@ -3,7 +3,6 @@ package pos.logic;
 import pos.data.Data;
 import pos.data.XmlPersister;
 
-import java.text.DecimalFormat;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -104,5 +103,37 @@ public void create(Cajero e) throws Exception{
                 .collect(Collectors.toList());
     }
 //Productos
+    /*
+public void create(Productos e) throws Exception{
+    Cajero result = data.getCajero().stream().filter(i->i.getId().equals(e.getId())).findFirst().orElse(null);
+    if (result==null) data.getCajero().add(e);
+    else throw new Exception("Cliente ya existe");
+}
+    public Cajero read(Productos e) throws Exception{
+        Cajero result = data.getCajero().stream().filter(i->i.getId().equals(e.getId())).findFirst().orElse(null);
+        if (result!=null) return result;
+        else throw new Exception("Cliente no existe");
+    }
 
+    public void update(Productos e) throws Exception{
+        Cajero result;
+        try{
+            result = this.read(e);
+            data.getCajero().remove(result);
+            data.getCajero().add(e);
+        }catch (Exception ex) {
+            throw new Exception("Cajero no existe");
+        }
+    }
+
+    public void delete(Productos e) throws Exception{
+        data.getCajero().remove(e);
+    }
+
+    public List<Productos> search(Productos e){
+        return data.getCajero().stream()
+                .filter(i->i.getNombre().contains(e.getNombre()))
+                .sorted(Comparator.comparing(Cajero::getNombre))
+                .collect(Collectors.toList());
+    }*/
  }
