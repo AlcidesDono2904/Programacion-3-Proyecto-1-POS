@@ -40,7 +40,7 @@ public class Application {
         tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
         tabbedPane.addTab("Cajeros  ",clientesIcon,cajerosView.getPanel());
         pos.presentation.productos.View productosView = new pos.presentation.productos.View();
-        tabbedPane.addTab("Productos  ",clientesIcon,productosView.getPanel());
+        tabbedPane.addTab("Productosssssssssssssssssssssssssssssssssssssssssssssss",clientesIcon,productosView.getPanel());
         window.setSize(900,450);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setIconImage((new ImageIcon(Application.class.getResource("presentation/icons/icon.png"))).getImage());
