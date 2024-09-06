@@ -2,23 +2,29 @@ package pos.presentation.productos;
 
 import javax.swing.*;
 
-public class View {
+public class View extends JFrame {
     private JPanel panel;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JButton guardarButton;
-    private JButton limpiarButton;
-    private JLabel codigo;
-    private JButton eliminarButton;
-    private JTextField textField3;
-    private JTextField textField4;
-    private JTextField textField5;
-    private JComboBox comboBox1;
-    private JTextField textField6;
-    private JButton buscarButton;
-    private JButton reporteButton;
+    private JTextField codigo;
+    private JTextField descripcion;
+    private JTextField unidad;
+    private JTextField precio;
+    private JTextField existencias;
+    private JButton save;
+    private JButton clear;
+    private JButton delete;
+    private JTextField searchNombre;
+    private JButton search;
+    private JButton report;
+    private JComboBox categorias;
     private JTable table1;
-    public JPanel getPanel() {
+    private JLabel searchNombreLbl;
+    private JLabel codLbl;
+    private JLabel descripLbl;
+    private JLabel unidadLbl;
+    private JLabel precioLbl;
+    private JLabel stockLbl;
+    private JLabel catLbl;
+    public JPanel getPanel(){
         return panel;
     }
 }
