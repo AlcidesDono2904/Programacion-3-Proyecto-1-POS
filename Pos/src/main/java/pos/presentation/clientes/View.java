@@ -94,6 +94,8 @@ public class View implements PropertyChangeListener {
                 controller.clear();
             }
         });
+
+        report.addActionListener();
     }
 
     private boolean validate() {
