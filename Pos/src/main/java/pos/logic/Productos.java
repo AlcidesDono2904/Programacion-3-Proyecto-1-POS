@@ -1,6 +1,9 @@
 package pos.logic;
 
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlID;
 
 
 /*4- Catálogo de productos
@@ -9,8 +12,9 @@ modificación y borrado de productos. De cada producto se requiere su código, d
 de medida, precio unitario y existencias; además de su categoría (ej. “Dulces”, “Bebidas”, etc.)*/
 
 import java.util.Objects;
-
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Productos {
+    @XmlID
     private String codigo;
     private String descripcion;
     private String unidadMedida;
