@@ -10,7 +10,7 @@ de medida, precio unitario y existencias; además de su categoría (ej. “Dulce
 
 import java.util.Objects;
 
-public class Producto {
+public class Productos {
     private String codigo;
     private String descripcion;
     private String unidadMedida;
@@ -18,7 +18,7 @@ public class Producto {
     private int existencias;
     private String categoria;
 
-    public Producto(String codigo, String descripcion, String unidadMedida, double precioUnitario, int existencias, String categoria) {
+    public Productos(String codigo, String descripcion, String unidadMedida, double precioUnitario, int existencias, String categoria) {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.unidadMedida = unidadMedida;
@@ -27,7 +27,7 @@ public class Producto {
         this.categoria = categoria;
     }
 
-    public Producto() {
+    public Productos() {
         this.codigo = "";
         this.descripcion = "";
         this.unidadMedida = "";
@@ -87,7 +87,7 @@ public class Producto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Producto producto = (Producto) o;
+        Productos producto = (Productos) o;
         return Objects.equals(codigo, producto.codigo);
     }
 
