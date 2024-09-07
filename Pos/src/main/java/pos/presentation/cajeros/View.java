@@ -17,9 +17,7 @@ import java.beans.PropertyChangeListener;
 
 public class View implements PropertyChangeListener {
     private JPanel panel;
-    private JLabel searchNombreLbl;
     private JTextField searchNombre;
-    private JButton report;
     private JButton search;
     private JTable list;
     private JLabel idLbl;
@@ -29,6 +27,8 @@ public class View implements PropertyChangeListener {
     private JButton save;
     private JButton delete;
     private JButton clear;
+    private JLabel searchNombreLbl;
+    private JButton report;
 
     public JPanel getPanel() {
         return panel;

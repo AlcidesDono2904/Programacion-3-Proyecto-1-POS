@@ -73,12 +73,12 @@ public class Service {
 public void create(Cajero e) throws Exception{
     Cajero result = data.getCajero().stream().filter(i->i.getId().equals(e.getId())).findFirst().orElse(null);
     if (result==null) data.getCajero().add(e);
-    else throw new Exception("Cliente ya existe");
+    else throw new Exception("Cajero ya existe");
 }
     public Cajero read(Cajero e) throws Exception{
         Cajero result = data.getCajero().stream().filter(i->i.getId().equals(e.getId())).findFirst().orElse(null);
         if (result!=null) return result;
-        else throw new Exception("Cliente no existe");
+        else throw new Exception("Cajero no existe");
     }
 
     public void update(Cajero e) throws Exception{
@@ -103,37 +103,36 @@ public void create(Cajero e) throws Exception{
                 .collect(Collectors.toList());
     }
 //Productos
-    /*
 public void create(Productos e) throws Exception{
-    Cajero result = data.getCajero().stream().filter(i->i.getId().equals(e.getId())).findFirst().orElse(null);
-    if (result==null) data.getCajero().add(e);
-    else throw new Exception("Cliente ya existe");
+    Productos result = data.getProducto().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
+    if (result==null) data.getProducto().add(e);
+    else throw new Exception("Producto ya existe");
 }
-    public Cajero read(Productos e) throws Exception{
-        Cajero result = data.getCajero().stream().filter(i->i.getId().equals(e.getId())).findFirst().orElse(null);
+    public Productos read(Productos e) throws Exception{
+        Productos result = data.getProducto().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
         if (result!=null) return result;
-        else throw new Exception("Cliente no existe");
+        else throw new Exception("Producto no existe");
     }
 
-    public void update(Productos e) throws Exception{
-        Cajero result;
-        try{
-            result = this.read(e);
-            data.getCajero().remove(result);
-            data.getCajero().add(e);
-        }catch (Exception ex) {
-            throw new Exception("Cajero no existe");
-        }
+    public void update(Productos e) throws Exception {
+        Productos result = this.read(e);
+        data.getProducto().remove(result);
+        data.getProducto().add(e);
     }
+
 
     public void delete(Productos e) throws Exception{
-        data.getCajero().remove(e);
+        Productos result = this.read(e);// Verifica si el producto existe
+        data.getProducto().remove(result);// Elimina el producto
     }
 
-    public List<Productos> search(Productos e){
-        return data.getCajero().stream()
-                .filter(i->i.getNombre().contains(e.getNombre()))
-                .sorted(Comparator.comparing(Cajero::getNombre))
+    public List<Productos> search(String codigo, String descripcion) {
+        return data.getProducto().stream()
+                .filter(p -> (codigo == null || p.getCodigo().contains(codigo)) &&
+                        (descripcion == null || p.getDescripcion().contains(descripcion)))
+                .sorted(Comparator.comparing(Productos::getDescripcion))
                 .collect(Collectors.toList());
-    }*/
- }
+    }
+
+
+}
