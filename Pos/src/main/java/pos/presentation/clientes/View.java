@@ -95,7 +95,19 @@ public class View implements PropertyChangeListener {
             }
         });
 
-        report.addActionListener();
+        report.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                ViewReporte report = new ViewReporte();
+                JPanel panel = report.getPanel();
+                JFrame frame = new JFrame();
+
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setContentPane(panel);
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
     }
 
     private boolean validate() {
