@@ -20,6 +20,9 @@ public class Categoria {
 
     }
 
+    public Categoria() {
+    }
+
     public String getCodigo() {
         return codigo;
     }
