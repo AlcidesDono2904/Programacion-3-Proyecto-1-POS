@@ -239,7 +239,7 @@ public class View implements PropertyChangeListener {
         e.setUnidadMedida(unidad.getText());
         e.setPrecioUnitario(Double.parseDouble(precio.getText()));
         e.setExistencias(Integer.parseInt(existencias.getText()));
-        e.setCategoria((Categoria) categoriasComboBox.getSelectedItem()); // Usar Categoria aquí
+        e.setCategoria((Categoria) categorias.getSelectedItem()); // Usar Categoria aquí
         return e;
     }
     // MVC
