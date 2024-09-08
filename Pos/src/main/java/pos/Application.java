@@ -37,10 +37,14 @@ public class Application {
         pos.presentation.cajeros.View cajerosView = new pos.presentation.cajeros.View();
         cajerosController = new pos.presentation.cajeros.Controller(cajerosView,cajerosModel);
 
+        pos.presentation.productos.Model productosModel= new pos.presentation.productos.Model();
+        pos.presentation.productos.View  productosView = new pos.presentation.productos.View();
+        productosController = new pos.presentation.productos.Controller(productosView,productosModel);
+
         tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
         tabbedPane.addTab("Cajeros  ",clientesIcon,cajerosView.getPanel());
-        pos.presentation.productos.View productosView = new pos.presentation.productos.View();
         tabbedPane.addTab("Productos",clientesIcon,productosView.getPanel());
+
         window.setSize(900,450);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setIconImage((new ImageIcon(Application.class.getResource("presentation/icons/icon.png"))).getImage());
@@ -50,6 +54,7 @@ public class Application {
 
     public static pos.presentation.clientes.Controller clientesController;
     public static pos.presentation.cajeros.Controller cajerosController;
+    public static pos.presentation.productos.Controller productosController;
 
     public static JFrame window;
 
