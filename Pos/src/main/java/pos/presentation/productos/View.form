@@ -70,7 +70,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="f6a47" class="javax.swing.JTable" binding="table1" default-binding="true">
+              <component id="f6a47" class="javax.swing.JTable" binding="list">
                 <constraints/>
                 <properties/>
               </component>
@@ -240,12 +240,6 @@
           </grid>
         </children>
       </grid>
-      <component id="4d1c7" class="javax.swing.JSeparator">
-        <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties/>
-      </component>
       <component id="12579" class="javax.swing.JSeparator">
         <constraints>
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -261,6 +255,12 @@
       <component id="410ca" class="javax.swing.JSeparator">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="4d1c7" class="javax.swing.JSeparator">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
       </component>

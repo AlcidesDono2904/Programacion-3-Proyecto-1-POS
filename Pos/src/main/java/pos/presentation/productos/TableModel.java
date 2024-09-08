@@ -1,13 +1,12 @@
 package pos.presentation.productos;
 
-import pos.logic.Cliente;
-import pos.logic.Productos;
+import pos.logic.Producto;
 import pos.presentation.AbstractTableModel;
 
 import java.util.List;
-public class TableModel extends AbstractTableModel<Productos> implements javax.swing.table.TableModel {
+public class TableModel extends AbstractTableModel<Producto> implements javax.swing.table.TableModel {
 
-    public TableModel(int[] cols, List<Productos> rows) {
+    public TableModel(int[] cols, List<Producto> rows) {
         super(cols, rows);
     }
 
@@ -20,7 +19,7 @@ public class TableModel extends AbstractTableModel<Productos> implements javax.s
     public static final int CATEGORIA = 5;
 
     @Override
-    protected Object getPropetyAt(Productos e, int col) {
+    protected Object getPropetyAt(Producto e, int col) {
         // Usar un switch para retornar el valor correcto de acuerdo a la columna seleccionada
         switch (cols[col]) {
             case CODIGO: return e.getCodigo();

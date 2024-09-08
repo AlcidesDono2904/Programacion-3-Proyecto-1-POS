@@ -13,7 +13,7 @@ de medida, precio unitario y existencias; además de su categoría (ej. “Dulce
 
 import java.util.Objects;
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Productos {
+public class Producto {
     @XmlID
     private String codigo;
     private String descripcion;
@@ -22,7 +22,7 @@ public class Productos {
     private int existencias;
     private String categoria;
 
-    public Productos(String codigo, String descripcion, String unidadMedida, double precioUnitario, int existencias, String categoria) {
+    public Producto(String codigo, String descripcion, String unidadMedida, double precioUnitario, int existencias, String categoria) {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.unidadMedida = unidadMedida;
@@ -31,7 +31,7 @@ public class Productos {
         this.categoria = categoria;
     }
 
-    public Productos() {
+    public Producto() {
         this.codigo = "";
         this.descripcion = "";
         this.unidadMedida = "";
@@ -91,7 +91,7 @@ public class Productos {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Productos producto = (Productos) o;
+        Producto producto = (Producto) o;
         return Objects.equals(codigo, producto.codigo);
     }
 

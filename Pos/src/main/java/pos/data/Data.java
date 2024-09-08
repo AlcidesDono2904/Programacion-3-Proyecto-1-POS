@@ -14,7 +14,7 @@ public class Data {
     @XmlElement(name = "cliente")
     private List<Cliente> clientes;
     private List<Cajero> cajero;
-    private List<Productos> producto;
+    private List<Producto> producto;
 
     public Data() {
         clientes = new ArrayList<>();
@@ -27,6 +27,6 @@ public class Data {
         return clientes;
     }
     public List<Cajero> getCajero() {return cajero; }
-    public List<Productos> getProducto() {return producto; }
+    public List<Producto> getProducto() {return producto; }
 
 }

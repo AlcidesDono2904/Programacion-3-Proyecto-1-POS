@@ -1,20 +1,19 @@
 package pos.presentation.productos;
 
 import pos.Application;
-import pos.logic.Cajero;
-import pos.logic.Productos;
+import pos.logic.Producto;
 import pos.presentation.AbstractModel;
-
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
 
 public class Model extends AbstractModel {
 
-    Productos filter;
-    List<Productos> list;
-    Productos current;
+    Producto filter;
+    List<Producto> list;
+    Producto current;
     int mode;
+
 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -27,36 +26,36 @@ public class Model extends AbstractModel {
     public Model() {
     }
 
-    public void init(List<Productos> list){
+    public void init(List<Producto> list){
         this.list = list;
-        this.current = new Productos();
-        this.filter = new Productos();
+        this.current = new Producto();
+        this.filter = new Producto();
         this.mode= Application.MODE_CREATE;
     }
 
-    public List<Productos> getList() {
+    public List<Producto> getList() {
         return list;
     }
 
-    public void setList(List<Productos> list){
+    public void setList(List<Producto> list){
         this.list = list;
         firePropertyChange(LIST);
     }
 
-    public Productos getCurrent() {
+    public Producto getCurrent() {
         return current;
     }
 
-    public void setCurrent(Productos current) {
+    public void setCurrent(Producto current) {
         this.current = current;
         firePropertyChange(CURRENT);
     }
 
-    public Productos getFilter() {
+    public Producto getFilter() {
         return filter;
     }
 
-    public void setFilter(Productos filter) {
+    public void setFilter(Producto filter) {
         this.filter = filter;
         firePropertyChange(FILTER);
     }

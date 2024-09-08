@@ -1,10 +1,9 @@
 package pos.presentation.productos;
 
 import pos.Application;
-import pos.logic.Cajero;
-import pos.presentation.cajeros.Controller;
-import pos.presentation.cajeros.Model;
-import pos.presentation.cajeros.TableModel;
+
+import pos.logic.Categoria;
+import pos.logic.Producto;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
@@ -13,8 +12,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 
-public class View extends JFrame {
+public class View implements PropertyChangeListener {
     private JPanel panel;
     private JTextField codigo;
     private JTextField descripcion;
@@ -28,7 +30,7 @@ public class View extends JFrame {
     private JButton search;
     private JButton report;
     private JComboBox categorias;
-    private JTable table1;
+    private JTable list;
     private JLabel searchNombreLbl;
     private JLabel codLbl;
     private JLabel descripLbl;
@@ -36,30 +38,58 @@ public class View extends JFrame {
     private JLabel precioLbl;
     private JLabel stockLbl;
     private JLabel catLbl;
-    public JPanel getPanel(){
+    private JComboBox<Categoria> categoriasComboBox;
+    public JPanel getPanel() {
         return panel;
     }
+
     public View() {
+        // Castear el ComboBox a JComboBox<Categoria>
+        JComboBox<Categoria> comboCategorias = (JComboBox<Categoria>) categorias;
+
+        // Cargar categorías en el ComboBox
+        cargarCategorias(comboCategorias);
+
+        // Manejar la selección de una categoría
+        comboCategorias.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Categoria selectedCategory = (Categoria) comboCategorias.getSelectedItem();
+                if (selectedCategory != null) {
+                    // Realizar la acción con la categoría seleccionada
+                    try {
+                        Producto filter = new Producto();
+                        filter.setCategoria(selectedCategory.getNombreCategoria());
+                        controller.search(filter); // Llama al controlador para buscar productos con el filtro aplicado
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
+
+        // Acción para buscar productos
         search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Cajero filter = new Cajero();
-                    filter.setNombre(searchNombre.getText());
-                    controller.search(filter);
+                    Producto filter = new Producto();
+                    filter.setDescripcion(searchNombre.getText()); // Búsqueda por descripción
+                    controller.search(filter); // Realiza la búsqueda con el filtro
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
 
+        // Acción para guardar productos (crear o actualizar)
         save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (validate()) {
-                    Cajero n = take();
+                if (validate()) { // Validar los campos del formulario
+                    Producto n = take(); // Crear un producto a partir de los datos del formulario
                     try {
-                        controller.save(n);
+                        controller.save(n); // Guardar el producto
                         JOptionPane.showMessageDialog(panel, "REGISTRO APLICADO", "", JOptionPane.INFORMATION_MESSAGE);
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -68,19 +98,21 @@ public class View extends JFrame {
             }
         });
 
+        // Acción para seleccionar un producto de la lista y editarlo
         list.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int row = list.getSelectedRow();
-                controller.edit(row);
+                int row = list.getSelectedRow(); // Obtener la fila seleccionada en la tabla
+                controller.edit(row); // Editar el producto correspondiente
             }
         });
 
+        // Acción para eliminar un producto seleccionado
         delete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    controller.delete();
+                    controller.delete(); // Eliminar el producto actual
                     JOptionPane.showMessageDialog(panel, "REGISTRO BORRADO", "", JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -88,50 +120,137 @@ public class View extends JFrame {
             }
         });
 
+        // Acción para limpiar el formulario y preparar para la creación de un nuevo producto
         clear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.clear();
+                controller.clear(); // Limpiar los campos del formulario
+            }
+        });
+
+       /*report.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                ViewReporte report = new ViewReporte();
+                JPanel panel = report.getPanel();
+                JFrame frame = new JFrame();
+
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setContentPane(panel);
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
+*/
+        categorias.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Obtener la categoría seleccionada
+                String selectedCategory = (String) categorias.getSelectedItem();
+
+                // Realizar alguna acción con la categoría seleccionada
+                if (selectedCategory != null) {
+                    // Por ejemplo, podrías actualizar la tabla de productos basada en la categoría seleccionada
+                    try {
+                        // Filtrar productos por la categoría seleccionada
+                        Producto filter = new Producto();
+                        filter.setCategoria(selectedCategory);
+                        controller.search(filter); // Llama al controlador para buscar productos con el filtro aplicado
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
             }
         });
     }
+    private void cargarCategorias(JComboBox<Categoria> comboCategorias) {
+        List<Categoria> categoriasList = new ArrayList<>();
+        categoriasList.add(new Categoria("001", "Dulces"));
+        categoriasList.add(new Categoria("002", "Bebidas"));
+        categoriasList.add(new Categoria("003", "Snacks"));
 
+        for (Categoria categoria : categoriasList) {
+            comboCategorias.addItem(categoria);
+        }
+    }
     private boolean validate() {
         boolean valid = true;
-        if (id.getText().isEmpty()) {
+        if (codigo.getText().isEmpty()) {
             valid = false;
-            idLbl.setBorder(Application.BORDER_ERROR);
-            idLbl.setToolTipText("Codigo requerido");
+            codLbl.setBorder(Application.BORDER_ERROR);
+            codLbl.setToolTipText("Codigo requerido");
         } else {
-            idLbl.setBorder(null);
-            idLbl.setToolTipText(null);
+            codLbl.setBorder(null);
+            codLbl.setToolTipText(null);
         }
 
-        if (nombre.getText().isEmpty()) {
+        if (descripcion.getText().isEmpty()) {
             valid = false;
-            nombreLbl.setBorder(Application.BORDER_ERROR);
-            nombreLbl.setToolTipText("Nombre requerido");
+            descripLbl.setBorder(Application.BORDER_ERROR);
+            descripLbl.setToolTipText("Nombre requerido");
         } else {
-            nombreLbl.setBorder(null);
-            nombreLbl.setToolTipText(null);
+            descripLbl.setBorder(null);
+            descripLbl.setToolTipText(null);
         }
+
+        if (unidad.getText().isEmpty()) {
+            valid = false;
+            unidadLbl.setBorder(Application.BORDER_ERROR);
+            unidadLbl.setToolTipText("unidad requerido");
+        } else {
+            unidadLbl.setBorder(null);
+            unidadLbl.setToolTipText(null);
+        }
+
+        if (precio.getText().isEmpty()) {
+            valid = false;
+            precioLbl.setBorder(Application.BORDER_ERROR);
+            precioLbl.setToolTipText("Precio requerida");
+        } else {
+            precioLbl.setBorder(null);
+            precioLbl.setToolTipText(null);
+        }
+
+        // Validación de las existencias
+        try {
+            Integer.parseInt(existencias.getText());
+            existencias.setBorder(null);
+            existencias.setToolTipText(null);
+        } catch (Exception e) {
+            valid = false;
+            existencias.setBorder(Application.BORDER_ERROR);
+            existencias.setToolTipText("Existencias inválidas");
+        }
+
+        // Validación de la categoría
+        if (categorias.getSelectedItem() == null) {
+            valid = false;
+            catLbl.setBorder(Application.BORDER_ERROR);
+            catLbl.setToolTipText("Categoría requerida");
+        } else {
+            catLbl.setBorder(null);
+            catLbl.setToolTipText(null);
+        }
+
 
         return valid;
     }
 
-    public Cajero take() {
-        Cajero e = new Cajero();
-        e.setId(id.getText());
-        e.setNombre(nombre.getText());
-
+    public Producto take() {
+        Producto e = new Producto();
+        e.setCodigo(codigo.getText());
+        e.setDescripcion(descripcion.getText());
+        e.setUnidadMedida(unidad.getText());
+        e.setPrecioUnitario(Double.parseDouble(precio.getText()));
+        e.setExistencias(Integer.parseInt(existencias.getText()));
+        e.setCategoria((String) categorias.getSelectedItem());
         return e;
     }
-
     // MVC
-    pos.presentation.cajeros.Model model;
-    pos.presentation.cajeros.Controller controller;
+    Model model;
+    Controller controller;
 
-    public void setModel(pos.presentation.cajeros.Model model) {
+    public void setModel(Model model) {
         this.model = model;
         model.addPropertyChangeListener(this);
     }
@@ -152,31 +271,30 @@ public class View extends JFrame {
                 columnModel.getColumn(1).setPreferredWidth(150);
                 break;
             case pos.presentation.clientes.Model.CURRENT:
-                id.setText(model.getCurrent().getId());
-                nombre.setText(model.getCurrent().getNombre());
+                codigo.setText(model.getCurrent().getCodigo());
+                descripcion.setText(model.getCurrent().getDescripcion());
 
 
                 if (model.getMode() == Application.MODE_EDIT) {
-                    id.setEnabled(false);
+                    codigo.setEnabled(false);
                     delete.setEnabled(true);
                 } else {
-                    id.setEnabled(true);
+                    codigo.setEnabled(true);
                     delete.setEnabled(false);
                 }
 
-                idLbl.setBorder(null);
-                idLbl.setToolTipText(null);
-                nombreLbl.setBorder(null);
-                nombreLbl.setToolTipText(null);
+                codLbl.setBorder(null);
+                codLbl.setToolTipText(null);
+                descripLbl.setBorder(null);
+                descripLbl.setToolTipText(null);
 
                 break;
             case Model.FILTER:
-                searchNombre.setText(model.getFilter().getNombre());
+                searchNombre.setText(model.getFilter().getDescripcion());
                 break;
         }
 
         this.panel.revalidate();
     }
+}
 
-}
-}

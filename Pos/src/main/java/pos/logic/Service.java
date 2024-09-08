@@ -69,12 +69,12 @@ public class Service {
                 .collect(Collectors.toList());
     }
 
-//================= CAJEROS ============
-public void create(Cajero e) throws Exception{
-    Cajero result = data.getCajero().stream().filter(i->i.getId().equals(e.getId())).findFirst().orElse(null);
-    if (result==null) data.getCajero().add(e);
-    else throw new Exception("Cajero ya existe");
-}
+    //================= CAJEROS ============
+    public void create(Cajero e) throws Exception{
+        Cajero result = data.getCajero().stream().filter(i->i.getId().equals(e.getId())).findFirst().orElse(null);
+        if (result==null) data.getCajero().add(e);
+        else throw new Exception("Cajero ya existe");
+    }
     public Cajero read(Cajero e) throws Exception{
         Cajero result = data.getCajero().stream().filter(i->i.getId().equals(e.getId())).findFirst().orElse(null);
         if (result!=null) return result;
@@ -102,35 +102,34 @@ public void create(Cajero e) throws Exception{
                 .sorted(Comparator.comparing(Cajero::getNombre))
                 .collect(Collectors.toList());
     }
-//Productos
-public void create(Productos e) throws Exception{
-    Productos result = data.getProducto().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
-    if (result==null) data.getProducto().add(e);
-    else throw new Exception("Producto ya existe");
-}
-    public Productos read(Productos e) throws Exception{
-        Productos result = data.getProducto().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
+    //Producto
+    public void create(Producto e) throws Exception{
+        Producto result = data.getProducto().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
+        if (result==null) data.getProducto().add(e);
+        else throw new Exception("Producto ya existe");
+    }
+    public Producto read(Producto e) throws Exception{
+        Producto result = data.getProducto().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
         if (result!=null) return result;
         else throw new Exception("Producto no existe");
     }
 
-    public void update(Productos e) throws Exception {
-        Productos result = this.read(e);
+    public void update(Producto e) throws Exception {
+        Producto result = this.read(e);
         data.getProducto().remove(result);
         data.getProducto().add(e);
     }
 
 
-    public void delete(Productos e) throws Exception{
-        Productos result = this.read(e);// Verifica si el producto existe
+    public void delete(Producto e) throws Exception{
+        Producto result = this.read(e);// Verifica si el producto existe
         data.getProducto().remove(result);// Elimina el producto
     }
 
-    public List<Productos> search(String codigo, String descripcion) {
+    public List<Producto> search(Producto e) {
         return data.getProducto().stream()
-                .filter(p -> (codigo == null || p.getCodigo().contains(codigo)) &&
-                        (descripcion == null || p.getDescripcion().contains(descripcion)))
-                .sorted(Comparator.comparing(Productos::getDescripcion))
+                .filter(i->i.getDescripcion().contains(e.getDescripcion()))
+                .sorted(Comparator.comparing(Producto::getDescripcion))
                 .collect(Collectors.toList());
     }
 

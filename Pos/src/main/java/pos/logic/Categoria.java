@@ -1,6 +1,16 @@
 package pos.logic;
 
+import java.util.ArrayList;
+import java.util.List;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlID;
+
+import java.util.Objects;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Categoria {
+    @XmlID
     private String codigo;
     private String nombreCategoria;
 
@@ -25,4 +35,5 @@ public class Categoria {
     public void setNombreCategoria(String nombreCategoria) {
         this.nombreCategoria = nombreCategoria;
     }
+
 }
