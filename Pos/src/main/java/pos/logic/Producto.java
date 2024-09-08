@@ -1,17 +1,11 @@
 package pos.logic;
 
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlID;
 
-
-/*4- Catálogo de productos
-Debe permitir la búsqueda de productos por código o descripción, la inclusión, consulta,
-modificación y borrado de productos. De cada producto se requiere su código, descripción, unidad
-de medida, precio unitario y existencias; además de su categoría (ej. “Dulces”, “Bebidas”, etc.)*/
-
 import java.util.Objects;
+
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Producto {
     @XmlID
@@ -20,15 +14,15 @@ public class Producto {
     private String unidadMedida;
     private double precioUnitario;
     private int existencias;
-    private String categoria;
+    private Categoria categoria; // Tipo correcto
 
-    public Producto(String codigo, String descripcion, String unidadMedida, double precioUnitario, int existencias, String categoria) {
+    public Producto(String codigo, String descripcion, String unidadMedida, double precioUnitario, int existencias, Categoria categoria) {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.unidadMedida = unidadMedida;
         this.precioUnitario = precioUnitario;
         this.existencias = existencias;
-        this.categoria = categoria;
+        this.categoria = categoria; // Tipo correcto
     }
 
     public Producto() {
@@ -37,7 +31,7 @@ public class Producto {
         this.unidadMedida = "";
         this.precioUnitario = 0.0;
         this.existencias = 0;
-        this.categoria = "";
+        this.categoria = null; // o new Categoria() si prefieres una instancia vacía
     }
 
     public String getCodigo() {
@@ -80,13 +74,14 @@ public class Producto {
         this.existencias = existencias;
     }
 
-    public String getCategoria() {
-        return categoria;
+    public Categoria getCategoria() {
+        return categoria; // Tipo correcto
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria; // Tipo correcto
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

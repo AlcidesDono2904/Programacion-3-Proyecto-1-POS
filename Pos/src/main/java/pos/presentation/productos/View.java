@@ -59,7 +59,7 @@ public class View implements PropertyChangeListener {
                     // Realizar la acción con la categoría seleccionada
                     try {
                         Producto filter = new Producto();
-                        filter.setCategoria(selectedCategory.getNombreCategoria());
+                        filter.setCategoria(selectedCategory);
                         controller.search(filter); // Llama al controlador para buscar productos con el filtro aplicado
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -141,27 +141,23 @@ public class View implements PropertyChangeListener {
                 frame.setVisible(true);
             }
         });
-*/
-        categorias.addActionListener(new ActionListener() {
+
+        categoriasComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Obtener la categoría seleccionada
-                String selectedCategory = (String) categorias.getSelectedItem();
-
-                // Realizar alguna acción con la categoría seleccionada
+                Categoria selectedCategory = (Categoria) categoriasComboBox.getSelectedItem();
                 if (selectedCategory != null) {
-                    // Por ejemplo, podrías actualizar la tabla de productos basada en la categoría seleccionada
                     try {
-                        // Filtrar productos por la categoría seleccionada
                         Producto filter = new Producto();
                         filter.setCategoria(selectedCategory);
-                        controller.search(filter); // Llama al controlador para buscar productos con el filtro aplicado
+                        controller.search(filter);
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
-        });
+        });*/
+
     }
     private void cargarCategorias(JComboBox<Categoria> comboCategorias) {
         List<Categoria> categoriasList = new ArrayList<>();
@@ -243,7 +239,7 @@ public class View implements PropertyChangeListener {
         e.setUnidadMedida(unidad.getText());
         e.setPrecioUnitario(Double.parseDouble(precio.getText()));
         e.setExistencias(Integer.parseInt(existencias.getText()));
-        e.setCategoria((String) categorias.getSelectedItem());
+        e.setCategoria((Categoria) categoriasComboBox.getSelectedItem()); // Usar Categoria aquí
         return e;
     }
     // MVC
