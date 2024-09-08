@@ -48,7 +48,7 @@ public class View implements PropertyChangeListener {
         JComboBox<Categoria> comboCategorias = (JComboBox<Categoria>) categorias;
 
         // Cargar categorías en el ComboBox
-        cargarCategorias(comboCategorias);
+       // cargarCategorias(comboCategorias);
 
         // Manejar la selección de una categoría
         comboCategorias.addActionListener(new ActionListener() {
@@ -140,9 +140,9 @@ public class View implements PropertyChangeListener {
                 frame.pack();
                 frame.setVisible(true);
             }
-        });
+        });*/
 
-        categoriasComboBox.addActionListener(new ActionListener() {
+       /* categoriasComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Categoria selectedCategory = (Categoria) categoriasComboBox.getSelectedItem();
@@ -159,7 +159,7 @@ public class View implements PropertyChangeListener {
         });*/
 
     }
-    private void cargarCategorias(JComboBox<Categoria> comboCategorias) {
+   /* private void cargarCategorias(JComboBox<Categoria> comboCategorias) {
         List<Categoria> categoriasList = new ArrayList<>();
         categoriasList.add(new Categoria("001", "Dulces"));
         categoriasList.add(new Categoria("002", "Bebidas"));
@@ -168,7 +168,7 @@ public class View implements PropertyChangeListener {
         for (Categoria categoria : categoriasList) {
             comboCategorias.addItem(categoria);
         }
-    }
+    }*/
     private boolean validate() {
         boolean valid = true;
         if (codigo.getText().isEmpty()) {
@@ -258,6 +258,11 @@ public class View implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
+            case pos.presentation.productos.Model.COMBOBOX:
+                for(Categoria c: model.getCategorias()){
+                    categorias.addItem(c);
+                }
+
             case pos.presentation.cajeros.Model.LIST:
                 int[] cols = {pos.presentation.cajeros.TableModel.ID, pos.presentation.cajeros.TableModel.NOMBRE};
                 list.setModel(new TableModel(cols, model.getList()));

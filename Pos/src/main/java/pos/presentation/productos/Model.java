@@ -1,9 +1,11 @@
 package pos.presentation.productos;
 
 import pos.Application;
+import pos.logic.Categoria;
 import pos.logic.Producto;
 import pos.presentation.AbstractModel;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -14,6 +16,8 @@ public class Model extends AbstractModel {
     Producto current;
     int mode;
 
+    List<Categoria> categorias;
+
 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -21,6 +25,7 @@ public class Model extends AbstractModel {
         firePropertyChange(LIST);
         firePropertyChange(CURRENT);
         firePropertyChange(FILTER);
+        firePropertyChange(COMBOBOX);
     }
 
     public Model() {
@@ -31,6 +36,10 @@ public class Model extends AbstractModel {
         this.current = new Producto();
         this.filter = new Producto();
         this.mode= Application.MODE_CREATE;
+        this.categorias = new ArrayList<Categoria>();
+        categorias.add(new Categoria("CAT-001", "Dulces"));
+        categorias.add(new Categoria("CAT-002", "Bebidas"));
+        categorias.add(new Categoria("CAT-003", "Snacks"));
     }
 
     public List<Producto> getList() {
@@ -68,7 +77,16 @@ public class Model extends AbstractModel {
         this.mode = mode;
     }
 
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
+    }
+
     public static final String LIST="list";
     public static final String CURRENT="current";
     public static final String FILTER="filter";
+    public static final String COMBOBOX="combobox";
 }
