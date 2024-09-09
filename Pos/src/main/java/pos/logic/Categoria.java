@@ -1,7 +1,5 @@
 package pos.logic;
 
-import java.util.ArrayList;
-import java.util.List;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlID;
@@ -11,36 +9,51 @@ import java.util.Objects;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Categoria {
     @XmlID
-    private String codigo;
-    private String nombreCategoria;
+    private String id;
+    private String nombre;
 
-    public Categoria(String codigo, String nombreCategoria) {
-        this.codigo = codigo;
-        this.nombreCategoria = nombreCategoria;
+    public Categoria(String id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
 
     }
 
     public Categoria() {
+        this.id = "";
+        this.nombre = "";
     }
 
-    public String getCodigo() {
-        return codigo;
+    public String getId() {
+        return id;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getNombreCategoria() {
-        return nombreCategoria;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreCategoria(String nombreCategoria) {
-        this.nombreCategoria = nombreCategoria;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     @Override
     public String toString() {
-        return codigo+"-"+nombreCategoria;
+        return id +"-"+ nombre;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Categoria categoria = (Categoria) o;
+        return Objects.equals(id, categoria.id) && Objects.equals(nombre, categoria.nombre);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nombre);
     }
 }
