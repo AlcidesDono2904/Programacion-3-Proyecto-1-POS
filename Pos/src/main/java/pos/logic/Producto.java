@@ -3,6 +3,7 @@ package pos.logic;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlID;
+import jakarta.xml.bind.annotation.XmlIDREF;
 
 import java.util.Objects;
 
@@ -14,6 +15,7 @@ public class Producto {
     private String unidadMedida;
     private double precioUnitario;
     private int existencias;
+    @XmlIDREF
     private Categoria categoria; // Tipo correcto
 
     public Producto(String codigo, String descripcion, String unidadMedida, double precioUnitario, int existencias, Categoria categoria) {
