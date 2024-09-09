@@ -258,24 +258,26 @@ public class View implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
-            case pos.presentation.productos.Model.COMBOBOX:
+            case Model.COMBOBOX:
                 for(Categoria c: model.getCategorias()){
                     categorias.addItem(c);
                 }
-
-            case pos.presentation.cajeros.Model.LIST:
-                int[] cols = {pos.presentation.cajeros.TableModel.ID, pos.presentation.cajeros.TableModel.NOMBRE};
+                break;
+            case Model.LIST:
+                int[] cols = {TableModel.CODIGO,TableModel.DESCRIPCION, TableModel.UNIDAD_MEDIDA,TableModel.PRECIO_UNITARIO, TableModel.EXISTENCIAS,TableModel.CATEGORIA};
                 list.setModel(new TableModel(cols, model.getList()));
                 list.setRowHeight(30);
                 TableColumnModel columnModel = list.getColumnModel();
-                columnModel.getColumn(0).setPreferredWidth(150);
                 columnModel.getColumn(1).setPreferredWidth(150);
+                columnModel.getColumn(3).setPreferredWidth(150);
                 break;
-            case pos.presentation.clientes.Model.CURRENT:
+            case Model.CURRENT:
                 codigo.setText(model.getCurrent().getCodigo());
                 descripcion.setText(model.getCurrent().getDescripcion());
-
-
+                unidad.setText(model.getCurrent().getUnidadMedida());
+                precio.setText(""+ model.getCurrent().getPrecioUnitario());
+                existencias.setText(""+ model.getCurrent().getExistencias());
+                categorias.setSelectedItem(model.getCurrent().getCategoria());
                 if (model.getMode() == Application.MODE_EDIT) {
                     codigo.setEnabled(false);
                     delete.setEnabled(true);
@@ -288,6 +290,14 @@ public class View implements PropertyChangeListener {
                 codLbl.setToolTipText(null);
                 descripLbl.setBorder(null);
                 descripLbl.setToolTipText(null);
+                unidadLbl.setBorder(null);
+                unidadLbl.setToolTipText(null);
+                precioLbl.setBorder(null);
+                precioLbl.setToolTipText(null);
+                existencias.setBorder(null);
+                existencias.setToolTipText(null);
+                categorias.setBorder(null);
+                categorias.setSelectedItem(model.getCurrent().getCategoria());
 
                 break;
             case Model.FILTER:
