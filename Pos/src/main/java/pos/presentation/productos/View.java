@@ -263,8 +263,8 @@ public class View implements PropertyChangeListener {
                     categorias.addItem(c);
                 }
 
-            case pos.presentation.cajeros.Model.LIST:
-                int[] cols = {pos.presentation.cajeros.TableModel.ID, pos.presentation.cajeros.TableModel.NOMBRE};
+            case pos.presentation.productos.Model.LIST:
+                int[] cols = {TableModel.CODIGO, TableModel.DESCRIPCION,TableModel.UNIDAD_MEDIDA,TableModel.PRECIO_UNITARIO,};
                 list.setModel(new TableModel(cols, model.getList()));
                 list.setRowHeight(30);
                 TableColumnModel columnModel = list.getColumnModel();
