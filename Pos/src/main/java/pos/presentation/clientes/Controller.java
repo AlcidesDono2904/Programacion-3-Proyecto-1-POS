@@ -7,8 +7,9 @@ import pos.logic.Service;
 import java.util.List;
 
 public class Controller {
+
     View view;
-    Model model;
+    public Model model;
 
     public Controller(View view, Model model) {
         model.init(Service.instance().search(new Cliente()));
