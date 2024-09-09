@@ -1,9 +1,12 @@
 package pos.presentation.facturacion;
 
 import javax.swing.*;
+import java.awt.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
-public class View {
-    private JPanel Totales;
+public class View implements PropertyChangeListener {
+    private JPanel panelTotales;
     private JPanel Funciones;
     private JPanel Producto;
     private JComboBox comboBox1;
@@ -19,4 +22,19 @@ public class View {
     private JButton quitar;
     private JButton descuento;
     private JButton cancelar;
+    private JLabel lblArticulos;
+    private JLabel lblSubtotal;
+    private JLabel lblDescuentos;
+    private JLabel lblTotal;
+    private JPanel panel;
+
+    public JPanel getPanel() {
+        return panel;
+    }
+    public View() {
+    }
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
+    }
 }
