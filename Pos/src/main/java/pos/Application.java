@@ -32,19 +32,26 @@ public class Application {
         pos.presentation.clientes.View clientesView = new pos.presentation.clientes.View();
         clientesController = new pos.presentation.clientes.Controller(clientesView,clientesModel);
         Icon clientesIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/client.png"));
-
+//----------------------------------------------------------------------------------------------------------------------
         pos.presentation.cajeros.Model cajerosModel= new pos.presentation.cajeros.Model();
         pos.presentation.cajeros.View cajerosView = new pos.presentation.cajeros.View();
         cajerosController = new pos.presentation.cajeros.Controller(cajerosView,cajerosModel);
-
+//----------------------------------------------------------------------------------------------------------------------
         pos.presentation.productos.Model productosModel= new pos.presentation.productos.Model();
         pos.presentation.productos.View  productosView = new pos.presentation.productos.View();
         productosController = new pos.presentation.productos.Controller(productosView,productosModel);
+//----------------------------------------------------------------------------------------------------------------------
+        pos.presentation.facturacion.Model facturacionModel = new pos.presentation.facturacion.Model();
+        pos.presentation.facturacion.View  facturacionView = new pos.presentation.facturacion.View();
+        facturacionController = new pos.presentation.facturacion.Controller(facturacionView,facturacionModel);
 
+//----------------------------------------------------------------------------------------------------------------------
+   //PESTAÑAS
         tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
         tabbedPane.addTab("Cajeros  ",clientesIcon,cajerosView.getPanel());
         tabbedPane.addTab("Productos",clientesIcon,productosView.getPanel());
-
+        tabbedPane.addTab("Factura",clientesIcon,facturacionView.getPanel());
+//----------------------------------------------------------------------------------------------------------------------
         window.setSize(900,450);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setIconImage((new ImageIcon(Application.class.getResource("presentation/icons/icon.png"))).getImage());
@@ -55,7 +62,7 @@ public class Application {
     public static pos.presentation.clientes.Controller clientesController;
     public static pos.presentation.cajeros.Controller cajerosController;
     public static pos.presentation.productos.Controller productosController;
-
+    public static pos.presentation.facturacion.Controller facturacionController;
     public static JFrame window;
 
     public final static int MODE_CREATE=1;
