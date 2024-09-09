@@ -263,9 +263,15 @@ public class View implements PropertyChangeListener {
                     categorias.addItem(c);
                 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
             case pos.presentation.productos.Model.LIST:
                 int[] cols = {TableModel.CODIGO, TableModel.DESCRIPCION,TableModel.UNIDAD_MEDIDA,TableModel.PRECIO_UNITARIO,};
+=======
+                break;
+            case Model.LIST:
+                int[] cols = {TableModel.CODIGO,TableModel.DESCRIPCION, TableModel.UNIDAD_MEDIDA,TableModel.PRECIO_UNITARIO, TableModel.EXISTENCIAS,TableModel.CATEGORIA};
+>>>>>>> origin/main
 =======
                 break;
             case Model.LIST:
