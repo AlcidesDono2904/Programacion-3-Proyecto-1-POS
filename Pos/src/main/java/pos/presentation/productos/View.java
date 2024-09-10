@@ -279,7 +279,9 @@ public class View implements PropertyChangeListener {
                 unidad.setText(model.getCurrent().getUnidadMedida());
                 precio.setText(""+ model.getCurrent().getPrecioUnitario());
                 existencias.setText(""+ model.getCurrent().getExistencias());
+
                 //categorias.setSelectedItem(model.getCurrent().getCategorias());
+
                 if (model.getMode() == Application.MODE_EDIT) {
                     codigo.setEnabled(false);
                     delete.setEnabled(true);
@@ -299,7 +301,9 @@ public class View implements PropertyChangeListener {
                 existencias.setBorder(null);
                 existencias.setToolTipText(null);
                 categorias.setBorder(null);
+
                 //categorias.setSelectedItem(model.getCurrent().getCategorias());
+
 
                 break;
             case Model.FILTER:

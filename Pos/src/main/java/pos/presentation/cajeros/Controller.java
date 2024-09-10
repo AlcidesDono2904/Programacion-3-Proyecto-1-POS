@@ -6,7 +6,7 @@ import pos.logic.Service;
 
 public class Controller {
     View view;
-    Model model;
+    public Model model;
 
     public Controller(View view, Model model) {
         try {
