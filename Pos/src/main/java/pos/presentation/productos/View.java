@@ -262,9 +262,11 @@ public class View implements PropertyChangeListener {
                 for(Categoria c: model.getCategorias()){
                     categorias.addItem(c);
                 }
+
                 break;
             case Model.LIST:
                 int[] cols = {TableModel.CODIGO,TableModel.DESCRIPCION, TableModel.UNIDAD_MEDIDA,TableModel.PRECIO_UNITARIO, TableModel.EXISTENCIAS,TableModel.CATEGORIA};
+
                 list.setModel(new TableModel(cols, model.getList()));
                 list.setRowHeight(30);
                 TableColumnModel columnModel = list.getColumnModel();
@@ -277,6 +279,8 @@ public class View implements PropertyChangeListener {
                 unidad.setText(model.getCurrent().getUnidadMedida());
                 precio.setText(""+ model.getCurrent().getPrecioUnitario());
                 existencias.setText(""+ model.getCurrent().getExistencias());
+
+                //categorias.setSelectedItem(model.getCurrent().getCategorias());
 
                 if (model.getMode() == Application.MODE_EDIT) {
                     codigo.setEnabled(false);
@@ -297,6 +301,8 @@ public class View implements PropertyChangeListener {
                 existencias.setBorder(null);
                 existencias.setToolTipText(null);
                 categorias.setBorder(null);
+
+                //categorias.setSelectedItem(model.getCurrent().getCategorias());
 
 
                 break;

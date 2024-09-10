@@ -31,15 +31,12 @@ public class Model extends AbstractModel {
     public Model() {
     }
 
-    public void init(List<Producto> list){
+    public void init(List<Producto> list,List<Categoria> categorias){
         this.list = list;
         this.current = new Producto();
         this.filter = new Producto();
         this.mode= Application.MODE_CREATE;
-        this.categorias = new ArrayList<Categoria>();
-        categorias.add(new Categoria("CAT-001", "Dulces"));
-        categorias.add(new Categoria("CAT-002", "Bebidas"));
-        categorias.add(new Categoria("CAT-003", "Snacks"));
+        this.categorias = categorias;
     }
 
     public List<Producto> getList() {
@@ -83,6 +80,7 @@ public class Model extends AbstractModel {
 
     public void setCategorias(List<Categoria> categorias) {
         this.categorias = categorias;
+        firePropertyChange(COMBOBOX);
     }
 
     public static final String LIST="list";

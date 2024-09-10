@@ -102,6 +102,37 @@ public class Service {
                 .sorted(Comparator.comparing(Cajero::getNombre))
                 .collect(Collectors.toList());
     }
+    //Categoria
+    public void create(Categoria e) throws Exception{
+        Categoria result = data.getCategorias().stream().filter(i->i.getId().equals(e.getId())).findFirst().orElse(null);
+        if (result==null) data.getCategorias().add(e);
+        else throw new Exception("Producto ya existe");
+    }
+    public Categoria read(Categoria e) throws Exception{
+        Categoria result = data.getCategorias().stream().filter(i->i.getId().equals(e.getId())).findFirst().orElse(null);
+        if (result!=null) return result;
+        else throw new Exception("Producto no existe");
+    }
+
+    public void update(Categoria e) throws Exception {
+        Categoria result = this.read(e);
+        data.getCategorias().remove(result);
+        data.getCategorias().add(e);
+    }
+
+
+    public void delete(Categoria e) throws Exception{
+        Categoria result = this.read(e);// Verifica si el producto existe
+        data.getProducto().remove(result);// Elimina el producto
+    }
+
+    public List<Categoria> search(Categoria e) {
+        return data.getCategorias().stream()
+                .filter(i->i.getNombre().contains(e.getNombre()))
+                .sorted(Comparator.comparing(Categoria::getNombre))
+                .collect(Collectors.toList());
+    }
+
     //Producto
     public void create(Producto e) throws Exception{
         Producto result = data.getProducto().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);

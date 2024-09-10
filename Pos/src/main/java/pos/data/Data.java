@@ -16,13 +16,16 @@ public class Data {
     @XmlElementWrapper(name = "cajeros")
     @XmlElement(name = "cajero")
     private List<Cajero> cajero;
+
+    @XmlElementWrapper(name="categorias")
+    @XmlElement(name="categoria")
+    private List<Categoria> categorias;
+
+
     @XmlElementWrapper(name = "productos")
     @XmlElement(name = "producto")
     private List<Producto> producto;
-    @XmlElementWrapper(name = "categorias")
-    @XmlElement(name = "categoria")
-    private List<Categoria> categorias;
-
+    
 
 
     public Data() {
@@ -38,5 +41,7 @@ public class Data {
     }
     public List<Cajero> getCajero() {return cajero; }
     public List<Producto> getProducto() {return producto; }
-    public List<Categoria> getCategoria() {return categorias; }
+
+    public List<Categoria> getCategorias() {return categorias; }
+
 }

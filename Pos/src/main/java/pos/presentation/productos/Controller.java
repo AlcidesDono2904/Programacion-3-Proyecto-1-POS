@@ -1,6 +1,7 @@
 package pos.presentation.productos;
 import pos.Application;
 
+import pos.logic.Categoria;
 import pos.logic.Producto;
 import pos.logic.Service;
 import java.util.List;
@@ -9,7 +10,7 @@ public class Controller {
     Model model;
 
     public Controller(View view, Model model) {
-        model.init(Service.instance().search(new Producto()));
+        model.init(Service.instance().search(new Producto()),Service.instance().search(new Categoria()));
         this.view = view;
         this.model = model;
         view.setController(this);
@@ -22,6 +23,7 @@ public class Controller {
         model.setMode(Application.MODE_CREATE);
         model.setCurrent(new Producto());
         model.setList(Service.instance().search(model.getFilter()));
+
     }
 
     // Metodo para guardar un producto (crear o actualizar)
