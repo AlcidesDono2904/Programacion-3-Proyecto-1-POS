@@ -13,6 +13,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.net.URI;
+
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 
 public class View implements PropertyChangeListener {
     private JPanel panel;
@@ -95,19 +100,33 @@ public class View implements PropertyChangeListener {
             }
         });
 
-        report.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e){
-                ViewReporte report = new ViewReporte();
-                JPanel panel = report.getPanel();
-                JFrame frame = new JFrame();
+        /*report.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    controller.print();
+                    String currentDirectory = System.getProperty("user.dir");
 
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                frame.setContentPane(panel);
-                frame.pack();
-                frame.setVisible(true);
+                    // Crea un objeto File con la ruta del archivo PDF
+                    File pdfFile = new File(currentDirectory + File.separator + "clientes.pdf");
+
+                    if (pdfFile.exists()) {
+                        try {
+
+                            Desktop desktop = Desktop.getDesktop();
+
+                            desktop.open(pdfFile);
+                        } catch (IOException ex) {
+                            System.out.println("No se pudo abrir el archivo PDF.");
+                            ex.printStackTrace();
+                        }
+                    } else {
+                        System.out.println("El archivo PDF no existe en el directorio.");
+                    }
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
-        });
+        });*/
     }
 
     private boolean validate() {
