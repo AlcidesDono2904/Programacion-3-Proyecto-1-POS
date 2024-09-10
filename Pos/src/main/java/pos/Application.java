@@ -42,7 +42,7 @@ public class Application {
         productosController = new pos.presentation.productos.Controller(productosView,productosModel);
 //----------------------------------------------------------------------------------------------------------------------
         pos.presentation.facturacion.Model facturacionModel = new pos.presentation.facturacion.Model();
-        pos.presentation.facturacion.View  facturacionView = new pos.presentation.facturacion.View();
+        pos.presentation.facturacion.View  facturacionView = new pos.presentation.facturacion.View(clientesController,cajerosController);
         facturacionController = new pos.presentation.facturacion.Controller(facturacionView,facturacionModel);
 
 //----------------------------------------------------------------------------------------------------------------------

@@ -1,20 +1,28 @@
 package pos.presentation.facturacion;
 
+
 import pos.logic.Producto;
+/*
+import pos.logic.Cliente;
+import pos.logic.Cajero;
+import pos.presentation.clientes.Controller;
+*/
+
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import java.util.List;
 
 public class View implements PropertyChangeListener {
     private JPanel panelTotales;
     private JPanel Funciones;
     private JPanel Producto;
-    private JComboBox comboBox1;
+    private JComboBox<String> catcliente;
     private JPanel Cliente;
-    private JComboBox comboBox2;
+    private JComboBox<String> catcajero;
     private JPanel Lineas;
     private JTable lineas;
     private JTextField productoTextField;
@@ -31,9 +39,16 @@ public class View implements PropertyChangeListener {
     private JLabel lblTotal;
     private JPanel panel;
 
+    // Controladores para clientes y cajeros
+    // Controladores para clientes y cajeros
+    private pos.presentation.clientes.Controller clienteController;
+    private pos.presentation.cajeros.Controller cajeroController;
+
+    // Metodo para obtener el panel (no cambia)
     public JPanel getPanel() {
         return panel;
     }
+
     public View() {
 
         agregar.addActionListener(new ActionListener() {
@@ -78,7 +93,80 @@ public class View implements PropertyChangeListener {
                 break;
 
         }
+    }
 
+
+/*
+    // Constructor que recibe los controladores
+    public View(Controller clienteController, pos.presentation.cajeros.Controller cajeroController) {
+        this.clienteController = clienteController;
+        this.cajeroController = cajeroController;
+
+        // Cargar clientes y cajeros desde el controlador
+        try {
+            cargarClientes();  // Llenar el JComboBox de clientes
+            cargarCajeros();   // Llenar el JComboBox de cajeros
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Listeners para cuando se seleccionan cliente y cajero
+        catcliente.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                seleccionarCliente(); // Lógica al seleccionar cliente
+            }
+        });
+
+        catcajero.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                seleccionarCajero(); // Lógica al seleccionar cajero
+            }
+        });
+    }
+
+    // Metodo para cargar los clientes en el JComboBox catcliente desde el controlador
+    private void cargarClientes() throws Exception {
+        // Usamos el metodo search para obtener la lista de clientes
+        clienteController.search(new Cliente());
+        List<Cliente> clientes = clienteController.model.getList();
+
+        catcliente.removeAllItems(); // Limpiar el JComboBox
+        for (Cliente cliente : clientes) {
+            catcliente.addItem(cliente.getNombre()); // Añadir el nombre del cliente al JComboBox
+        }
+    }
+
+    // Metodo para cargar los cajeros en el JComboBox catcajero desde el controlador
+    private void cargarCajeros() throws Exception {
+        // Usamos el metodo search para obtener la lista de cajeros
+        cajeroController.search(new Cajero());
+        List<Cajero> cajeros = cajeroController.model.getList();
+
+        catcajero.removeAllItems(); // Limpiar el JComboBox
+        for (Cajero cajero : cajeros) {
+            catcajero.addItem(cajero.getNombre()); // Añadir el nombre del cajero al JComboBox
+        }
+    }
+
+    // Metodo que se ejecuta cuando se selecciona un cliente
+    private void seleccionarCliente() {
+        String clienteSeleccionado = (String) catcliente.getSelectedItem();
+        System.out.println("Cliente seleccionado: " + clienteSeleccionado);
 
     }
+
+    // Metodo que se ejecuta cuando se selecciona un cajero
+    private void seleccionarCajero() {
+        String cajeroSeleccionado = (String) catcajero.getSelectedItem();
+        System.out.println("Cajero seleccionado: " + cajeroSeleccionado);
+
+    }
+//MVC
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        //  cambio en el modelo
+
+    }*/
 }
