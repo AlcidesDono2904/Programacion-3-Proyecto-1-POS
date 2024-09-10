@@ -1,26 +1,36 @@
 package pos.logic;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlID;
+import jakarta.xml.bind.annotation.XmlIDREF;
+
 import java.util.Objects;
-//@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Linea {
-   // @XmlID
+    @XmlID
     private String codigo;
+    @XmlIDREF
     private Producto producto;
     private int cantidad;
     private double descuento;
-    private double neto;
-    private double importe;
+    //private double neto;
+    //private double importe;
 
-    public Linea(String codigo, Producto producto, int cantidad, double descuento, double neto, double importe) {
+    public Linea(String codigo, Producto producto, int cantidad, double descuento) {
         this.codigo = codigo;
         this.producto = producto;
         this.cantidad = cantidad;
         this.descuento = descuento;
-        this.neto = neto;
-        this.importe = importe;
+        //this.neto = neto;
+        //this.importe = importe;
     }
 
-    public Linea() {this("",null,0,0,0,0);}
+    public Linea(Producto p){
+        this.producto = p;
+    }
+
+    public Linea() {this("",null,0,0);}
 
 
     public Producto getProducto() {
@@ -47,20 +57,12 @@ public class Linea {
         this.descuento = descuento;
     }
 
-    public double getNeto() {
-        return neto;
+    public double neto(){
+        return producto.getPrecioUnitario()*((100.0-descuento)/100.0);
     }
 
-    public void setNeto(double neto) {
-        this.neto = neto;
-    }
-
-    public double getImporte() {
-        return importe;
-    }
-
-    public void setImporte(double importe) {
-        this.importe = importe;
+    public double importe(){
+        return neto()*cantidad;
     }
 
     @Override
@@ -69,8 +71,6 @@ public class Linea {
                 "producto=" + producto +
                 ", cantidad=" + cantidad +
                 ", descuento=" + descuento +
-                ", neto=" + neto +
-                ", importe=" + importe +
                 '}';
     }
 
@@ -79,12 +79,12 @@ public class Linea {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Linea linea = (Linea) o;
-        return cantidad == linea.cantidad && Double.compare(descuento, linea.descuento) == 0 && Double.compare(neto, linea.neto) == 0 && Double.compare(importe, linea.importe) == 0 && Objects.equals(producto, linea.producto);
+        return cantidad == linea.cantidad && Double.compare(descuento, linea.descuento) == 0 && Objects.equals(producto, linea.producto);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(codigo,producto, cantidad, descuento, neto, importe);
+        return Objects.hash(codigo,producto, cantidad, descuento);
     }
 
 

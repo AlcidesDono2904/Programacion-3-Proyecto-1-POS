@@ -151,7 +151,6 @@ public class Service {
         data.getProducto().add(e);
     }
 
-
     public void delete(Producto e) throws Exception{
         Producto result = this.read(e);// Verifica si el producto existe
         data.getProducto().remove(result);// Elimina el producto
@@ -163,6 +162,7 @@ public class Service {
                 .sorted(Comparator.comparing(Producto::getDescripcion))
                 .collect(Collectors.toList());
     }
-//Factura
+
+    //Factura
 
 }

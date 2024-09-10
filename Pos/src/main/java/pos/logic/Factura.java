@@ -1,18 +1,17 @@
 package pos.logic;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlAttachmentRef;
-import jakarta.xml.bind.annotation.XmlID;
+import jakarta.xml.bind.annotation.*;
 
 import java.util.List;
-//@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Factura {
-   // @XmlID
+    @XmlID
     private String codigo;
+    @XmlIDREF
     private Cliente cliente;
+    @XmlIDREF
     private Cajero cajero;
-    //@XmlAttachmentRef
+
     private List<Linea> lineas;
 
     public Factura(String codigo, Cliente cliente, Cajero cajero, List<Linea> lineas) {
