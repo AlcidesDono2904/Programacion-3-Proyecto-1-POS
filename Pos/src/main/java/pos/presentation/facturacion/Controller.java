@@ -19,4 +19,8 @@ public class Controller {
         model.setMode(Application.MODE_CREATE);
         model.agregarLinea(Service.instance().read(p));
     }
+
+    public void search(Producto filter) throws Exception {
+        model.setProductos(Service.instance().search(filter));
+    }
 }

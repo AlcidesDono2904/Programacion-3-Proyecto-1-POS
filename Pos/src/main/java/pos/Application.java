@@ -47,10 +47,11 @@ public class Application {
 
 //----------------------------------------------------------------------------------------------------------------------
    //PESTAÑAS
+        tabbedPane.addTab("Factura",clientesIcon,facturacionView.getPanel());
         tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
         tabbedPane.addTab("Cajeros  ",clientesIcon,cajerosView.getPanel());
         tabbedPane.addTab("Productos",clientesIcon,productosView.getPanel());
-        tabbedPane.addTab("Factura",clientesIcon,facturacionView.getPanel());
+
 //----------------------------------------------------------------------------------------------------------------------
         window.setSize(900,450);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

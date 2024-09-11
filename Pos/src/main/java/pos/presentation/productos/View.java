@@ -257,8 +257,6 @@ public class View implements PropertyChangeListener {
             catLbl.setBorder(null);
             catLbl.setToolTipText(null);
         }
-
-
         return valid;
     }
 
@@ -333,7 +331,6 @@ public class View implements PropertyChangeListener {
                 categorias.setBorder(null);
 
                 //categorias.setSelectedItem(model.getCurrent().getCategorias());
-
 
                 break;
             case Model.FILTER:

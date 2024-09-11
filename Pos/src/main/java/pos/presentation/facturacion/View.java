@@ -63,6 +63,26 @@ public class View implements PropertyChangeListener {
                 }
             }
         });
+
+        buscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BuscarView buscarView = new BuscarView();
+                buscarView.setModel(getModel());
+                buscarView.setController(getController());
+
+                // Crear el popup (JDialog)
+                JDialog popup = new JDialog((JFrame) null, "Buscar Producto", true); // null si no tienes un JFrame padre
+
+                // Añadir el JPanel de buscarView al popup
+                popup.add(buscarView.getPanel());
+
+                // Ajustar el tamaño del popup de acuerdo al contenido
+                popup.pack(); // Ajusta el tamaño automáticamente según los componentes
+                popup.setLocationRelativeTo(null); // Centrar en la pantalla
+                popup.setVisible(true); // Mostrar el popup
+            }
+        });
     }
 
     //MVC
@@ -75,9 +95,15 @@ public class View implements PropertyChangeListener {
         model.addPropertyChangeListener(this);
     }
 
+    public Model getModel(){
+        return this.model;
+    }
+
     public void setController(pos.presentation.facturacion.Controller controller) {
         this.controller = controller;
     }
+
+    public Controller getController(){return controller;}
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

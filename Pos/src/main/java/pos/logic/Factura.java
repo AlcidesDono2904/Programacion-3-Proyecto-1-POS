@@ -11,7 +11,8 @@ public class Factura {
     private Cliente cliente;
     @XmlIDREF
     private Cajero cajero;
-
+    @XmlElementWrapper(name="lineas")
+    @XmlElement(name="linea")
     private List<Linea> lineas;
 
     public Factura(String codigo, Cliente cliente, Cajero cajero, List<Linea> lineas) {

@@ -36,7 +36,6 @@ public class Controller {
     public void search(Producto filter) throws Exception {
         model.setFilter(filter);
         model.setMode(Application.MODE_CREATE);
-        model.setCurrent(new Producto());
         model.setList(Service.instance().search(model.getFilter()));
 
     }
