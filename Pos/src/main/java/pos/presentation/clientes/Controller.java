@@ -78,9 +78,9 @@ public class Controller {
         model.setMode(Application.MODE_CREATE);
         model.setCurrent(new Cliente());
     }
-    /*
+
     public void print()throws Exception{
-        String dest="clientes.pdf";
+        String dest="pdfs/clientes.pdf";
         PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
         PdfWriter writer = new PdfWriter(dest);
         PdfDocument pdf = new PdfDocument(writer);
@@ -126,13 +126,5 @@ public class Controller {
         if(!hasBorder) cell.setBorder(Border.NO_BORDER);
         return cell;
     }
-
-    private Cell getCell(Image image, HorizontalAlignment alignment, boolean hasBorder) {
-        Cell cell = new Cell().add(image);
-        image.setHorizontalAlignment(alignment);
-        cell.setPadding(0);
-        if(!hasBorder) cell.setBorder(Border.NO_BORDER);
-        return cell;
-    }*/
 
 }

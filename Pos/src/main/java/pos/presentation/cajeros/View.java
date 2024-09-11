@@ -8,12 +8,15 @@ import pos.presentation.cajeros.TableModel;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
 
 public class View implements PropertyChangeListener {
     private JPanel panel;
@@ -87,6 +90,33 @@ public class View implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.clear();
+            }
+        });
+
+       report.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    controller.print();
+                    String currentDirectory = System.getProperty("user.dir");
+
+                    // Crea un objeto File con la ruta del archivo PDF
+                    File pdfFile = new File(currentDirectory + File.separator + "pdfs/cajeros.pdf");
+
+                    if (pdfFile.exists()) {
+                        try {
+                            Desktop desktop = Desktop.getDesktop();
+
+                            desktop.open(pdfFile);
+                        } catch (IOException ex) {
+                            System.out.println("No se pudo abrir el archivo PDF.");
+                            ex.printStackTrace();
+                        }
+                    } else {
+                        System.out.println("El archivo PDF no existe en el directorio.");
+                    }
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }
