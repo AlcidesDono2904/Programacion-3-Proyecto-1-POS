@@ -2,11 +2,9 @@ package pos.presentation.facturacion;
 
 
 import pos.logic.Producto;
-/*
+
 import pos.logic.Cliente;
 import pos.logic.Cajero;
-import pos.presentation.clientes.Controller;
-*/
 
 
 import javax.swing.*;
@@ -49,16 +47,18 @@ public class View implements PropertyChangeListener {
         return panel;
     }
 
-    public View() {
+    public View(pos.presentation.clientes.Controller clienteController, pos.presentation.cajeros.Controller cajeroController) {
+        this.clienteController = clienteController;
+        this.cajeroController = cajeroController;
 
         agregar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Producto p = new Producto();
                 p.setCodigo(productoTextField.getText());
-                try{
+                try {
                     controller.agregarProducto(p);
-                }catch(Exception ex){
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             }
@@ -96,19 +96,81 @@ public class View implements PropertyChangeListener {
                 popup.setVisible(true);
             }
         });
+        // Cargar clientes y cajeros desde el controlador
+        try {
+            cargarClientes();  // Llenar el JComboBox de clientes
+            cargarCajeros();   // Llenar el JComboBox de cajeros
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Listeners para cuando se seleccionan cliente y cajero
+        catcliente.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                seleccionarCliente(); // Lógica al seleccionar cliente
+            }
+        });
+
+        catcajero.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                seleccionarCajero(); // Lógica al seleccionar cajero
+            }
+        });
     }
 
+    private void cargarClientes() throws Exception {
+        if (clienteController == null) {
+            throw new IllegalStateException("El controlador de clientes no está inicializado");
+        }
+        clienteController.search(new Cliente());
+        List<Cliente> clientes = clienteController.model.getList();
+
+        catcliente.removeAllItems(); // Limpiar el JComboBox
+        for (Cliente cliente : clientes) {
+            catcliente.addItem(cliente.getNombre()); // Añadir el nombre del cliente al JComboBox
+        }
+    }
+
+    private void cargarCajeros() throws Exception {
+        if (cajeroController == null) {
+            throw new IllegalStateException("El controlador de cajeros no está inicializado");
+        }
+        cajeroController.search(new Cajero());
+        List<Cajero> cajeros = cajeroController.model.getList();
+
+        catcajero.removeAllItems(); // Limpiar el JComboBox
+        for (Cajero cajero : cajeros) {
+            catcajero.addItem(cajero.getNombre()); // Añadir el nombre del cajero al JComboBox
+        }
+    }
+
+
+    // Metodo que se ejecuta cuando se selecciona un cliente
+    private void seleccionarCliente() {
+        String clienteSeleccionado = (String) catcliente.getSelectedItem();
+        System.out.println("Cliente seleccionado: " + clienteSeleccionado);
+
+    }
+
+    // Metodo que se ejecuta cuando se selecciona un cajero
+    private void seleccionarCajero() {
+        String cajeroSeleccionado = (String) catcajero.getSelectedItem();
+        System.out.println("Cajero seleccionado: " + cajeroSeleccionado);
+
+    }
     //MVC
 
     Model model;
-    Controller controller;
+    pos.presentation.facturacion.Controller controller;
 
     public void setModel(pos.presentation.facturacion.Model model) {
         this.model = model;
         model.addPropertyChangeListener(this);
     }
 
-    public Model getModel(){
+    public Model getModel() {
         return this.model;
     }
 
@@ -116,13 +178,15 @@ public class View implements PropertyChangeListener {
         this.controller = controller;
     }
 
-    public Controller getController(){return controller;}
+    public pos.presentation.facturacion.Controller getController() {
+        return controller;
+    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        switch (evt.getPropertyName()){
+        switch (evt.getPropertyName()) {
             case Model.LINEAS:
-                int[] cols = {TableModel.CODIGO,TableModel.ARTICULO,TableModel.CATEGORIA,TableModel.PRECIO,TableModel.DESCUENTO,TableModel.NETO,TableModel.IMPORTE};
+                int[] cols = {TableModel.CODIGO, TableModel.ARTICULO, TableModel.CATEGORIA, TableModel.PRECIO, TableModel.DESCUENTO, TableModel.NETO, TableModel.IMPORTE};
                 lineas.setModel(new TableModel(cols, model.getLineas()));
                 lineas.setRowHeight(30);
 
@@ -133,7 +197,7 @@ public class View implements PropertyChangeListener {
 
         }
     }
-
+}
 
 /*
     // Constructor que recibe los controladores
@@ -208,4 +272,3 @@ public class View implements PropertyChangeListener {
         //  cambio en el modelo
 
     }*/
-}
