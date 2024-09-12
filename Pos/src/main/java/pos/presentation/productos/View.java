@@ -57,17 +57,8 @@ public class View implements PropertyChangeListener {
         comboCategorias.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Categoria selectedCategory = (Categoria) comboCategorias.getSelectedItem();
-                if (selectedCategory != null) {
-                    // Realizar la acción con la categoría seleccionada
-                    try {
-                        Producto filter = new Producto();
-                        filter.setCategoria(selectedCategory);
-                        controller.search(filter); // Llama al controlador para buscar productos con el filtro aplicado
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
+
+
             }
         });
 

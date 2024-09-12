@@ -32,7 +32,22 @@ public class BuscarView implements PropertyChangeListener {
                 }
             }
         });
+
+        OKButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    controller.agregarProducto(model.getProductos().get(productos.getSelectedRow()));
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
+            }
+        });
     }
+
+    public JButton getCancelarButton() {return cancelarButton;}
+
+    public JButton getOKButton() {return OKButton;}
 
     public JPanel getPanel(){return panel;}
 

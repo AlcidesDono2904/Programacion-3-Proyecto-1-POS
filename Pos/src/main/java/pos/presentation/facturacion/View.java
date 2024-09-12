@@ -71,16 +71,29 @@ public class View implements PropertyChangeListener {
                 buscarView.setModel(getModel());
                 buscarView.setController(getController());
 
-                // Crear el popup (JDialog)
-                JDialog popup = new JDialog((JFrame) null, "Buscar Producto", true); // null si no tienes un JFrame padre
+                JDialog popup = new JDialog((JFrame) null, "Buscar Producto", true);
 
-                // Añadir el JPanel de buscarView al popup
                 popup.add(buscarView.getPanel());
 
-                // Ajustar el tamaño del popup de acuerdo al contenido
-                popup.pack(); // Ajusta el tamaño automáticamente según los componentes
-                popup.setLocationRelativeTo(null); // Centrar en la pantalla
-                popup.setVisible(true); // Mostrar el popup
+                //Tomar el boton y añadirle la accion de cerrar el popup
+                JButton cancelar = buscarView.getCancelarButton();
+                cancelar.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        popup.dispose();
+                    }
+                });
+
+                buscarView.getOKButton().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        popup.dispose();
+                    }
+                });
+
+                popup.pack();
+                popup.setLocationRelativeTo(null);
+                popup.setVisible(true);
             }
         });
     }
