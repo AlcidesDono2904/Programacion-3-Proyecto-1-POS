@@ -3,6 +3,7 @@ package pos.presentation.facturacion;
 
 import pos.logic.Linea;
 import pos.logic.Producto;
+import pos.logic.Service;
 import pos.presentation.AbstractModel;
 
 import java.beans.PropertyChangeListener;
@@ -14,8 +15,12 @@ public class Model extends AbstractModel {
 
     List<Linea> lineas;
 
+    //buscarView
+    List<Producto> productos;
+
     public Model() {
         lineas = new ArrayList<Linea>();
+        productos = Service.instance().search(new Producto());
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -47,5 +52,14 @@ public class Model extends AbstractModel {
         this.lineas = lineas;
     }
 
+    public List<Producto> getProductos() {return productos;}
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
+        firePropertyChange(PRODUCTOS);
+    }
+
     public static final String LINEAS= "lineas";
+
+    public static final String PRODUCTOS= "productos";
 }

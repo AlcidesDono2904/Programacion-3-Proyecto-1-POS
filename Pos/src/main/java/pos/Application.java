@@ -42,15 +42,16 @@ public class Application {
         productosController = new pos.presentation.productos.Controller(productosView,productosModel);
 //----------------------------------------------------------------------------------------------------------------------
         pos.presentation.facturacion.Model facturacionModel = new pos.presentation.facturacion.Model();
-        pos.presentation.facturacion.View  facturacionView = new pos.presentation.facturacion.View(clientesController,cajerosController);
+        pos.presentation.facturacion.View  facturacionView = new pos.presentation.facturacion.View();
         facturacionController = new pos.presentation.facturacion.Controller(facturacionView,facturacionModel);
 
 //----------------------------------------------------------------------------------------------------------------------
    //PESTAÑAS
+        tabbedPane.addTab("Factura",clientesIcon,facturacionView.getPanel());
         tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
         tabbedPane.addTab("Cajeros  ",clientesIcon,cajerosView.getPanel());
         tabbedPane.addTab("Productos",clientesIcon,productosView.getPanel());
-        tabbedPane.addTab("Factura",clientesIcon,facturacionView.getPanel());
+
 //----------------------------------------------------------------------------------------------------------------------
         window.setSize(900,450);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

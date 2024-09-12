@@ -100,14 +100,14 @@ public class View implements PropertyChangeListener {
             }
         });
 
-        /*report.addActionListener(new ActionListener() {
+        report.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try{
                     controller.print();
                     String currentDirectory = System.getProperty("user.dir");
 
                     // Crea un objeto File con la ruta del archivo PDF
-                    File pdfFile = new File(currentDirectory + File.separator + "clientes.pdf");
+                    File pdfFile = new File(currentDirectory + File.separator + "pdfs/clientes.pdf");
 
                     if (pdfFile.exists()) {
                         try {
@@ -126,7 +126,7 @@ public class View implements PropertyChangeListener {
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
-        });*/
+        });
     }
 
     private boolean validate() {

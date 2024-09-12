@@ -6,6 +6,7 @@ import pos.logic.Producto;
 import pos.presentation.AbstractModel;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -37,6 +38,8 @@ public class Model extends AbstractModel {
         this.filter = new Producto();
         this.mode= Application.MODE_CREATE;
         this.categorias = categorias;
+
+        this.categorias.sort(Comparator.comparing(Categoria::getId));
     }
 
     public List<Producto> getList() {

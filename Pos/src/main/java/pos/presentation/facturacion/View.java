@@ -63,6 +63,39 @@ public class View implements PropertyChangeListener {
                 }
             }
         });
+
+        buscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BuscarView buscarView = new BuscarView();
+                buscarView.setModel(getModel());
+                buscarView.setController(getController());
+
+                JDialog popup = new JDialog((JFrame) null, "Buscar Producto", true);
+
+                popup.add(buscarView.getPanel());
+
+                //Tomar el boton y añadirle la accion de cerrar el popup
+                JButton cancelar = buscarView.getCancelarButton();
+                cancelar.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        popup.dispose();
+                    }
+                });
+
+                buscarView.getOKButton().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        popup.dispose();
+                    }
+                });
+
+                popup.pack();
+                popup.setLocationRelativeTo(null);
+                popup.setVisible(true);
+            }
+        });
     }
 
     //MVC
@@ -75,9 +108,15 @@ public class View implements PropertyChangeListener {
         model.addPropertyChangeListener(this);
     }
 
+    public Model getModel(){
+        return this.model;
+    }
+
     public void setController(pos.presentation.facturacion.Controller controller) {
         this.controller = controller;
     }
+
+    public Controller getController(){return controller;}
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
