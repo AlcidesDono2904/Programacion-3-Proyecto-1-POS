@@ -2,6 +2,7 @@ package pos.presentation.clientes;
 
 import pos.Application;
 import pos.logic.Cliente;
+import pos.logic.Producto;
 import pos.presentation.AbstractModel;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;

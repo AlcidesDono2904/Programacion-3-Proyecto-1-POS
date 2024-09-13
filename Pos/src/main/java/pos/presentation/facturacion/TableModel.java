@@ -43,4 +43,5 @@ public class TableModel extends AbstractTableModel<Linea> implements javax.swing
         colNames[NETO]= "Neto";
         colNames[IMPORTE]= "Importe";
     }
+
 }

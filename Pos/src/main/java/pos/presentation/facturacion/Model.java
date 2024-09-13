@@ -1,7 +1,9 @@
 package pos.presentation.facturacion;
 
 
+import pos.logic.Cliente;
 import pos.logic.Linea;
+import pos.logic.Cajero;
 import pos.logic.Producto;
 import pos.logic.Service;
 import pos.presentation.AbstractModel;
@@ -17,10 +19,13 @@ public class Model extends AbstractModel {
 
     //buscarView
     List<Producto> productos;
-
+    List<Cliente> clientes;
+    List<Cajero> cajeros;
     public Model() {
         lineas = new ArrayList<Linea>();
         productos = Service.instance().search(new Producto());
+        clientes = Service.instance().search(new Cliente());
+        cajeros = Service.instance().search(new Cajero());
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -53,6 +58,17 @@ public class Model extends AbstractModel {
     }
 
     public List<Producto> getProductos() {return productos;}
+    public List<Cajero> getCajeros() {return cajeros;}
+    public List<Cliente> getClientes() {return clientes;}
+    public void setClientes(List<Cliente> clientes) {
+        this.clientes = clientes;
+        firePropertyChange(CLIENTES);
+    }
+
+    public void setCajeros(List<Cajero> cajeros) {
+        this.cajeros = cajeros;
+        firePropertyChange(CAJEROS);
+    }
 
     public void setProductos(List<Producto> productos) {
         this.productos = productos;
@@ -62,4 +78,6 @@ public class Model extends AbstractModel {
     public static final String LINEAS= "lineas";
 
     public static final String PRODUCTOS= "productos";
+    public static final String CAJEROS= "cajeros";
+    public static final String CLIENTES= "clientes";
 }

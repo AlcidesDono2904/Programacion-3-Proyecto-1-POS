@@ -4,6 +4,8 @@ import pos.logic.Service;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -26,7 +28,7 @@ public class Application {
                 super.windowClosing(e);
                 Service.instance().stop();
             }
-        });
+        });;
 
         pos.presentation.clientes.Model clientesModel= new pos.presentation.clientes.Model();
         pos.presentation.clientes.View clientesView = new pos.presentation.clientes.View();
@@ -51,6 +53,20 @@ public class Application {
         tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
         tabbedPane.addTab("Cajeros  ",clientesIcon,cajerosView.getPanel());
         tabbedPane.addTab("Productos",clientesIcon,productosView.getPanel());
+        tabbedPane.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                JTabbedPane sourceTabbedPane = (JTabbedPane) e.getSource();
+                int index = sourceTabbedPane.getSelectedIndex();
+                if (sourceTabbedPane.getTitleAt(index).equals("Factura")) {
+                    try {
+                        facturacionController.show();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
 
 //----------------------------------------------------------------------------------------------------------------------
         window.setSize(900,450);

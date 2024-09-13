@@ -10,6 +10,8 @@ import pos.logic.Cajero;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
@@ -118,6 +120,26 @@ public class View implements PropertyChangeListener {
                 seleccionarCajero(); // Lógica al seleccionar cajero
             }
         });
+        panel.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                super.componentShown(e);
+                controller.show();
+            }
+        });
+    }
+    public void actualizarClientes(List<Cliente> clientes) {
+        catcliente.removeAllItems();
+        for (Cliente cliente : clientes) {
+            catcliente.addItem(cliente.getNombre());
+        }
+    }
+
+    public void actualizarCajeros(List<Cajero> cajeros) {
+        catcajero.removeAllItems();
+        for (Cajero cajero : cajeros) {
+            catcajero.addItem(cajero.getNombre());
+        }
     }
 
     private void cargarClientes() throws Exception {
@@ -198,77 +220,3 @@ public class View implements PropertyChangeListener {
         }
     }
 }
-
-/*
-    // Constructor que recibe los controladores
-    public View(Controller clienteController, pos.presentation.cajeros.Controller cajeroController) {
-        this.clienteController = clienteController;
-        this.cajeroController = cajeroController;
-
-        // Cargar clientes y cajeros desde el controlador
-        try {
-            cargarClientes();  // Llenar el JComboBox de clientes
-            cargarCajeros();   // Llenar el JComboBox de cajeros
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // Listeners para cuando se seleccionan cliente y cajero
-        catcliente.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                seleccionarCliente(); // Lógica al seleccionar cliente
-            }
-        });
-
-        catcajero.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                seleccionarCajero(); // Lógica al seleccionar cajero
-            }
-        });
-    }
-
-    // Metodo para cargar los clientes en el JComboBox catcliente desde el controlador
-    private void cargarClientes() throws Exception {
-        // Usamos el metodo search para obtener la lista de clientes
-        clienteController.search(new Cliente());
-        List<Cliente> clientes = clienteController.model.getList();
-
-        catcliente.removeAllItems(); // Limpiar el JComboBox
-        for (Cliente cliente : clientes) {
-            catcliente.addItem(cliente.getNombre()); // Añadir el nombre del cliente al JComboBox
-        }
-    }
-
-    // Metodo para cargar los cajeros en el JComboBox catcajero desde el controlador
-    private void cargarCajeros() throws Exception {
-        // Usamos el metodo search para obtener la lista de cajeros
-        cajeroController.search(new Cajero());
-        List<Cajero> cajeros = cajeroController.model.getList();
-
-        catcajero.removeAllItems(); // Limpiar el JComboBox
-        for (Cajero cajero : cajeros) {
-            catcajero.addItem(cajero.getNombre()); // Añadir el nombre del cajero al JComboBox
-        }
-    }
-
-    // Metodo que se ejecuta cuando se selecciona un cliente
-    private void seleccionarCliente() {
-        String clienteSeleccionado = (String) catcliente.getSelectedItem();
-        System.out.println("Cliente seleccionado: " + clienteSeleccionado);
-
-    }
-
-    // Metodo que se ejecuta cuando se selecciona un cajero
-    private void seleccionarCajero() {
-        String cajeroSeleccionado = (String) catcajero.getSelectedItem();
-        System.out.println("Cajero seleccionado: " + cajeroSeleccionado);
-
-    }
-//MVC
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        //  cambio en el modelo
-
-    }*/
