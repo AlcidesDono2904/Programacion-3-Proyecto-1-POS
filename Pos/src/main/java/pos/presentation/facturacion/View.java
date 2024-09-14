@@ -145,6 +145,47 @@ public class View implements PropertyChangeListener {
             }
         });
 
+        descuento.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DescuentoView descuentoView = new DescuentoView();
+                descuentoView.setController(getController());
+                descuentoView.setModel(getModel());
+
+                JDialog popup = new JDialog((JFrame) null, "Buscar Producto", true);
+
+                popup.add(descuentoView.getPanel());
+
+                //Tomar el boton y añadirle la accion de cerrar el popup
+                JButton cancelar = descuentoView.getCancelarButton();
+
+                cancelar.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        popup.dispose();
+                    }
+                });
+
+                descuentoView.getOKButton().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        popup.dispose();
+                    }
+                });
+
+                popup.pack();
+                popup.setLocationRelativeTo(null);
+                popup.setVisible(true);
+            }
+        });
+
+        quitar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.quitar();
+            }
+        });
+
         // Listeners para cuando se seleccionan cliente y cajero
         catcliente.addActionListener(new ActionListener() {
             @Override
@@ -256,9 +297,11 @@ public class View implements PropertyChangeListener {
                 if (model.getMode()== Application.MODE_EDIT){
                     cantidad.setEnabled(true);
                     descuento.setEnabled(true);
+                    quitar.setEnabled(true);
                 }else{
                     cantidad.setEnabled(false);
                     descuento.setEnabled(false);
+                    quitar.setEnabled(false);
                 }
         }
     }

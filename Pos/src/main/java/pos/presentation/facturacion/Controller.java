@@ -65,4 +65,22 @@ public class Controller {
         model.setMode(Application.MODE_CREATE);
         model.setCurrent(null);
     }
+
+    public void save(double desc)throws Exception{
+        if(desc>100.0 || desc<0.0){
+            throw new Exception();
+        }
+
+        Linea l=model.getCurrent();
+
+        l.setDescuento(desc);
+        model.setMode(Application.MODE_CREATE);
+        model.setCurrent(null);
+    }
+
+    public void quitar(){
+        model.getLineas().remove(model.getCurrent());
+        model.setMode(Application.MODE_CREATE);
+        model.setCurrent(null);
+    }
 }

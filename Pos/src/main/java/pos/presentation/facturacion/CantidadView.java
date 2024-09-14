@@ -48,5 +48,4 @@ public class CantidadView {
     public void setController(Controller controller){
         this.controller=controller;
     }
-
 }
