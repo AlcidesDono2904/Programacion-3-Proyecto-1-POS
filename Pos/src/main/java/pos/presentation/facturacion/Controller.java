@@ -1,10 +1,7 @@
 package pos.presentation.facturacion;
 
 import pos.Application;
-import pos.logic.Producto;
-import pos.logic.Cliente;
-import pos.logic.Cajero;
-import pos.logic.Service;
+import pos.logic.*;
 
 public class Controller {
     pos.presentation.facturacion.View view;
@@ -41,5 +38,31 @@ public class Controller {
         model.setProductos(Service.instance().search(new Producto()));
         model.setCajeros(Service.instance().search(new Cajero()));
         model.setClientes(Service.instance().search(new Cliente()));
+    }
+
+    public void edit(int row){
+        Linea l = model.getLineas().get(row);
+        try {
+            model.setMode(Application.MODE_EDIT);
+            model.setCurrent(l);
+        } catch (Exception ex) {}
+    }
+
+    public void save(int cant)throws Exception{
+        Linea l=model.getCurrent();
+
+        int total=0;
+        for(Linea i : model.getLineas()){
+            if(i.getProducto()==l.getProducto()){
+                total+=i.getCantidad();
+                if(total<l.getCantidad()) {
+                    throw new Exception("La cantidad de productos a facturar no puede ser mayor a las existencias");
+                }
+            }
+        }
+
+        l.setCantidad(cant);
+        model.setMode(Application.MODE_CREATE);
+        model.setCurrent(null);
     }
 }
