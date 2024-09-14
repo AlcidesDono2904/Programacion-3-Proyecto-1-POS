@@ -165,4 +165,12 @@ public class Service {
 
     //Factura
 
+    public void create(Factura e) throws Exception{
+        Factura result = data.getFactura().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
+        if (result==null) {
+            e.setCodigo("FAC-"+(data.getFactura().size()+1));
+            data.getFactura().add(e);
+        } else throw new Exception("Factura ya existe");
+    }
+
 }

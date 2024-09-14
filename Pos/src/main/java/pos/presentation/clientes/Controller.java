@@ -126,5 +126,4 @@ public class Controller {
         if(!hasBorder) cell.setBorder(Border.NO_BORDER);
         return cell;
     }
-
 }

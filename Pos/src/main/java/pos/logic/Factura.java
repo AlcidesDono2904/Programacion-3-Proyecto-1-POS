@@ -46,6 +46,18 @@ public class Factura {
 
     public void setLineas(List<Linea> lineas) {
         this.lineas = lineas;
+        int i=1;
+        for (Linea l:lineas){
+            l.setCodigo("LIN-"+(i++));
+        }
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     @Override
@@ -57,15 +69,12 @@ public class Factura {
                 '}';
     }
 
-    public String getCodigo() {
-        return codigo;
+    public double importe(){
+        double total = 0;
+        for (Linea l:lineas){
+            total+=l.importe();
+        }
+        return total;
     }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
-    //agregar algunos metodos como calcular subtotal, total, etc.
-
 
 }
