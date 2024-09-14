@@ -11,6 +11,7 @@ public class Controller {
     pos.presentation.facturacion.Model model;
 
     public Controller(View facturacionView, Model facturacionModel) {
+        facturacionModel.init(Service.instance().search(new Producto()),Service.instance().search(new Cliente()),Service.instance().search(new Cajero()));
         this.view = facturacionView;
         this.model = facturacionModel;
         view.setController(this);

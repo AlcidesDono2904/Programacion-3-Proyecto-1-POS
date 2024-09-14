@@ -70,8 +70,8 @@ public class View implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 BuscarView buscarView = new BuscarView();
-                buscarView.setModel(getModel());
                 buscarView.setController(getController());
+                buscarView.setModel(getModel());
 
                 JDialog popup = new JDialog((JFrame) null, "Buscar Producto", true);
 

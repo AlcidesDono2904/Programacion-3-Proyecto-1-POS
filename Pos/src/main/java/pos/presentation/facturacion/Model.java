@@ -22,10 +22,14 @@ public class Model extends AbstractModel {
     List<Cliente> clientes;
     List<Cajero> cajeros;
     public Model() {
+
+    }
+
+    public void init(List<Producto> productos, List<Cliente> clientes, List<Cajero> cajeros) {
         lineas = new ArrayList<Linea>();
-        productos = Service.instance().search(new Producto());
-        clientes = Service.instance().search(new Cliente());
-        cajeros = Service.instance().search(new Cajero());
+        this.productos = productos;
+        this.clientes =clientes ;
+        this.cajeros=cajeros ;
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
