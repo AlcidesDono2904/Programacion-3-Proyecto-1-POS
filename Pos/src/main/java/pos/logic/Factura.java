@@ -46,6 +46,10 @@ public class Factura {
 
     public void setLineas(List<Linea> lineas) {
         this.lineas = lineas;
+        int i=1;
+        for (Linea l:lineas){
+            l.setCodigo("LIN -"+(i++));
+        }
     }
 
     @Override

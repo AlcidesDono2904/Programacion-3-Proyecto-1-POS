@@ -2,6 +2,7 @@ package pos.presentation.facturacion;
 
 
 import pos.Application;
+import pos.logic.Factura;
 import pos.logic.Producto;
 
 import pos.logic.Cliente;
@@ -186,6 +187,43 @@ public class View implements PropertyChangeListener {
             }
         });
 
+        cobrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CobrarView cobrarView = new CobrarView();
+                cobrarView.setController(getController());
+                cobrarView.setModel(getModel());
+
+                JDialog popup = new JDialog((JFrame) null, "Buscar Producto", true);
+
+                popup.add(cobrarView.getPanel());
+
+                //Tomar el boton y añadirle la accion de cerrar el popup
+                JButton cancelar = cobrarView.getCancelarButton();
+
+                cancelar.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        popup.dispose();
+                    }
+                });
+
+                cobrarView.getOKButton().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        popup.dispose();
+                        //cobrar y hacer la factura al final
+
+                        controller.cobrar(take());
+                    }
+                });
+
+                popup.pack();
+                popup.setLocationRelativeTo(null);
+                popup.setVisible(true);
+            }
+        });
+
         // Listeners para cuando se seleccionan cliente y cajero
         catcliente.addActionListener(new ActionListener() {
             @Override
@@ -262,6 +300,15 @@ public class View implements PropertyChangeListener {
         System.out.println("Cajero seleccionado: " + cajeroSeleccionado);
 
     }
+
+    public Factura take(){
+        Factura factura = new Factura();
+        factura.setCajero((Cajero)catcajero.getSelectedItem());
+        factura.setCliente((Cliente)catcliente.getSelectedItem());
+        factura.setLineas(model.getLineas());
+
+        return factura;
+    }
     //MVC
 
     Model model;
@@ -291,6 +338,8 @@ public class View implements PropertyChangeListener {
                 int[] cols = {TableModel.CODIGO, TableModel.ARTICULO, TableModel.CATEGORIA,TableModel.CANTIDAD, TableModel.PRECIO, TableModel.DESCUENTO, TableModel.NETO, TableModel.IMPORTE};
                 lineas.setModel(new TableModel(cols, model.getLineas()));
                 lineas.setRowHeight(30);
+
+                lblTotal.setText("Total: "+model.total());
 
                 break;
             case Model.CURRENT:

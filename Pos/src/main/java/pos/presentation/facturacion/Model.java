@@ -6,7 +6,6 @@ import pos.logic.Cliente;
 import pos.logic.Linea;
 import pos.logic.Cajero;
 import pos.logic.Producto;
-import pos.logic.Service;
 import pos.presentation.AbstractModel;
 
 import java.beans.PropertyChangeListener;
@@ -47,6 +46,7 @@ public class Model extends AbstractModel {
         l.setCodigo("LIN-"+lineas.size());
         lineas.add(l);
         firePropertyChange(LINEAS);
+
     }
 
     public void setCurrent(Linea c) {
@@ -93,9 +93,22 @@ public class Model extends AbstractModel {
         firePropertyChange(PRODUCTOS);
     }
 
+    public void cobrar(){
+
+    }
+
+    public double total(){
+        double sum =0;
+        for (Linea l:this.lineas){
+            sum +=l.importe();
+        }
+        return sum;
+    }
+
     public static final String LINEAS= "lineas";
     public static final String PRODUCTOS= "productos";
     public static final String CAJEROS= "cajeros";
     public static final String CLIENTES= "clientes";
     public static final String CURRENT= "current";
+
 }

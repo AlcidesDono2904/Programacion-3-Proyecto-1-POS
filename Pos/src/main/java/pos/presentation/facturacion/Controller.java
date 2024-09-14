@@ -83,4 +83,9 @@ public class Controller {
         model.setMode(Application.MODE_CREATE);
         model.setCurrent(null);
     }
+
+    public void cobrar(Factura f){
+        Service.instance().create(f);
+
+    }
 }

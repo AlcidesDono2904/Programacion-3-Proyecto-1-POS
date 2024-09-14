@@ -25,6 +25,12 @@ public class Data {
     @XmlElementWrapper(name = "productos")
     @XmlElement(name = "producto")
     private List<Producto> producto;
+
+
+
+    @XmlElementWrapper(name = "facturas")
+    @XmlElement(name = "factura")
+    private List<Factura> factura;
     
 
 
@@ -41,7 +47,7 @@ public class Data {
     }
     public List<Cajero> getCajero() {return cajero; }
     public List<Producto> getProducto() {return producto; }
-
+    public List<Factura> getFactura() {return factura;}
     public List<Categoria> getCategorias() {return categorias; }
 
 }
