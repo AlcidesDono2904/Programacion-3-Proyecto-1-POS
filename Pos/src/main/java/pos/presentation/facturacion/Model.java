@@ -1,6 +1,7 @@
 package pos.presentation.facturacion;
 
 
+import pos.Application;
 import pos.logic.Cliente;
 import pos.logic.Linea;
 import pos.logic.Cajero;
@@ -16,21 +17,28 @@ public class Model extends AbstractModel {
     int mode;
 
     List<Linea> lineas;
+    Linea current;
 
     //buscarView
     List<Producto> productos;
     List<Cliente> clientes;
     List<Cajero> cajeros;
     public Model() {
+
+    }
+
+    public void init(List<Producto> productos, List<Cliente> clientes, List<Cajero> cajeros) {
         lineas = new ArrayList<Linea>();
-        productos = Service.instance().search(new Producto());
-        clientes = Service.instance().search(new Cliente());
-        cajeros = Service.instance().search(new Cajero());
+        this.productos = productos;
+        this.clientes =clientes ;
+        this.cajeros=cajeros ;
+        this.mode= Application.MODE_CREATE;
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         super.addPropertyChangeListener(listener);
         firePropertyChange(LINEAS);
+        firePropertyChange(CURRENT);
 
     }
 
@@ -39,6 +47,16 @@ public class Model extends AbstractModel {
         l.setCodigo("LIN-"+lineas.size());
         lineas.add(l);
         firePropertyChange(LINEAS);
+    }
+
+    public void setCurrent(Linea c) {
+        this.current = c;
+        firePropertyChange(CURRENT);
+        firePropertyChange(LINEAS);
+    }
+
+    public Linea getCurrent() {
+        return current;
     }
 
     public int getMode() {
@@ -76,8 +94,8 @@ public class Model extends AbstractModel {
     }
 
     public static final String LINEAS= "lineas";
-
     public static final String PRODUCTOS= "productos";
     public static final String CAJEROS= "cajeros";
     public static final String CLIENTES= "clientes";
+    public static final String CURRENT= "current";
 }

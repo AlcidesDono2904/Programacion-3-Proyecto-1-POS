@@ -58,6 +58,12 @@ public class BuscarView implements PropertyChangeListener {
     public void setModel(pos.presentation.facturacion.Model model) {
         this.model = model;
         model.addPropertyChangeListener(this);
+        try{
+            controller.search(new Producto());
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+
     }
 
     public void setController(pos.presentation.facturacion.Controller controller) {
