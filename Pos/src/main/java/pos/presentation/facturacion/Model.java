@@ -97,12 +97,41 @@ public class Model extends AbstractModel {
 
     }
 
+    public int articulos(){
+        int sum=0;
+        for(Linea l : lineas){
+            sum+=l.getCantidad();
+        }
+        return sum;
+    }
+
+    public double subTotal(){
+        double sum=0;
+        for(Linea l : lineas){
+            sum+=l.getProducto().getPrecioUnitario()*l.getCantidad();
+        }
+        return sum;
+    }
+
+    public double descuento(){
+        double sum=0;
+        for(Linea l : lineas){
+            double precio=l.getProducto().getPrecioUnitario()*l.getCantidad();
+            sum+=precio-(precio*((100-l.getDescuento())/100));
+        }
+        return sum;
+    }
+
     public double total(){
         double sum =0;
         for (Linea l:this.lineas){
             sum +=l.importe();
         }
         return sum;
+    }
+
+    public void clear(){
+        //todo
     }
 
     public static final String LINEAS= "lineas";

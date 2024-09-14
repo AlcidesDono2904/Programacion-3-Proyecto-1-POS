@@ -39,6 +39,7 @@ public class Data {
         cajero = new ArrayList<>();
         producto = new ArrayList<>();
         categorias = new ArrayList<>();
+        factura = new ArrayList<>();
 
     }
 

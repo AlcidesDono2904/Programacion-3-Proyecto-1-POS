@@ -10,18 +10,21 @@ import pos.logic.Cajero;
 
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class View implements PropertyChangeListener {
     private JPanel panelTotales;
     private JPanel Funciones;
     private JPanel Producto;
-    private JComboBox<String> catcliente;
+    private JComboBox<Cliente> catcliente;
     private JPanel Cliente;
-    private JComboBox<String> catcajero;
+    private JComboBox<Cajero> catcajero;
     private JPanel Lineas;
     private JTable lineas;
     private JTextField productoTextField;
@@ -213,8 +216,31 @@ public class View implements PropertyChangeListener {
                     public void actionPerformed(ActionEvent e) {
                         popup.dispose();
                         //cobrar y hacer la factura al final
+                        try{
+                            controller.print();
+                            String currentDirectory = System.getProperty("user.dir");
 
-                        controller.cobrar(take());
+                            // Crea un objeto File con la ruta del archivo PDF
+                            File pdfFile = new File(currentDirectory + File.separator + "pdfs/factura.pdf");
+
+                            if (pdfFile.exists()) {
+                                try {
+                                    Desktop desktop = Desktop.getDesktop();
+
+                                    desktop.open(pdfFile);
+                                } catch (IOException ex) {
+                                    System.out.println("No se pudo abrir el archivo PDF.");
+                                    ex.printStackTrace();
+                                }
+                            } else {
+                                System.out.println("El archivo PDF no existe en el directorio.");
+                            }
+
+                            controller.cobrar(take());
+
+                        }catch(Exception ex){
+                            JOptionPane.showMessageDialog(null, ex.getMessage());
+                        }
                     }
                 });
 
@@ -249,14 +275,14 @@ public class View implements PropertyChangeListener {
     public void actualizarClientes(List<Cliente> clientes) {
         catcliente.removeAllItems();
         for (Cliente cliente : clientes) {
-            catcliente.addItem(cliente.getNombre());
+            catcliente.addItem(cliente);
         }
     }
 
     public void actualizarCajeros(List<Cajero> cajeros) {
         catcajero.removeAllItems();
         for (Cajero cajero : cajeros) {
-            catcajero.addItem(cajero.getNombre());
+            catcajero.addItem(cajero);
         }
     }
 
@@ -269,7 +295,7 @@ public class View implements PropertyChangeListener {
 
         catcliente.removeAllItems(); // Limpiar el JComboBox
         for (Cliente cliente : clientes) {
-            catcliente.addItem(cliente.getNombre()); // Añadir el nombre del cliente al JComboBox
+            catcliente.addItem(cliente); // Añadir el nombre del cliente al JComboBox
         }
     }
 
@@ -282,10 +308,17 @@ public class View implements PropertyChangeListener {
 
         catcajero.removeAllItems(); // Limpiar el JComboBox
         for (Cajero cajero : cajeros) {
-            catcajero.addItem(cajero.getNombre()); // Añadir el nombre del cajero al JComboBox
+            catcajero.addItem(cajero); // Añadir el nombre del cajero al JComboBox
         }
     }
 
+    public JComboBox<Cliente> getCliente() {
+        return catcliente;
+    }
+
+    public JComboBox<Cajero> getCajero() {
+        return catcajero;
+    }
 
     // Metodo que se ejecuta cuando se selecciona un cliente
     private void seleccionarCliente() {
@@ -339,9 +372,13 @@ public class View implements PropertyChangeListener {
                 lineas.setModel(new TableModel(cols, model.getLineas()));
                 lineas.setRowHeight(30);
 
+                lblArticulos.setText("Articulos: "+model.articulos());
+                lblSubtotal.setText("Subtotal: "+model.subTotal());
+                lblDescuentos.setText("Descuento: "+model.descuento());
                 lblTotal.setText("Total: "+model.total());
 
                 break;
+
             case Model.CURRENT:
                 if (model.getMode()== Application.MODE_EDIT){
                     cantidad.setEnabled(true);
