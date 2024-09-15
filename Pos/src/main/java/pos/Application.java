@@ -52,6 +52,7 @@ public class Application {
         tabbedPane.addTab("Factura",clientesIcon,facturacionView.getPanel());
         tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
         tabbedPane.addTab("Cajeros  ",clientesIcon,cajerosView.getPanel());
+
         tabbedPane.addTab("Productos",clientesIcon,productosView.getPanel());
         tabbedPane.addChangeListener(new ChangeListener() {
             @Override
