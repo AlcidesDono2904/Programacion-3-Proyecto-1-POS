@@ -55,11 +55,16 @@ public class View implements PropertyChangeListener {
         this.clienteController = clienteController;
         this.cajeroController = cajeroController;
 
+        lineas.setRowSelectionAllowed(true);
+        lineas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
         lineas.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int row = lineas.getSelectedRow();
-                controller.edit(row);
+                int row=lineas.getSelectedRow();
+                if(row!=-1){
+                    controller.edit(row);
+                }
             }
         });
 
@@ -369,6 +374,7 @@ public class View implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
             case Model.LINEAS:
+
                 int[] cols = {TableModel.CODIGO, TableModel.ARTICULO, TableModel.CATEGORIA,TableModel.CANTIDAD, TableModel.PRECIO, TableModel.DESCUENTO, TableModel.NETO, TableModel.IMPORTE};
                 lineas.setModel(new TableModel(cols, model.getLineas()));
                 lineas.setRowHeight(30);

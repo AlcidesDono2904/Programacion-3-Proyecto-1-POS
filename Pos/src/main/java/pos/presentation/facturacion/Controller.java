@@ -17,6 +17,8 @@ import com.itextpdf.layout.properties.TextAlignment;
 import pos.Application;
 import pos.logic.*;
 
+import javax.swing.*;
+
 public class Controller {
     pos.presentation.facturacion.View view;
     pos.presentation.facturacion.Model model;
@@ -55,11 +57,28 @@ public class Controller {
     }
 
     public void edit(int row){
-        // Obtiene el producto seleccionado desde la lista de productos en la factura
-        Linea selectedProducto = model.getLineas().get(row);
+       // Verificar que la fila seleccionada sea válida
+        if (row < 0 || row >= model.getLineas().size()) {
+            JOptionPane.showMessageDialog(null, "Fila seleccionada no válida", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        // Establece el producto actual en el modelo para que la vista pueda reflejarlo
-        model.setCurrent(selectedProducto);
+        // Obtener el producto seleccionado desde la lista del modelo
+        Linea lineaSeleccionada = model.getLineas().get(row);
+
+        try {
+            // Cambiar el modo del modelo a "editar"
+            model.setMode(Application.MODE_EDIT);
+
+            // Establecer el producto seleccionado como el producto actual en el modelo
+            model.setCurrent(lineaSeleccionada);
+
+            // Actualizar la vista con los datos del producto seleccionado
+            // Esto generalmente ya se manejaría en el metodo "propertyChange" si estás usando Observer
+        } catch (Exception ex) {
+            // Manejar cualquier excepción que pueda ocurrir
+            JOptionPane.showMessageDialog(null, "Error al intentar editar el producto: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void save(int cant)throws Exception{
