@@ -19,6 +19,11 @@ public class CobrarView implements PropertyChangeListener {
     private JPanel panel;
 
     CobrarView(){
+        // Inicializar los JTextField con 0 por defecto
+        efectivo.setText("0");
+        tarjete.setText("0");
+        cheque.setText("0");
+        sinpe.setText("0");
         OKButton.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
