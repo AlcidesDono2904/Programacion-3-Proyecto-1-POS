@@ -55,11 +55,11 @@ public class Controller {
     }
 
     public void edit(int row){
-        Linea l = model.getLineas().get(row);
-        try {
-            model.setMode(Application.MODE_EDIT);
-            model.setCurrent(l);
-        } catch (Exception ex) {}
+        // Obtiene el producto seleccionado desde la lista de productos en la factura
+        Linea selectedProducto = model.getLineas().get(row);
+
+        // Establece el producto actual en el modelo para que la vista pueda reflejarlo
+        model.setCurrent(selectedProducto);
     }
 
     public void save(int cant)throws Exception{

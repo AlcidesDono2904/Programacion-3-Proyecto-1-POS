@@ -58,7 +58,8 @@ public class View implements PropertyChangeListener {
         lineas.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                controller.edit(lineas.getSelectedRow());
+                int row = lineas.getSelectedRow();
+                controller.edit(row);
             }
         });
 
