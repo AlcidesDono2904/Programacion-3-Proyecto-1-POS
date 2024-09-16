@@ -16,8 +16,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class View implements PropertyChangeListener {
     private JPanel panel;
@@ -284,9 +282,9 @@ public class View implements PropertyChangeListener {
 
                 break;
             case Model.LIST:
-                int[] cols = {TableModel.CODIGO,TableModel.DESCRIPCION, TableModel.UNIDAD_MEDIDA,TableModel.PRECIO_UNITARIO, TableModel.EXISTENCIAS,TableModel.CATEGORIA};
+                int[] cols = {TableModelListado.CODIGO, TableModelListado.DESCRIPCION, TableModelListado.UNIDAD_MEDIDA, TableModelListado.PRECIO_UNITARIO, TableModelListado.EXISTENCIAS, TableModelListado.CATEGORIA};
 
-                list.setModel(new TableModel(cols, model.getList()));
+                list.setModel(new TableModelListado(cols, model.getList()));
                 list.setRowHeight(30);
                 TableColumnModel columnModel = list.getColumnModel();
                 columnModel.getColumn(1).setPreferredWidth(200);
