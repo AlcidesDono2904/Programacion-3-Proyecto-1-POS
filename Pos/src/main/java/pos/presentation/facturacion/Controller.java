@@ -84,11 +84,11 @@ public class Controller {
     public void save(int cant)throws Exception{
         Linea l=model.getCurrent();
 
-        int total=0;
+        int total=cant;
         for(Linea i : model.getLineas()){
             if(i.getProducto()==l.getProducto()){
                 total+=i.getCantidad();
-                if(total<l.getCantidad()) {
+                if(total>l.getProducto().getExistencias()) {
                     throw new Exception("La cantidad de productos a facturar no puede ser mayor a las existencias");
                 }
             }
@@ -97,7 +97,7 @@ public class Controller {
         l.setCantidad(cant);
         model.setMode(Application.MODE_CREATE);
         model.setCurrent(null);
-    }
+}
 
     public void save(double desc)throws Exception{
         if(desc>100.0 || desc<0.0){
