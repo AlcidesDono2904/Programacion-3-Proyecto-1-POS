@@ -279,17 +279,11 @@ public class View implements PropertyChangeListener {
         });
     }
     public void actualizarClientes(List<Cliente> clientes) {
-        catcliente.removeAllItems();
-        for (Cliente cliente : clientes) {
-            catcliente.addItem(cliente);
-        }
+        actualizarComboBox(catcliente, clientes);
     }
 
     public void actualizarCajeros(List<Cajero> cajeros) {
-        catcajero.removeAllItems();
-        for (Cajero cajero : cajeros) {
-            catcajero.addItem(cajero);
-        }
+        actualizarComboBox(catcajero, cajeros);
     }
 
     private void cargarClientes() throws Exception {
@@ -298,11 +292,7 @@ public class View implements PropertyChangeListener {
         }
         clienteController.search(new Cliente());
         List<Cliente> clientes = clienteController.model.getList();
-
-        catcliente.removeAllItems(); // Limpiar el JComboBox
-        for (Cliente cliente : clientes) {
-            catcliente.addItem(cliente); // Añadir el nombre del cliente al JComboBox
-        }
+        actualizarComboBox(catcliente, clientes);
     }
 
     private void cargarCajeros() throws Exception {
@@ -311,10 +301,17 @@ public class View implements PropertyChangeListener {
         }
         cajeroController.search(new Cajero());
         List<Cajero> cajeros = cajeroController.model.getList();
+        actualizarComboBox(catcajero, cajeros);
+    }
 
-        catcajero.removeAllItems(); // Limpiar el JComboBox
-        for (Cajero cajero : cajeros) {
-            catcajero.addItem(cajero); // Añadir el nombre del cajero al JComboBox
+    private <T> void actualizarComboBox(JComboBox<T> comboBox, List<T> items) {
+        comboBox.removeAllItems(); // Limpiar el JComboBox
+        if (items != null && !items.isEmpty()) { // Validar que la lista no sea nula o vacía
+            for (T item : items) {
+                comboBox.addItem(item); // Añadir el item al JComboBox
+            }
+        } else {
+            System.out.println("No hay elementos para mostrar en el comboBox."); // Mensaje informativo
         }
     }
 
@@ -328,17 +325,24 @@ public class View implements PropertyChangeListener {
 
     // Metodo que se ejecuta cuando se selecciona un cliente
     private void seleccionarCliente() {
-        String clienteSeleccionado = (String) catcliente.getSelectedItem();
-        System.out.println("Cliente seleccionado: " + clienteSeleccionado);
-
+        Cliente clienteSeleccionado = (Cliente) catcliente.getSelectedItem(); // Cambia a Cliente
+        if (clienteSeleccionado != null) {
+            System.out.println("Cliente seleccionado: " + clienteSeleccionado.toString()); // Asegúrate de que toString() esté sobrescrito en Cliente
+        } else {
+            System.out.println("No se ha seleccionado ningún cliente.");
+        }
     }
 
     // Metodo que se ejecuta cuando se selecciona un cajero
     private void seleccionarCajero() {
-        String cajeroSeleccionado = (String) catcajero.getSelectedItem();
-        System.out.println("Cajero seleccionado: " + cajeroSeleccionado);
-
+        Cajero cajeroSeleccionado = (Cajero) catcajero.getSelectedItem(); // Cambia a Cajero
+        if (cajeroSeleccionado != null) {
+            System.out.println("Cajero seleccionado: " + cajeroSeleccionado.toString()); // Asegúrate de que toString() esté sobrescrito en Cajero
+        } else {
+            System.out.println("No se ha seleccionado ningún cajero.");
+        }
     }
+
 
     public Factura take(){
         Factura factura = new Factura();
@@ -373,8 +377,14 @@ public class View implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
+            case Model.CLIENTES:
+                getCliente().setModel(new DefaultComboBoxModel(model.getClientes().toArray()));
+                getCliente().setSelectedIndex(-1);
+                break;
+            case Model.CAJEROS:
+                getCajero().setModel(new DefaultComboBoxModel(model.getCajeros().toArray()));
+                getCajero().setSelectedIndex(-1);
             case Model.LINEAS:
-
                 int[] cols = {TableModel.CODIGO, TableModel.ARTICULO, TableModel.CATEGORIA,TableModel.CANTIDAD, TableModel.PRECIO, TableModel.DESCUENTO, TableModel.NETO, TableModel.IMPORTE};
                 lineas.setModel(new TableModel(cols, model.getLineas()));
                 lineas.setRowHeight(30);
