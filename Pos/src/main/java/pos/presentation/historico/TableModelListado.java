@@ -1,4 +1,4 @@
 package pos.presentation.historico;
 
-public class TableModel {
+public class TableModelListado {
 }

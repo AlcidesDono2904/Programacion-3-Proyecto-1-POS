@@ -1,7 +1,7 @@
 package pos.presentation.facturacion;
 
 import pos.logic.Producto;
-import pos.presentation.productos.TableModelListado;
+import pos.presentation.productos.TableModel;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
@@ -74,9 +74,9 @@ public class BuscarView implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()){
             case Model.PRODUCTOS:
-                int[] cols = {TableModelListado.CODIGO, TableModelListado.DESCRIPCION, TableModelListado.UNIDAD_MEDIDA, TableModelListado.PRECIO_UNITARIO, TableModelListado.EXISTENCIAS, TableModelListado.CATEGORIA};
+                int[] cols = {TableModel.CODIGO, TableModel.DESCRIPCION, TableModel.UNIDAD_MEDIDA, TableModel.PRECIO_UNITARIO, TableModel.EXISTENCIAS, TableModel.CATEGORIA};
 
-                productos.setModel(new TableModelListado(cols, model.getProductos()));
+                productos.setModel(new TableModel(cols, model.getProductos()));
                 productos.setRowHeight(30);
 
                 TableColumnModel columnModel = productos.getColumnModel();
