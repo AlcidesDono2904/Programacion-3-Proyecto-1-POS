@@ -1,7 +1,9 @@
 package pos.logic;
 
 import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import java.time.LocalDate;
 import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Factura {
@@ -11,6 +13,8 @@ public class Factura {
     private Cliente cliente;
     @XmlIDREF
     private Cajero cajero;
+    @XmlJavaTypeAdapter(value = LocalDateAdapter.class)
+    LocalDate fecha;
     @XmlElementWrapper(name="lineas")
     @XmlElement(name="linea")
     private List<Linea> lineas;
@@ -19,7 +23,9 @@ public class Factura {
         this.codigo = codigo;
         this.cliente = cliente;
         this.cajero = cajero;
+        this.fecha = LocalDate.now(); // Establece la fecha actual
         this.lineas = lineas;
+
     }
 
     public Factura() {this("",null,null,null);}
@@ -51,7 +57,12 @@ public class Factura {
             l.setCodigo("LIN-"+(i++));
         }
     }
-
+    public LocalDate getFecha() {
+        return fecha;
+    }
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
     public String getCodigo() {
         return codigo;
     }
@@ -63,12 +74,13 @@ public class Factura {
     @Override
     public String toString() {
         return "Factura{" +
-                "cliente=" + cliente +
+                "codigo='" + codigo + '\'' +
+                ", cliente=" + cliente +
                 ", cajero=" + cajero +
+                ", fecha=" + fecha +
                 ", lineas=" + lineas +
                 '}';
     }
-
     public double importe(){
         double total = 0;
         for (Linea l:lineas){

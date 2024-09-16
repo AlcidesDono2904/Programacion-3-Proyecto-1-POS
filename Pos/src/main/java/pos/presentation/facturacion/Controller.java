@@ -145,7 +145,13 @@ public class Controller {
         document.add(header);
 
         document.add(new Paragraph(""));document.add(new Paragraph(""));
+// Agregar fecha
+        Factura factura = new Factura(); // Aquí deberías obtener la instancia de Factura que estás manejando
+        document.add(new Paragraph("Fecha: " + factura.getFecha().toString()).setFont(font).setFontSize(12f).setTextAlignment(TextAlignment.RIGHT));
 
+        document.add(new Paragraph(""));
+        document.add(new Paragraph(""));
+        //------------------Cuerpo------------------------------
         Color bkg = ColorConstants.RED;
         Color frg= ColorConstants.WHITE;
 
