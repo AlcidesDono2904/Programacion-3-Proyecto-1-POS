@@ -1,6 +1,6 @@
 package pos.data;
 
-import pos.logic.*;
+import pos.logic.*;//Importa todas las clases de logic
 import jakarta.xml.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.List;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Data {
-
+//Atributos
     @XmlElementWrapper(name = "clientes")
     @XmlElement(name = "cliente")
     private List<Cliente> clientes;
