@@ -172,5 +172,10 @@ public class Service {
             data.getFactura().add(e);
         } else throw new Exception("Factura ya existe");
     }
-
+    public List<Factura> searchFacturas(Factura e) {
+        return data.getFactura().stream()
+                .filter(i->i.getCliente().getNombre().contains(e.getCliente().getNombre()))
+                .sorted(Comparator.comparing(Factura::getCodigo))
+                .collect(Collectors.toList());
+    }
 }
