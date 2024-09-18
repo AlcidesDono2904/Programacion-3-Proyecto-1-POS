@@ -71,13 +71,7 @@ public class View implements PropertyChangeListener {
         agregar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Producto p = new Producto();
-                p.setCodigo(productoTextField.getText());
-                try {
-                    controller.agregarProducto(p);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
-                }
+                obtenerProducto();
             }
         });
 
@@ -154,7 +148,12 @@ public class View implements PropertyChangeListener {
                 popup.setVisible(true);
             }
         });
-
+        cancelar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                limpiarCampos();
+            }
+        });
         descuento.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -199,6 +198,18 @@ public class View implements PropertyChangeListener {
         cobrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(catcajero.getSelectedItem() == null){
+                    JOptionPane.showMessageDialog(null, "Debe seleccionar una cajero");
+                    return;
+                }
+                if(catcliente.getSelectedItem() == null){
+                    JOptionPane.showMessageDialog(null, "Debe seleccionar una cliente");
+                    return;
+                }
+                if(model.articulos() == 0){
+                    JOptionPane.showMessageDialog(null, "Debe agregar productos a la factura");
+                    return;
+                }
                 CobrarView cobrarView = new CobrarView();
                 cobrarView.setController(getController());
                 cobrarView.setModel(getModel());
@@ -277,6 +288,24 @@ public class View implements PropertyChangeListener {
                 controller.show();
             }
         });
+        productoTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    obtenerProducto();
+                }
+            }
+
+        });
+    }
+    private void obtenerProducto(){
+        Producto p = new Producto();
+        p.setCodigo(productoTextField.getText());
+        try {
+            controller.agregarProducto(p);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
     }
     public void actualizarClientes(List<Cliente> clientes) {
         actualizarComboBox(catcliente, clientes);
@@ -328,6 +357,8 @@ public class View implements PropertyChangeListener {
         Cliente clienteSeleccionado = (Cliente) catcliente.getSelectedItem(); // Cambia a Cliente
         if (clienteSeleccionado != null) {
             System.out.println("Cliente seleccionado: " + clienteSeleccionado.toString()); // Asegúrate de que toString() esté sobrescrito en Cliente
+
+            controller.setDescuentoLineas(clienteSeleccionado);
         } else {
             System.out.println("No se ha seleccionado ningún cliente.");
         }
@@ -355,9 +386,9 @@ public class View implements PropertyChangeListener {
     //MVC
 
     Model model;
-    pos.presentation.facturacion.Controller controller;
+    Controller controller;
 
-    public void setModel(pos.presentation.facturacion.Model model) {
+    public void setModel(Model model) {
         this.model = model;
         model.addPropertyChangeListener(this);
     }
@@ -366,11 +397,11 @@ public class View implements PropertyChangeListener {
         return this.model;
     }
 
-    public void setController(pos.presentation.facturacion.Controller controller) {
+    public void setController(Controller controller) {
         this.controller = controller;
     }
 
-    public pos.presentation.facturacion.Controller getController() {
+    public Controller getController() {
         return controller;
     }
 
@@ -407,5 +438,11 @@ public class View implements PropertyChangeListener {
                     quitar.setEnabled(false);
                 }
         }
+    }
+    private void limpiarCampos(){
+        productoTextField.setText("");
+        controller.quitar();
+        catcajero.setSelectedIndex(-1);
+        catcliente.setSelectedIndex(-1);
     }
 }

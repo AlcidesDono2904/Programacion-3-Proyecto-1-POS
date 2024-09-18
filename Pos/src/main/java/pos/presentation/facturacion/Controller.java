@@ -20,8 +20,8 @@ import pos.logic.*;
 import javax.swing.*;
 
 public class Controller {
-    pos.presentation.facturacion.View view;
-    pos.presentation.facturacion.Model model;
+    View view;
+    Model model;
 
     public Controller(View facturacionView, Model facturacionModel) {
         facturacionModel.init(Service.instance().search(new Producto()),Service.instance().search(new Cliente()),Service.instance().search(new Cajero()));
@@ -44,7 +44,17 @@ public class Controller {
 
     public void agregarProducto(Producto p) throws Exception{
         model.setMode(Application.MODE_CREATE);
-        model.agregarLinea(Service.instance().read(p));
+        for(var i : model.getLineas()){
+            if(i.getProducto().equals(p)){
+                return;
+            }
+        }
+        if(p.getExistencias() > 0) {
+            model.agregarLinea(Service.instance().read(p));
+        }
+        else{
+            throw new Exception("No se puede agregar el producto, no hay existencias");
+        }
     }
 
     public void search(Producto filter) throws Exception {
@@ -201,5 +211,15 @@ public class Controller {
         cell.setTextAlignment(alignment);
         if(!hasBorder) cell.setBorder(Border.NO_BORDER);
         return cell;
+    }
+
+    public void setDescuentoLineas(Cliente e){
+        if(e != null){
+            for(var i: model.getLineas()){
+                i.setDescuento(e.getDescuento());
+                System.out.println(e.getDescuento());
+            }
+            model.refrescar();
+        }
     }
 }

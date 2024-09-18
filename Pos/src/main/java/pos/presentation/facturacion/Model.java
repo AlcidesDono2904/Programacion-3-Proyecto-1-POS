@@ -133,7 +133,9 @@ public class Model extends AbstractModel {
     public void clear(){
         //todo
     }
-
+    public void refrescar(){
+        firePropertyChange(LINEAS);
+    }
     public static final String LINEAS= "lineas";
     public static final String PRODUCTOS= "productos";
     public static final String CAJEROS= "cajeros";

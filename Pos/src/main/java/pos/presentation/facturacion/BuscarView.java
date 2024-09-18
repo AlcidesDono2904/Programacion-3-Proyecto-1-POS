@@ -55,7 +55,7 @@ public class BuscarView implements PropertyChangeListener {
     Model model;
     Controller controller;
 
-    public void setModel(pos.presentation.facturacion.Model model) {
+    public void setModel(Model model) {
         this.model = model;
         model.addPropertyChangeListener(this);
         try{
@@ -66,7 +66,7 @@ public class BuscarView implements PropertyChangeListener {
 
     }
 
-    public void setController(pos.presentation.facturacion.Controller controller) {
+    public void setController(Controller controller) {
         this.controller = controller;
     }
 
