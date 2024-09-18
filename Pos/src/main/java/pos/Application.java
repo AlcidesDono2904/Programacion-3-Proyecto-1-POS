@@ -59,8 +59,9 @@ public class Application {
 
 
 //----------------------------------------------------------------------------------------------------------------------
-//Agregar el tab de estadistica
-
+        pos.presentation.estadistica.Model estadisticaModel= new pos.presentation.estadistica.Model();
+        pos.presentation.estadistica.View estadisticaView = new pos.presentation.estadistica.View();
+        estadisticaController= new pos.presentation.estadistica.Controller(estadisticaView,estadisticaModel);
 
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -69,6 +70,7 @@ public class Application {
         tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
         tabbedPane.addTab("Cajeros  ",cajerosIcon,cajerosView.getPanel());
         tabbedPane.addTab("Productos",productosIcon,productosView.getPanel());
+        tabbedPane.addTab("Estadistica",clientesIcon,estadisticaView.getPanel());
         tabbedPane.addTab("Historico", historialIcon,historicoView.getPanel());
 //----------------------------------------------------------------------------------------------------------------------
         tabbedPane.addChangeListener(new ChangeListener() {
@@ -99,6 +101,7 @@ public class Application {
     public static pos.presentation.productos.Controller productosController;
     public static pos.presentation.facturacion.Controller facturacionController;
     public static pos.presentation.historico.ControllerHistorico historicoController;
+    public static pos.presentation.estadistica.Controller estadisticaController;
     public static JFrame window;
 
     public final static int MODE_CREATE=1;
