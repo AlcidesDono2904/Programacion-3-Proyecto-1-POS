@@ -1,6 +1,7 @@
 package pos;
 
 import pos.logic.Service;
+import pos.presentation.historico.ModelHistorico;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -33,27 +34,43 @@ public class Application {
         pos.presentation.clientes.Model clientesModel= new pos.presentation.clientes.Model();
         pos.presentation.clientes.View clientesView = new pos.presentation.clientes.View();
         clientesController = new pos.presentation.clientes.Controller(clientesView,clientesModel);
-        Icon clientesIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/client.png"));
+        Icon clientesIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/client.png"));
 //----------------------------------------------------------------------------------------------------------------------
         pos.presentation.cajeros.Model cajerosModel= new pos.presentation.cajeros.Model();
         pos.presentation.cajeros.View cajerosView = new pos.presentation.cajeros.View();
         cajerosController = new pos.presentation.cajeros.Controller(cajerosView,cajerosModel);
+        Icon cajerosIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/cajero.png"));
 //----------------------------------------------------------------------------------------------------------------------
         pos.presentation.productos.Model productosModel= new pos.presentation.productos.Model();
         pos.presentation.productos.View  productosView = new pos.presentation.productos.View();
         productosController = new pos.presentation.productos.Controller(productosView,productosModel);
+        Icon productosIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/productos.png"));
 //----------------------------------------------------------------------------------------------------------------------
         pos.presentation.facturacion.Model facturacionModel = new pos.presentation.facturacion.Model();
         pos.presentation.facturacion.View  facturacionView = new pos.presentation.facturacion.View(clientesController,cajerosController);
         facturacionController = new pos.presentation.facturacion.Controller(facturacionView,facturacionModel);
+        Icon facturaIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/factura.png"));
 
 //----------------------------------------------------------------------------------------------------------------------
-   //PESTAÑAS
-        tabbedPane.addTab("Factura",clientesIcon,facturacionView.getPanel());
-        tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
-        tabbedPane.addTab("Cajeros  ",clientesIcon,cajerosView.getPanel());
+        pos.presentation.historico.ModelHistorico historicoModel = new pos.presentation.historico.ModelHistorico();
+        pos.presentation.historico.View historicoView = new pos.presentation.historico.View();
+        historicoController = new pos.presentation.historico.ControllerHistorico(historicoView,historicoModel);
+        Icon historialIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/historial.png"));
 
-        tabbedPane.addTab("Productos",clientesIcon,productosView.getPanel());
+
+//----------------------------------------------------------------------------------------------------------------------
+//Agregar el tab de estadistica 
+
+
+
+//----------------------------------------------------------------------------------------------------------------------
+        //PESTAÑAS
+        tabbedPane.addTab("Factura",facturaIcon,facturacionView.getPanel());
+        tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
+        tabbedPane.addTab("Cajeros  ",cajerosIcon,cajerosView.getPanel());
+        tabbedPane.addTab("Productos",productosIcon,productosView.getPanel());
+        tabbedPane.addTab("Historico", historialIcon,historicoView.getPanel());
+//----------------------------------------------------------------------------------------------------------------------
         tabbedPane.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -70,7 +87,7 @@ public class Application {
         });
 
 //----------------------------------------------------------------------------------------------------------------------
-        window.setSize(900,450);
+        window.setSize(900,600);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setIconImage((new ImageIcon(Application.class.getResource("presentation/icons/icon.png"))).getImage());
         window.setTitle("POS: Point Of Sale");
@@ -81,6 +98,7 @@ public class Application {
     public static pos.presentation.cajeros.Controller cajerosController;
     public static pos.presentation.productos.Controller productosController;
     public static pos.presentation.facturacion.Controller facturacionController;
+    public static pos.presentation.historico.ControllerHistorico historicoController;
     public static JFrame window;
 
     public final static int MODE_CREATE=1;

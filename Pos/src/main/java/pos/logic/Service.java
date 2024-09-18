@@ -174,8 +174,11 @@ public class Service {
     }
     public List<Factura> searchFacturas(Factura e) {
         return data.getFactura().stream()
-                .filter(i->i.getCliente().getNombre().contains(e.getCliente().getNombre()))
-                .sorted(Comparator.comparing(Factura::getCodigo))
+                .filter(i -> i.getCliente() != null && i.getCliente().getNombre() != null) // Validar que no sean nulos
+                .filter(i -> e.getCliente() != null && e.getCliente().getNombre() != null) // Validar factura a buscar
+                .filter(i -> i.getCliente().getNombre().contains(e.getCliente().getNombre())) // Filtro real
+                .sorted(Comparator.comparing(Factura::getCodigo)) // Ordenar por código
                 .collect(Collectors.toList());
     }
+
 }

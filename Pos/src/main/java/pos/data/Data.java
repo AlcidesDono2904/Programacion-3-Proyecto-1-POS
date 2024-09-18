@@ -9,7 +9,7 @@ import java.util.List;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Data {
-//Atributos
+    //Atributos
     @XmlElementWrapper(name = "clientes")
     @XmlElement(name = "cliente")
     private List<Cliente> clientes;
@@ -31,7 +31,7 @@ public class Data {
     @XmlElementWrapper(name = "facturas")
     @XmlElement(name = "factura")
     private List<Factura> factura;
-    
+
 
 
     public Data() {
@@ -52,3 +52,4 @@ public class Data {
     public List<Categoria> getCategorias() {return categorias; }
 
 }
+

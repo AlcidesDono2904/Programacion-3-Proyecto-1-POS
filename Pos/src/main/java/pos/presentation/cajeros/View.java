@@ -153,10 +153,10 @@ public class View implements PropertyChangeListener {
     }
 
     // MVC
-    pos.presentation.cajeros.Model model;
-    pos.presentation.cajeros.Controller controller;
+    Model model;
+    Controller controller;
 
-    public void setModel(pos.presentation.cajeros.Model model) {
+    public void setModel(Model model) {
         this.model = model;
         model.addPropertyChangeListener(this);
     }
@@ -168,8 +168,8 @@ public class View implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
-            case pos.presentation.cajeros.Model.LIST:
-                int[] cols = {pos.presentation.cajeros.TableModel.ID, pos.presentation.cajeros.TableModel.NOMBRE};
+            case Model.LIST:
+                int[] cols = {TableModel.ID, TableModel.NOMBRE};
                 list.setModel(new TableModel(cols, model.getList()));
                 list.setRowHeight(30);
                 TableColumnModel columnModel = list.getColumnModel();
