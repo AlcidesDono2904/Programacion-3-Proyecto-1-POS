@@ -15,6 +15,8 @@ public abstract class AbstractTableModel<E> extends javax.swing.table.AbstractTa
         initColNames();
     }
 
+    public AbstractTableModel(){}
+
     public int getColumnCount() {
         return cols.length;
     }

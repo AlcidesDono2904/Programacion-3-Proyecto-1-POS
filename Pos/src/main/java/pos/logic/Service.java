@@ -3,6 +3,8 @@ package pos.logic;
 import pos.data.Data;
 import pos.data.XmlPersister;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -181,4 +183,54 @@ public class Service {
                 .collect(Collectors.toList());
     }
 
+
+    //estadistica
+    public List<LocalDate> buscarRangoFechas(){
+        Factura filtro=new Factura();
+        List<Factura> facturas=data.getFactura().stream()
+                .filter(i->i.getCodigo().contains(filtro.getCodigo()))
+                .sorted(Comparator.comparing(Factura::getCodigo))
+                .collect(Collectors.toList());
+
+        List<LocalDate> fechas=new ArrayList<>();
+        for(Factura f:facturas){
+            if(!fechas.contains(f.getFecha()))
+                fechas.add(f.getFecha());
+        }
+
+        return fechas;
+    }
+
+    public List<Rango> buscarRango(){
+        List<Rango> rangos=new ArrayList<>();
+        List<Categoria> categorias= search(new Categoria());
+
+        List<Factura> facturas=data.getFactura();
+
+        for(Categoria c:categorias){//crear rangos de todas las categorias
+            Rango r=new Rango();
+            r.setCategoria(c);
+            rangos.add(r);
+        }
+
+        for(LocalDate l:buscarRangoFechas()){
+            List<Linea> lineas=new ArrayList<>();
+            for(Factura f:facturas){
+                if(f.getFecha().equals(l)){
+                    lineas.addAll(f.getLineas().stream().toList());
+                }
+            }
+            for(int i=0;i<categorias.size();i++){
+                double importe=0;
+                for(int j=0;j<lineas.size();j++){
+                    if(lineas.get(j).getProducto().getCategoria().equals(categorias.get(i))){
+                        importe+=lineas.get(j).importe();
+                    }
+                }
+                rangos.get(i).getImportes().add(importe);
+            }
+        }
+
+        return rangos;
+    }
 }
