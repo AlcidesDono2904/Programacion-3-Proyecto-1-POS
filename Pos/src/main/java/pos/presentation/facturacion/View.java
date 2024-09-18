@@ -359,8 +359,6 @@ public class View implements PropertyChangeListener {
             System.out.println("Cliente seleccionado: " + clienteSeleccionado.toString()); // Asegúrate de que toString() esté sobrescrito en Cliente
 
             controller.setDescuentoLineas(clienteSeleccionado);
-        } else {
-            System.out.println("No se ha seleccionado ningún cliente.");
         }
     }
 
@@ -369,8 +367,6 @@ public class View implements PropertyChangeListener {
         Cajero cajeroSeleccionado = (Cajero) catcajero.getSelectedItem(); // Cambia a Cajero
         if (cajeroSeleccionado != null) {
             System.out.println("Cajero seleccionado: " + cajeroSeleccionado.toString()); // Asegúrate de que toString() esté sobrescrito en Cajero
-        } else {
-            System.out.println("No se ha seleccionado ningún cajero.");
         }
     }
 
