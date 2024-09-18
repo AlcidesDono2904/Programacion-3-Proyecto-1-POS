@@ -147,47 +147,8 @@ public class View implements PropertyChangeListener {
             }
         });
 
-       /*report.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e){
-                ViewReporte report = new ViewReporte();
-                JPanel panel = report.getPanel();
-                JFrame frame = new JFrame();
-
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                frame.setContentPane(panel);
-                frame.pack();
-                frame.setVisible(true);
-            }
-        });*/
-
-       /* categoriasComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Categoria selectedCategory = (Categoria) categoriasComboBox.getSelectedItem();
-                if (selectedCategory != null) {
-                    try {
-                        Producto filter = new Producto();
-                        filter.setCategoria(selectedCategory);
-                        controller.search(filter);
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            }
-        });*/
-
     }
-   /* private void cargarCategorias(JComboBox<Categoria> comboCategorias) {
-        List<Categoria> categoriasList = new ArrayList<>();
-        categoriasList.add(new Categoria("001", "Dulces"));
-        categoriasList.add(new Categoria("002", "Bebidas"));
-        categoriasList.add(new Categoria("003", "Snacks"));
 
-        for (Categoria categoria : categoriasList) {
-            comboCategorias.addItem(categoria);
-        }
-    }*/
     private boolean validate() {
         boolean valid = true;
         if (codigo.getText().isEmpty()) {

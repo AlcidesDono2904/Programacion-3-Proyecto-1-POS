@@ -49,13 +49,15 @@ public class Controller {
                 return;
             }
         }
-        if(p.getExistencias() > 0) {
-            model.agregarLinea(Service.instance().read(p));
+        Producto aux = Service.instance().read(p);
+        if(aux.getExistencias() > 0) {
+            model.agregarLinea(aux);
         }
         else{
-            throw new Exception("No se puede agregar el producto, no hay existencias");
+            throw new Exception("No se puede agregar el producto, no hay suficientes existencias");
         }
-    }
+
+}
 
     public void search(Producto filter) throws Exception {
         model.setProductos(Service.instance().search(filter));
