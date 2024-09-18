@@ -21,7 +21,7 @@ public class Model extends AbstractModel {
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         super.addPropertyChangeListener(listener);
-        firePropertyChange(TABLA);
+        //firePropertyChange(TABLA);
         firePropertyChange(CB);
     }
 
@@ -35,7 +35,7 @@ public class Model extends AbstractModel {
         this.fechas = fechas;
         this.fechasCB = fechasCB;
         this.categorias = categorias;
-        firePropertyChange(CB);
+        //firePropertyChange(CB);
     }
 
     public List<Rango> getRangos() {

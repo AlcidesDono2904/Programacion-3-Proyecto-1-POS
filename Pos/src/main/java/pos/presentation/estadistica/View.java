@@ -1,15 +1,23 @@
 package pos.presentation.estadistica;
 
+import org.jfree.chart.ChartUtilities;
 import pos.logic.Categoria;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 public class View implements PropertyChangeListener {
     private JPanel panel;
@@ -65,6 +73,43 @@ public class View implements PropertyChangeListener {
 
                 tabla.setModel(tablaModelo);
                 tabla.setRowHeight(15);
+
+                DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+                for (int row = 0; row < model.getRangos().size(); row++) {
+                    for (int col = 0; col < model.getFechas().size(); col++) {
+
+                        String categoria = model.getRangos().get(row).getCategoria().toString();
+                        double valor = model.getRangos().get(row).getImportes().get(col);
+                        String fecha = model.getFechas().get(col).toString();
+
+                        dataset.addValue(valor, categoria, fecha);
+                        /*Number value,
+                        Comparable rowKey,
+                            Comparable columnKey )*/
+                    }
+                }
+
+
+                JFreeChart chart = ChartFactory.createLineChart(
+                        "Mi Gráfico",
+                        "Fechas",
+                        "Valores",
+                        dataset
+                );
+
+                ChartPanel chartPanel = new ChartPanel(chart);
+
+
+                chartPanel.setPreferredSize(new java.awt.Dimension(560, 370));
+
+                graficoPanel.removeAll();
+                graficoPanel.setLayout(new BorderLayout());
+                graficoPanel.add(chartPanel, BorderLayout.CENTER);
+
+                graficoPanel.revalidate();
+                graficoPanel.repaint();
+
                 break;
             case Model.CB:
 
