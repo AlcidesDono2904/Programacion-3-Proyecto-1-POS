@@ -287,6 +287,7 @@ public class View implements PropertyChangeListener {
                 list.setModel(new TableModel(cols, model.getList()));
                 list.setRowHeight(30);
                 TableColumnModel columnModel = list.getColumnModel();
+                columnModel.getColumn(0).setPreferredWidth(200);
                 columnModel.getColumn(1).setPreferredWidth(200);
                 columnModel.getColumn(5).setPreferredWidth(300);
                 break;
