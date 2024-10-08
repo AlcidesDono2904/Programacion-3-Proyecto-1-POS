@@ -1,6 +1,7 @@
 package pos.logic;
 
 import pos.data.Data;
+import pos.data.ProductoDao;
 import pos.data.XmlPersister;
 
 import java.time.LocalDate;
@@ -17,9 +18,11 @@ public class Service {
         return theInstance;
     }
     private Data data;
+    private ProductoDao productoDao;
 
     private Service(){
         try{
+            productoDao = new ProductoDao();
             data= XmlPersister.instance().load();
         }
         catch(Exception e){
@@ -136,33 +139,28 @@ public class Service {
     }
 
     //Producto
-    public void create(Producto e) throws Exception{
-        Producto result = data.getProducto().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
-        if (result==null) data.getProducto().add(e);
-        else throw new Exception("Producto ya existe");
+    public void create(Producto e) throws Exception {
+        productoDao.create(e);
     }
-    public Producto read(Producto e) throws Exception{
-        Producto result = data.getProducto().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
-        if (result!=null) return result;
-        else throw new Exception("Producto no existe");
+
+    public Producto read(Producto e) throws Exception {
+        return productoDao.read(e.getCodigo());
     }
 
     public void update(Producto e) throws Exception {
-        Producto result = this.read(e);
-        data.getProducto().remove(result);
-        data.getProducto().add(e);
+        productoDao.update(e);
     }
 
-    public void delete(Producto e) throws Exception{
-        Producto result = this.read(e);// Verifica si el producto existe
-        data.getProducto().remove(result);// Elimina el producto
+    public void delete(Producto e) throws Exception {
+        productoDao.delete(e);
     }
 
     public List<Producto> search(Producto e) {
-        return data.getProducto().stream()
-                .filter(i->i.getDescripcion().contains(e.getDescripcion()))
-                .sorted(Comparator.comparing(Producto::getDescripcion))
-                .collect(Collectors.toList());
+        try {
+            return productoDao.search(e);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     //Factura

@@ -31,7 +31,7 @@ public class Application {
             }
         });;
 
-        pos.presentation.clientes.Model clientesModel= new pos.presentation.clientes.Model();
+       /* pos.presentation.clientes.Model clientesModel= new pos.presentation.clientes.Model();
         pos.presentation.clientes.View clientesView = new pos.presentation.clientes.View();
         clientesController = new pos.presentation.clientes.Controller(clientesView,clientesModel);
         Icon clientesIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/client.png"));
@@ -39,14 +39,14 @@ public class Application {
         pos.presentation.cajeros.Model cajerosModel= new pos.presentation.cajeros.Model();
         pos.presentation.cajeros.View cajerosView = new pos.presentation.cajeros.View();
         cajerosController = new pos.presentation.cajeros.Controller(cajerosView,cajerosModel);
-        Icon cajerosIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/cajero.png"));
+        Icon cajerosIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/cajero.png"));*/
 //----------------------------------------------------------------------------------------------------------------------
         pos.presentation.productos.Model productosModel= new pos.presentation.productos.Model();
         pos.presentation.productos.View  productosView = new pos.presentation.productos.View();
         productosController = new pos.presentation.productos.Controller(productosView,productosModel);
         Icon productosIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/productos.png"));
 //----------------------------------------------------------------------------------------------------------------------
-        pos.presentation.facturacion.Model facturacionModel = new pos.presentation.facturacion.Model();
+      /*  pos.presentation.facturacion.Model facturacionModel = new pos.presentation.facturacion.Model();
         pos.presentation.facturacion.View  facturacionView = new pos.presentation.facturacion.View(clientesController,cajerosController);
         facturacionController = new pos.presentation.facturacion.Controller(facturacionView,facturacionModel);
         Icon facturaIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/factura.png"));
@@ -61,17 +61,17 @@ public class Application {
 //----------------------------------------------------------------------------------------------------------------------
         pos.presentation.estadistica.Model estadisticaModel= new pos.presentation.estadistica.Model();
         pos.presentation.estadistica.View estadisticaView = new pos.presentation.estadistica.View();
-        estadisticaController= new pos.presentation.estadistica.Controller(estadisticaView,estadisticaModel);
+        estadisticaController= new pos.presentation.estadistica.Controller(estadisticaView,estadisticaModel);*/
 
 
 //----------------------------------------------------------------------------------------------------------------------
         //PESTAÑAS
-        tabbedPane.addTab("Factura",facturaIcon,facturacionView.getPanel());
-        tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
-        tabbedPane.addTab("Cajeros  ",cajerosIcon,cajerosView.getPanel());
+      //  tabbedPane.addTab("Factura",facturaIcon,facturacionView.getPanel());
+      //  tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
+      //  tabbedPane.addTab("Cajeros  ",cajerosIcon,cajerosView.getPanel());
         tabbedPane.addTab("Productos",productosIcon,productosView.getPanel());
-        tabbedPane.addTab("Estadistica",clientesIcon,estadisticaView.getPanel());
-        tabbedPane.addTab("Historico", historialIcon,historicoView.getPanel());
+       // tabbedPane.addTab("Estadistica",clientesIcon,estadisticaView.getPanel());
+      //  tabbedPane.addTab("Historico", historialIcon,historicoView.getPanel());
 //----------------------------------------------------------------------------------------------------------------------
         tabbedPane.addChangeListener(new ChangeListener() {
             @Override
