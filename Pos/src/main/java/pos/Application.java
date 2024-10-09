@@ -31,12 +31,12 @@ public class Application {
             }
         });;
 
-       /* pos.presentation.clientes.Model clientesModel= new pos.presentation.clientes.Model();
+        pos.presentation.clientes.Model clientesModel= new pos.presentation.clientes.Model();
         pos.presentation.clientes.View clientesView = new pos.presentation.clientes.View();
         clientesController = new pos.presentation.clientes.Controller(clientesView,clientesModel);
         Icon clientesIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/client.png"));
 //----------------------------------------------------------------------------------------------------------------------
-        pos.presentation.cajeros.Model cajerosModel= new pos.presentation.cajeros.Model();
+        /*pos.presentation.cajeros.Model cajerosModel= new pos.presentation.cajeros.Model();
         pos.presentation.cajeros.View cajerosView = new pos.presentation.cajeros.View();
         cajerosController = new pos.presentation.cajeros.Controller(cajerosView,cajerosModel);
         Icon cajerosIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/cajero.png"));*/
@@ -67,7 +67,7 @@ public class Application {
 //----------------------------------------------------------------------------------------------------------------------
         //PESTAÑAS
       //  tabbedPane.addTab("Factura",facturaIcon,facturacionView.getPanel());
-      //  tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
+        tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
       //  tabbedPane.addTab("Cajeros  ",cajerosIcon,cajerosView.getPanel());
         tabbedPane.addTab("Productos",productosIcon,productosView.getPanel());
        // tabbedPane.addTab("Estadistica",clientesIcon,estadisticaView.getPanel());

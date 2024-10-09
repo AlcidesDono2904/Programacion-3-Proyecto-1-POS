@@ -102,6 +102,7 @@ public class ProductoDao {
         e.setDescripcion(rs.getString(alias + ".descripcion"));
         e.setUnidadMedida(rs.getString(alias + ".unidadMedida"));
         e.setPrecioUnitario(rs.getFloat(alias + ".precioUnitario"));
+        e.setExistencias(rs.getInt(alias + ".existencias"));
         return e;
     }
 

@@ -80,6 +80,7 @@ public class Database {
         try {
             return statement.executeQuery();
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new Exception("ERROR DE BASE DE DATOS");
         }
     }

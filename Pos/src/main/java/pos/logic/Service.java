@@ -1,8 +1,6 @@
 package pos.logic;
 
-import pos.data.Data;
-import pos.data.ProductoDao;
-import pos.data.XmlPersister;
+import pos.data.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,10 +17,14 @@ public class Service {
     }
     private Data data;
     private ProductoDao productoDao;
+    private CategoriaDao categoriaDao;
+    private ClienteDao clienteDao;
 
     private Service(){
         try{
             productoDao = new ProductoDao();
+            categoriaDao = new CategoriaDao();
+            clienteDao = new ClienteDao();
             data= XmlPersister.instance().load();
         }
         catch(Exception e){
@@ -41,37 +43,27 @@ public class Service {
 //================= CLIENTES ============
 
     public void create(Cliente e) throws Exception{
-        Cliente result = data.getClientes().stream().filter(i->i.getId().equals(e.getId())).findFirst().orElse(null);
-        if (result==null) data.getClientes().add(e);
-        else throw new Exception("Cliente ya existe");
+        clienteDao.create(e);
     }
 
     public Cliente read(Cliente e) throws Exception{
-        Cliente result = data.getClientes().stream().filter(i->i.getId().equals(e.getId())).findFirst().orElse(null);
-        if (result!=null) return result;
-        else throw new Exception("Cliente no existe");
+        return clienteDao.read(e.getId());
     }
 
     public void update(Cliente e) throws Exception{
-        Cliente result;
-        try{
-            result = this.read(e);
-            data.getClientes().remove(result);
-            data.getClientes().add(e);
-        }catch (Exception ex) {
-            throw new Exception("Cliente no existe");
-        }
+        clienteDao.update(e);
     }
 
     public void delete(Cliente e) throws Exception{
-        data.getClientes().remove(e);
+        clienteDao.delete(e);
     }
 
     public List<Cliente> search(Cliente e){
-        return data.getClientes().stream()
-                .filter(i->i.getNombre().contains(e.getNombre()))
-                .sorted(Comparator.comparing(Cliente::getNombre))
-                .collect(Collectors.toList());
+        try{
+            return clienteDao.search(e);
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
     }
 
     //================= CAJEROS ============
@@ -108,34 +100,13 @@ public class Service {
                 .collect(Collectors.toList());
     }
     //Categoria
-    public void create(Categoria e) throws Exception{
-        Categoria result = data.getCategorias().stream().filter(i->i.getId().equals(e.getId())).findFirst().orElse(null);
-        if (result==null) data.getCategorias().add(e);
-        else throw new Exception("Producto ya existe");
-    }
-    public Categoria read(Categoria e) throws Exception{
-        Categoria result = data.getCategorias().stream().filter(i->i.getId().equals(e.getId())).findFirst().orElse(null);
-        if (result!=null) return result;
-        else throw new Exception("Producto no existe");
-    }
-
-    public void update(Categoria e) throws Exception {
-        Categoria result = this.read(e);
-        data.getCategorias().remove(result);
-        data.getCategorias().add(e);
-    }
-
-
-    public void delete(Categoria e) throws Exception{
-        Categoria result = this.read(e);// Verifica si el producto existe
-        data.getProducto().remove(result);// Elimina el producto
-    }
 
     public List<Categoria> search(Categoria e) {
-        return data.getCategorias().stream()
-                .filter(i->i.getNombre().contains(e.getNombre()))
-                .sorted(Comparator.comparing(Categoria::getNombre))
-                .collect(Collectors.toList());
+        try {
+            return categoriaDao.search(e);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     //Producto
