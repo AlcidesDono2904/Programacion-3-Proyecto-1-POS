@@ -43,7 +43,7 @@ public class ClienteDao {
     public void update(Cliente c)throws Exception {
         String sql="update "+
                 "Cliente "+
-                "set nombre=?,telefono=?,email=?,descuento=?"+
+                "set nombre=?,telefono=?,email=?,descuento=? "+
                 "where id=?";
         PreparedStatement stm= db.prepareStatement(sql);
         stm.setString(1, c.getNombre());

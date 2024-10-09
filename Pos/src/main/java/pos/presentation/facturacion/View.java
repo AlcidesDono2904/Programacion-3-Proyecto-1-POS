@@ -372,10 +372,9 @@ public class View implements PropertyChangeListener {
 
 
     public Factura take(){
-        Factura factura = new Factura();
+        Factura factura = model.getFactura();
         factura.setCajero((Cajero)catcajero.getSelectedItem());
         factura.setCliente((Cliente)catcliente.getSelectedItem());
-        factura.setLineas(model.getLineas());
 
         return factura;
     }
@@ -413,7 +412,7 @@ public class View implements PropertyChangeListener {
                 getCajero().setSelectedIndex(-1);
             case Model.LINEAS:
                 int[] cols = {TableModel.CODIGO, TableModel.ARTICULO, TableModel.CATEGORIA,TableModel.CANTIDAD, TableModel.PRECIO, TableModel.DESCUENTO, TableModel.NETO, TableModel.IMPORTE};
-                lineas.setModel(new TableModel(cols, model.getLineas()));
+                lineas.setModel(new TableModel(cols, model.getFactura().getLineas()));
                 lineas.setRowHeight(30);
 
                 lblArticulos.setText("Articulos: "+model.articulos());

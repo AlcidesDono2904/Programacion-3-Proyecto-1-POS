@@ -36,23 +36,23 @@ public class Application {
         clientesController = new pos.presentation.clientes.Controller(clientesView,clientesModel);
         Icon clientesIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/client.png"));
 //----------------------------------------------------------------------------------------------------------------------
-        /*pos.presentation.cajeros.Model cajerosModel= new pos.presentation.cajeros.Model();
+        pos.presentation.cajeros.Model cajerosModel= new pos.presentation.cajeros.Model();
         pos.presentation.cajeros.View cajerosView = new pos.presentation.cajeros.View();
         cajerosController = new pos.presentation.cajeros.Controller(cajerosView,cajerosModel);
-        Icon cajerosIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/cajero.png"));*/
+        Icon cajerosIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/cajero.png"));
 //----------------------------------------------------------------------------------------------------------------------
         pos.presentation.productos.Model productosModel= new pos.presentation.productos.Model();
         pos.presentation.productos.View  productosView = new pos.presentation.productos.View();
         productosController = new pos.presentation.productos.Controller(productosView,productosModel);
         Icon productosIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/productos.png"));
 //----------------------------------------------------------------------------------------------------------------------
-      /*  pos.presentation.facturacion.Model facturacionModel = new pos.presentation.facturacion.Model();
+        pos.presentation.facturacion.Model facturacionModel = new pos.presentation.facturacion.Model();
         pos.presentation.facturacion.View  facturacionView = new pos.presentation.facturacion.View(clientesController,cajerosController);
         facturacionController = new pos.presentation.facturacion.Controller(facturacionView,facturacionModel);
         Icon facturaIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/factura.png"));
 
 //----------------------------------------------------------------------------------------------------------------------
-        pos.presentation.historico.ModelHistorico historicoModel = new pos.presentation.historico.ModelHistorico();
+        /*pos.presentation.historico.ModelHistorico historicoModel = new pos.presentation.historico.ModelHistorico();
         pos.presentation.historico.View historicoView = new pos.presentation.historico.View();
         historicoController = new pos.presentation.historico.ControllerHistorico(historicoView,historicoModel);
         Icon historialIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/historial.png"));
@@ -66,9 +66,9 @@ public class Application {
 
 //----------------------------------------------------------------------------------------------------------------------
         //PESTAÑAS
-      //  tabbedPane.addTab("Factura",facturaIcon,facturacionView.getPanel());
+        tabbedPane.addTab("Factura",facturaIcon,facturacionView.getPanel());
         tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
-      //  tabbedPane.addTab("Cajeros  ",cajerosIcon,cajerosView.getPanel());
+        tabbedPane.addTab("Cajeros  ",cajerosIcon,cajerosView.getPanel());
         tabbedPane.addTab("Productos",productosIcon,productosView.getPanel());
        // tabbedPane.addTab("Estadistica",clientesIcon,estadisticaView.getPanel());
       //  tabbedPane.addTab("Historico", historialIcon,historicoView.getPanel());

@@ -19,12 +19,14 @@ public class Service {
     private ProductoDao productoDao;
     private CategoriaDao categoriaDao;
     private ClienteDao clienteDao;
+    private CajeroDao cajeroDao;
 
     private Service(){
         try{
             productoDao = new ProductoDao();
             categoriaDao = new CategoriaDao();
             clienteDao = new ClienteDao();
+            cajeroDao = new CajeroDao();
             data= XmlPersister.instance().load();
         }
         catch(Exception e){
@@ -68,36 +70,27 @@ public class Service {
 
     //================= CAJEROS ============
     public void create(Cajero e) throws Exception{
-        Cajero result = data.getCajero().stream().filter(i->i.getId().equals(e.getId())).findFirst().orElse(null);
-        if (result==null) data.getCajero().add(e);
-        else throw new Exception("Cajero ya existe");
+        cajeroDao.create(e);
     }
     public Cajero read(Cajero e) throws Exception{
-        Cajero result = data.getCajero().stream().filter(i->i.getId().equals(e.getId())).findFirst().orElse(null);
-        if (result!=null) return result;
-        else throw new Exception("Cajero no existe");
+        return cajeroDao.read(e.getId());
     }
 
     public void update(Cajero e) throws Exception{
-        Cajero result;
-        try{
-            result = this.read(e);
-            data.getCajero().remove(result);
-            data.getCajero().add(e);
-        }catch (Exception ex) {
-            throw new Exception("Cajero no existe");
-        }
+        cajeroDao.update(e);
     }
 
     public void delete(Cajero e) throws Exception{
-        data.getCajero().remove(e);
+        cajeroDao.delete(e);
     }
 
     public List<Cajero> search(Cajero e){
-        return data.getCajero().stream()
-                .filter(i->i.getNombre().contains(e.getNombre()))
-                .sorted(Comparator.comparing(Cajero::getNombre))
-                .collect(Collectors.toList());
+        try{
+            return cajeroDao.search(e);
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
+
     }
     //Categoria
 
@@ -139,6 +132,7 @@ public class Service {
     public void create(Factura e) throws Exception{
         Factura result = data.getFactura().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
         if (result==null) {
+            e.setFecha(LocalDate.now());
             e.setCodigo("FAC-"+(data.getFactura().size()+1));
             data.getFactura().add(e);
         } else throw new Exception("Factura ya existe");

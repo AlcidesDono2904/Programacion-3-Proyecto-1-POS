@@ -6,9 +6,7 @@ import jakarta.xml.bind.annotation.XmlID;
 
 import java.util.Objects;
 
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Categoria {
-    @XmlID
     private String id;
     private String nombre;
 

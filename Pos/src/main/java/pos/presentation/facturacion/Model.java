@@ -2,10 +2,7 @@ package pos.presentation.facturacion;
 
 
 import pos.Application;
-import pos.logic.Cliente;
-import pos.logic.Linea;
-import pos.logic.Cajero;
-import pos.logic.Producto;
+import pos.logic.*;
 import pos.presentation.AbstractModel;
 
 import java.beans.PropertyChangeListener;
@@ -15,7 +12,8 @@ import java.util.List;
 public class Model extends AbstractModel {
     int mode;
 
-    List<Linea> lineas;
+    Factura factura;
+    //List<Linea> lineas; no trabaja con una lista de lineas sino con la lista de lineas de factura
     Linea current;
 
     //buscarView
@@ -27,7 +25,8 @@ public class Model extends AbstractModel {
     }
 
     public void init(List<Producto> productos, List<Cliente> clientes, List<Cajero> cajeros) {
-        lineas = new ArrayList<Linea>();
+        factura = new Factura();
+        factura.setLineas(new ArrayList<Linea>());
         this.productos = productos;
         this.clientes =clientes ;
         this.cajeros=cajeros ;
@@ -43,8 +42,7 @@ public class Model extends AbstractModel {
 
     public void agregarLinea(Producto p) {
         Linea l = new Linea(p);
-        l.setCodigo("LIN-"+lineas.size());
-        lineas.add(l);
+        factura.getLineas().add(l);
         firePropertyChange(LINEAS);
 
     }
@@ -63,16 +61,18 @@ public class Model extends AbstractModel {
         return mode;
     }
 
+    public Factura getFactura(){return factura;}
+
     public void setMode(int mode) {
         this.mode = mode;
     }
 
     public List<Linea> getLineas() {
-        return lineas;
+        return factura.getLineas();
     }
 
     public void setLineas(List<Linea> lineas) {
-        this.lineas = lineas;
+        this.factura.setLineas(lineas);
     }
 
     public List<Producto> getProductos() {return productos;}
@@ -93,41 +93,20 @@ public class Model extends AbstractModel {
         firePropertyChange(PRODUCTOS);
     }
 
-    public void cobrar(){
-
-    }
-
-    public int articulos(){
-        int sum=0;
-        for(Linea l : lineas){
-            sum+=l.getCantidad();
-        }
-        return sum;
+    public int articulos(){//cantida articulos
+        return factura.articulos();
     }
 
     public double subTotal(){
-        double sum=0;
-        for(Linea l : lineas){
-            sum+=l.getProducto().getPrecioUnitario()*l.getCantidad();
-        }
-        return sum;
+        return factura.subTotal();
     }
 
     public double descuento(){
-        double sum=0;
-        for(Linea l : lineas){
-            double precio=l.getProducto().getPrecioUnitario()*l.getCantidad();
-            sum+=precio-(precio*((100-l.getDescuento())/100));
-        }
-        return sum;
+        return factura.descuento();
     }
 
     public double total(){
-        double sum =0;
-        for (Linea l:this.lineas){
-            sum +=l.importe();
-        }
-        return sum;
+        return factura.importe();
     }
 
     public void clear(){
