@@ -38,7 +38,7 @@ CREATE TABLE Linea (
        producto varchar(10) not null,
        cantidad int not null,
        descuento double,
-       factura varchar(10),
+       factura int,
        Primary Key (codigo)         
      );
 
@@ -80,3 +80,4 @@ insert into Factura (fecha, cliente, cajero)values('2020-01-03','003','003');
 
 insert into Linea (producto,cantidad,descuento,factura)values('001','10','0.0', 1);
 insert into Linea (producto,cantidad,descuento,factura)values('002','20','0.0', 2);
+insert into Linea (producto,cantidad,descuento,factura)values('002','10','10.0', 3);
