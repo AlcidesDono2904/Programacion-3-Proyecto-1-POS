@@ -52,7 +52,7 @@ public class Application {
         Icon facturaIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/factura.png"));
 
 //----------------------------------------------------------------------------------------------------------------------
-        /*pos.presentation.historico.ModelHistorico historicoModel = new pos.presentation.historico.ModelHistorico();
+        pos.presentation.historico.ModelHistorico historicoModel = new pos.presentation.historico.ModelHistorico();
         pos.presentation.historico.View historicoView = new pos.presentation.historico.View();
         historicoController = new pos.presentation.historico.ControllerHistorico(historicoView,historicoModel);
         Icon historialIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/historial.png"));
@@ -61,7 +61,7 @@ public class Application {
 //----------------------------------------------------------------------------------------------------------------------
         pos.presentation.estadistica.Model estadisticaModel= new pos.presentation.estadistica.Model();
         pos.presentation.estadistica.View estadisticaView = new pos.presentation.estadistica.View();
-        estadisticaController= new pos.presentation.estadistica.Controller(estadisticaView,estadisticaModel);*/
+        estadisticaController= new pos.presentation.estadistica.Controller(estadisticaView,estadisticaModel);
 
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -70,8 +70,8 @@ public class Application {
         tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
         tabbedPane.addTab("Cajeros  ",cajerosIcon,cajerosView.getPanel());
         tabbedPane.addTab("Productos",productosIcon,productosView.getPanel());
-       // tabbedPane.addTab("Estadistica",clientesIcon,estadisticaView.getPanel());
-      //  tabbedPane.addTab("Historico", historialIcon,historicoView.getPanel());
+        //tabbedPane.addTab("Estadistica",clientesIcon,estadisticaView.getPanel());
+        tabbedPane.addTab("Historico", historialIcon,historicoView.getPanel());
 //----------------------------------------------------------------------------------------------------------------------
         tabbedPane.addChangeListener(new ChangeListener() {
             @Override

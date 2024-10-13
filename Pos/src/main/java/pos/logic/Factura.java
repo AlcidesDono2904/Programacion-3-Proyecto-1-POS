@@ -8,16 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Factura {
-    @XmlID
+
     private String codigo;
-    @XmlIDREF
     private Cliente cliente;
-    @XmlIDREF
     private Cajero cajero;
-    @XmlJavaTypeAdapter(value = LocalDateAdapter.class)
     LocalDate fecha;
-    @XmlElementWrapper(name="lineas")
-    @XmlElement(name="linea")
     private List<Linea> lineas;
 
     public Factura(String codigo, Cliente cliente, Cajero cajero, List<Linea> lineas) {
