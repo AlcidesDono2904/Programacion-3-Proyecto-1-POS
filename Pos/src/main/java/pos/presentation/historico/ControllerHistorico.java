@@ -31,7 +31,7 @@ public class ControllerHistorico {
     ModelHistorico model;
     View view;
     public ControllerHistorico(View view, ModelHistorico model){
-      //  model.init(Service.instance().searchFacturas(new Factura()));
+        model.init(Service.instance().searchFacturas(new Factura()));
         this.model = model;
         this.view = view;
         view.setController(this);

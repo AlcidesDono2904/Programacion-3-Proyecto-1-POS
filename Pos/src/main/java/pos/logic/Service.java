@@ -15,29 +15,25 @@ public class Service {
         if (theInstance == null) theInstance = new Service();
         return theInstance;
     }
-    private Data data;
+
     private ProductoDao productoDao;
     private CategoriaDao categoriaDao;
     private ClienteDao clienteDao;
+    private CajeroDao cajeroDao;
+    private LineaDao lineaDao;
+    private FacturaDao facturaDao;
 
     private Service(){
-        try{
-            productoDao = new ProductoDao();
-            categoriaDao = new CategoriaDao();
-            clienteDao = new ClienteDao();
-            data= XmlPersister.instance().load();
-        }
-        catch(Exception e){
-            data =  new Data();
-        }
+        productoDao = new ProductoDao();
+        categoriaDao = new CategoriaDao();
+        clienteDao = new ClienteDao();
+        cajeroDao = new CajeroDao();
+        lineaDao = new LineaDao();
+        facturaDao = new FacturaDao();
     }
 
     public void stop(){
-        try {
-            XmlPersister.instance().store(data);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+
     }
 
 //================= CLIENTES ============
@@ -68,36 +64,27 @@ public class Service {
 
     //================= CAJEROS ============
     public void create(Cajero e) throws Exception{
-        Cajero result = data.getCajero().stream().filter(i->i.getId().equals(e.getId())).findFirst().orElse(null);
-        if (result==null) data.getCajero().add(e);
-        else throw new Exception("Cajero ya existe");
+        cajeroDao.create(e);
     }
     public Cajero read(Cajero e) throws Exception{
-        Cajero result = data.getCajero().stream().filter(i->i.getId().equals(e.getId())).findFirst().orElse(null);
-        if (result!=null) return result;
-        else throw new Exception("Cajero no existe");
+        return cajeroDao.read(e.getId());
     }
 
     public void update(Cajero e) throws Exception{
-        Cajero result;
-        try{
-            result = this.read(e);
-            data.getCajero().remove(result);
-            data.getCajero().add(e);
-        }catch (Exception ex) {
-            throw new Exception("Cajero no existe");
-        }
+        cajeroDao.update(e);
     }
 
     public void delete(Cajero e) throws Exception{
-        data.getCajero().remove(e);
+        cajeroDao.delete(e);
     }
 
     public List<Cajero> search(Cajero e){
-        return data.getCajero().stream()
-                .filter(i->i.getNombre().contains(e.getNombre()))
-                .sorted(Comparator.comparing(Cajero::getNombre))
-                .collect(Collectors.toList());
+        try{
+            return cajeroDao.search(e);
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
+
     }
     //Categoria
 
@@ -137,68 +124,27 @@ public class Service {
     //Factura
 
     public void create(Factura e) throws Exception{
-        Factura result = data.getFactura().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
-        if (result==null) {
-            e.setCodigo("FAC-"+(data.getFactura().size()+1));
-            data.getFactura().add(e);
-        } else throw new Exception("Factura ya existe");
+        facturaDao.Create(e);
     }
     public List<Factura> searchFacturas(Factura e) {
-        return data.getFactura().stream()
-                .filter(i -> i.getCliente() != null && i.getCliente().getNombre() != null) // Validar que no sean nulos
-                .filter(i -> e.getCliente() != null && e.getCliente().getNombre() != null) // Validar factura a buscar
-                .filter(i -> i.getCliente().getNombre().contains(e.getCliente().getNombre())) // Filtro real
-                .sorted(Comparator.comparing(Factura::getCodigo)) // Ordenar por código
-                .collect(Collectors.toList());
+        try{
+            return facturaDao.search(e);
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
     }
 
 
     //estadistica
     public List<LocalDate> buscarRangoFechas(){
-        Factura filtro=new Factura();
-        List<Factura> facturas=data.getFactura().stream()
-                .filter(i->i.getCodigo().contains(filtro.getCodigo()))
-                .sorted(Comparator.comparing(Factura::getCodigo))
-                .collect(Collectors.toList());
-
         List<LocalDate> fechas=new ArrayList<>();
-        for(Factura f:facturas){
-            if(!fechas.contains(f.getFecha()))
-                fechas.add(f.getFecha());
-        }
 
         return fechas;
     }
 
     public List<Rango> buscarRango(){
         List<Rango> rangos=new ArrayList<>();
-        List<Categoria> categorias= search(new Categoria());
 
-        List<Factura> facturas=data.getFactura();
-
-        for(Categoria c:categorias){//crear rangos de todas las categorias
-            Rango r=new Rango();
-            r.setCategoria(c);
-            rangos.add(r);
-        }
-
-        for(LocalDate l:buscarRangoFechas()){
-            List<Linea> lineas=new ArrayList<>();
-            for(Factura f:facturas){
-                if(f.getFecha().equals(l)){
-                    lineas.addAll(f.getLineas().stream().toList());
-                }
-            }
-            for(int i=0;i<categorias.size();i++){
-                double importe=0;
-                for(int j=0;j<lineas.size();j++){
-                    if(lineas.get(j).getProducto().getCategoria().equals(categorias.get(i))){
-                        importe+=lineas.get(j).importe();
-                    }
-                }
-                rangos.get(i).getImportes().add(importe);
-            }
-        }
 
         return rangos;
     }

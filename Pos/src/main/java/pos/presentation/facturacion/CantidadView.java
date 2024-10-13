@@ -17,7 +17,9 @@ public class CantidadView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
-                    controller.save(Integer.parseInt(cantidad.getText()));
+                    if(validate()){
+                        controller.save(Integer.parseInt(cantidad.getText()));
+                    }
                 }catch (Exception ex){
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
@@ -35,6 +37,14 @@ public class CantidadView {
 
     public JButton getCancelarButton(){
         return cancelarButton;
+    }
+
+    private boolean validate()throws Exception{
+        if(Integer.parseInt(cantidad.getText()) >= 0){
+            return true;
+        }else{
+            throw new Exception("El valor dado no puede ser inferior a cero");
+        }
     }
 
     //MVC

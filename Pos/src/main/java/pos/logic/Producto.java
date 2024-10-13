@@ -7,15 +7,12 @@ import jakarta.xml.bind.annotation.XmlIDREF;
 
 import java.util.Objects;
 
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Producto {
-    @XmlID
     private String codigo;
     private String descripcion;
     private String unidadMedida;
     private double precioUnitario;
     private int existencias;
-    @XmlIDREF
     private Categoria categoria; // Tipo correcto
 
     public Producto(String codigo, String descripcion, String unidadMedida, double precioUnitario, int existencias, Categoria categoria) {

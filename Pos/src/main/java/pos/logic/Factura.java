@@ -4,19 +4,15 @@ import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Factura {
-    @XmlID
+
     private String codigo;
-    @XmlIDREF
     private Cliente cliente;
-    @XmlIDREF
     private Cajero cajero;
-    @XmlJavaTypeAdapter(value = LocalDateAdapter.class)
     LocalDate fecha;
-    @XmlElementWrapper(name="lineas")
-    @XmlElement(name="linea")
     private List<Linea> lineas;
 
     public Factura(String codigo, Cliente cliente, Cajero cajero, List<Linea> lineas) {
@@ -28,7 +24,7 @@ public class Factura {
 
     }
 
-    public Factura() {this("",null,null,null);}
+    public Factura() {this("",new Cliente(),new Cajero(),new ArrayList<>());}
 
     public Cliente getCliente() {
         return cliente;
@@ -81,12 +77,38 @@ public class Factura {
                 ", lineas=" + lineas +
                 '}';
     }
-    public double importe(){
+    public double importe(){//precio con descuento de linea y descuento de cliente
         double total = 0;
         for (Linea l:lineas){
             total+=l.importe();
         }
+        total=(total*(100-cliente.getDescuento())/100);
         return total;
     }
 
+    public int articulos(){//cantidad articulos
+        int sum=0;
+        for(Linea l : lineas){
+            sum+=l.getCantidad();
+        }
+        return sum;
+    }
+
+    public double subTotal(){//precio multiplicado por cantidad, no considera descuentos
+        double sum=0;
+        for(Linea l : lineas){
+            sum+=l.getProducto().getPrecioUnitario()*l.getCantidad();
+        }
+        return sum;
+    }
+
+    public double descuento(){//el precio que ha sido descontando (subtotal-(subtotal*descuento))
+        double sum=0;
+        for(Linea l : lineas){
+            double precio=l.getProducto().getPrecioUnitario()*l.getCantidad();
+            sum+=precio-(precio*((100-l.getDescuento())/100));
+        }
+        sum=(sum*(100-cliente.getDescuento())/100);
+        return sum;
+    }
 }

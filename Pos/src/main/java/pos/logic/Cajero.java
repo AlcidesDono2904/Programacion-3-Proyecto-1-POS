@@ -6,11 +6,7 @@ import jakarta.xml.bind.annotation.XmlID;
 
 import java.util.Objects;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-
-
 public class Cajero {
-        @XmlID
         private String id;
         private String nombre;
 
