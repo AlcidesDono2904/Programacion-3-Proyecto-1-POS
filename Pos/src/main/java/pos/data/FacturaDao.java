@@ -75,6 +75,21 @@ public class FacturaDao {
        return facturas;
    }
 
+   public double importeFactura(Factura f)throws Exception {
+        //selecciona de listas, las que coincidan con el codigo de la factura, toma los productos, toma el precio unitario, lo multiplica por la canitdad de lineas, y hace el descuento de lineas y al final hace el descuento del cliente
+        String sql="select " +
+                "sum(((p.precioUnitario*l.cantidad)-(p.precioUnitario*l.cantidad*(l.descuento/100)))*(1-(c.descuento/100)) as importe "+
+                "from Linea l " +
+                "inner join Factura f on f.codigo=l.factura " +
+                "inner join Producto p on p.codigo=l.producto " +
+                "inner join Cliente c on f.cliente=c.id " +
+                "where f.codigo=?";
+        PreparedStatement stm=db.prepareStatement(sql);
+        stm.setInt(1,Integer.parseInt(f.getCodigo()));
+        ResultSet rs=db.executeQuery(stm);
+        return rs.getDouble(1);
+   }
+
    public Factura from(ResultSet rs,String alias)throws Exception{
         Factura f=new Factura();
         f.setCodigo(rs.getString(alias+".codigo"));

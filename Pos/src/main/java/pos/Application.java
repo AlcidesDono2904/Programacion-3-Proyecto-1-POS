@@ -27,9 +27,8 @@ public class Application {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                Service.instance().stop();
             }
-        });;
+        });
 
         pos.presentation.clientes.Model clientesModel= new pos.presentation.clientes.Model();
         pos.presentation.clientes.View clientesView = new pos.presentation.clientes.View();
@@ -70,7 +69,7 @@ public class Application {
         tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
         tabbedPane.addTab("Cajeros  ",cajerosIcon,cajerosView.getPanel());
         tabbedPane.addTab("Productos",productosIcon,productosView.getPanel());
-        //tabbedPane.addTab("Estadistica",clientesIcon,estadisticaView.getPanel());
+        tabbedPane.addTab("Estadistica",clientesIcon,estadisticaView.getPanel());
         tabbedPane.addTab("Historico", historialIcon,historicoView.getPanel());
 //----------------------------------------------------------------------------------------------------------------------
         tabbedPane.addChangeListener(new ChangeListener() {

@@ -8,7 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Service {
+public class Service implements IService{
     private static Service theInstance;
 
     public static Service instance(){
@@ -30,10 +30,6 @@ public class Service {
         cajeroDao = new CajeroDao();
         lineaDao = new LineaDao();
         facturaDao = new FacturaDao();
-    }
-
-    public void stop(){
-
     }
 
 //================= CLIENTES ============
@@ -133,6 +129,24 @@ public class Service {
             throw new RuntimeException(ex);
         }
     }
+
+    //Linea
+
+    public List<Linea> searchLineas(Factura f){
+        try{
+            return lineaDao.search(f);
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
+
+    }
+
+    //Auxiliares
+    public double importeFactura(Factura e) throws Exception {
+        return facturaDao.importeFactura(e);
+    }
+
+
 
 
     //estadistica
