@@ -91,17 +91,10 @@ public class View  implements PropertyChangeListener {
                             "An unexpected error occurred while generating the report. Please try again.",
                             "Unexpected Error",
                             JOptionPane.ERROR_MESSAGE);
-
                 }
             }
-
         });
-
-
-
     }
-
-
 
 //MVC
     ModelHistorico model;
@@ -156,6 +149,4 @@ public class View  implements PropertyChangeListener {
             JOptionPane.showMessageDialog(panel, "No lines available", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-
 }

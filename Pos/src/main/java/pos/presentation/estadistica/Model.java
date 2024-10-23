@@ -5,18 +5,16 @@ import pos.logic.Rango;
 import pos.presentation.AbstractModel;
 
 import java.beans.PropertyChangeListener;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Model extends AbstractModel {
-    private List<LocalDate> fechas;
     private List<Rango> rangos;
     private Rango actual;
 
     private List<Categoria> categorias;
-    private List<LocalDate> fechasCB;
 
+    private int mode;
 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -26,16 +24,12 @@ public class Model extends AbstractModel {
     }
 
     public Model() {
-        fechas = new ArrayList<LocalDate>();
         rangos = new ArrayList<Rango>();
     }
 
-    public void init(List<Rango>rangos,List<LocalDate>fechas,List<LocalDate>fechasCB,List<Categoria>categorias){
-        this.rangos = rangos;
-        this.fechas = fechas;
-        this.fechasCB = fechasCB;
+    public void init(List<Categoria>categorias){
         this.categorias = categorias;
-        //firePropertyChange(CB);
+        this.mode=0;
     }
 
     public List<Rango> getRangos() {
@@ -44,19 +38,13 @@ public class Model extends AbstractModel {
 
     public void setRangos(List<Rango> rangos) {
         this.rangos = rangos;
-    }
-
-    public List<LocalDate> getFechas() {
-        return fechas;
-    }
-
-    public void setFechas(List<LocalDate> fechas) {
-        this.fechas = fechas;
+        firePropertyChange(TABLA);
     }
 
     public Rango getActual() {
         return actual;
     }
+
     public void setActual(Rango actual) {
         this.actual = actual;
 
@@ -67,22 +55,35 @@ public class Model extends AbstractModel {
     public void setCategorias(List<Categoria> categorias) {
         this.categorias = categorias;
     }
-    public List<LocalDate> getFechasCB() {
-        return fechasCB;
-    }
-    public void setFechasCB(List<LocalDate> fechasCB) {
-        this.fechasCB = fechasCB;
+
+    public int getMode() {return mode;}
+
+    public void setMode(int mode) {this.mode = mode;}
+
+    public void agregarRango(Rango rango) {
+        rangos.add(rango);
+        firePropertyChange(TABLA);
     }
 
-    public void datos(List<Rango> rangos, List<LocalDate> localDates) {
-        this.rangos = rangos;
-        this.fechas = localDates;
+    public void removeCategory(Categoria categoria) {
+        for (Rango rango : rangos) {
+            if (rango.getCategoria().equals(categoria)) {
+                rangos.remove(rango);
+                break;
+            }
+        }
+        firePropertyChange(TABLA);
+    }
+
+    public void clear(){
+        rangos.clear();
         firePropertyChange(TABLA);
     }
 
     public static final String TABLA="tabla";
     public static final String CB="cb";
 
-
+    public static final int CREATE=0;
+    public static final int DELETE=1;
 
 }

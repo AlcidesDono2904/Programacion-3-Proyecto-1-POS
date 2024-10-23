@@ -1,13 +1,13 @@
 package pos.data;
 
-import pos.logic.Factura;
-import pos.logic.Linea;
-import pos.logic.Producto;
+import pos.logic.*;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class LineaDao {
@@ -46,7 +46,7 @@ public class LineaDao {
         }
     }
 
-    public List<Linea> search(Factura e)throws Exception{//busca una lista de lineas seguna una factura
+    public List<Linea> search(Factura e)throws Exception{//busca una lista de lineas segun una factura
         List<Linea> lista=new ArrayList<Linea>();
         String sql="select * from "+
                 "Linea t "+
@@ -63,6 +63,38 @@ public class LineaDao {
         }
         return lista;
     }
+
+    public Rango searchRangoCategoria(Categoria c, String fechaInicio, String fechaFin)throws Exception{
+        String sql="SELECT SUM(((p.precioUnitario*l.cantidad)-(p.precioUnitario*l.cantidad*(l.descuento/100)))*(1-(cl.descuento/100))) AS importe, DATE_FORMAT(f.fecha, '%Y-%m') AS fecha "+
+        "FROM factura f "+
+        "INNER JOIN linea l ON f.codigo = l.factura "+
+        "INNER JOIN Producto p ON l.producto = p.codigo "+
+        "INNER JOIN Categoria c ON p.categoria = c.id "+
+        "INNER JOIN Cliente cl ON f.cliente = cl.id "+
+        "WHERE DATE_FORMAT(f.fecha, '%Y-%m') BETWEEN ? AND ? AND c.id = ? "+
+        "GROUP BY DATE_FORMAT(f.fecha, '%Y-%m') "+
+        "ORDER BY DATE_FORMAT(f.fecha, '%Y-%m') ASC";
+        PreparedStatement stm=db.prepareStatement(sql);
+
+        stm.setString(1,fechaInicio);
+        stm.setString(2,fechaFin);
+        stm.setString(3,c.getId());
+
+        ResultSet rs=db.executeQuery(stm);
+
+        Rango rango = new Rango();
+
+        while (rs.next()){
+            rango.getImportes().add(rs.getDouble("importe"));
+            rango.getFechas().add(rs.getString("fecha"));
+            /*String fecha=rs.getString("fecha")+"-01";
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+            rango.getFechas().add(formato.parse(fecha));*/
+        }
+
+        return rango;
+    }
+
 
 
     public Linea from(ResultSet rs, String alias)throws Exception {
