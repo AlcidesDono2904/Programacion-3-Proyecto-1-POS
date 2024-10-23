@@ -88,7 +88,7 @@ public class Application {
         });
 
 //----------------------------------------------------------------------------------------------------------------------
-        window.setSize(900,800);
+        window.setSize(1600,900);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setIconImage((new ImageIcon(Application.class.getResource("presentation/icons/icon.png"))).getImage());
         window.setTitle("POS: Point Of Sale");

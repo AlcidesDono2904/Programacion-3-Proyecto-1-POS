@@ -1,6 +1,11 @@
 package pos.logic;
 
 public class Protocol {
+    public static final String SERVER="localhost";
+    public static final int PORT=777;
+
+    public static final int ERROR_NO_ERROR=0;
+    public static final int ERROR=1;
     /*producot 1
     * categoria 2
     * cliente 3

@@ -5,6 +5,7 @@ import pos.data.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -147,8 +148,6 @@ public class Service implements IService{
     }
 
 
-
-
     //estadistica
     public List<LocalDate> buscarRangoFechas(){
         List<LocalDate> fechas=new ArrayList<>();
@@ -158,8 +157,12 @@ public class Service implements IService{
 
     public List<Rango> buscarRango(){
         List<Rango> rangos=new ArrayList<>();
-
-
         return rangos;
+    }
+
+    public Rango rangoCategoria(Categoria c, Date inicio, Date fin)throws Exception{
+        Rango r=lineaDao.searchRangoCategoria(c,((inicio.getYear()+1900)+"-"+(inicio.getMonth()+1)),((fin.getYear()+1900)+"-"+(fin.getMonth()+1)));
+        r.setCategoria(categoriaDao.read(c.getId()));
+        return r;
     }
 }

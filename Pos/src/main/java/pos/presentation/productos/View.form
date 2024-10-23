@@ -78,6 +78,7 @@
               <component id="f6a47" class="javax.swing.JTable" binding="list">
                 <constraints/>
                 <properties>
+                  <autoResizeMode value="2"/>
                   <preferredScrollableViewportSize width="600" height="300"/>
                 </properties>
               </component>

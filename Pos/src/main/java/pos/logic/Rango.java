@@ -1,11 +1,13 @@
 package pos.logic;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Rango {
     Categoria categoria;
     List<Double> importes;
+    List<String> fechas;
 
     public Rango(Categoria categoria, List<Double> importes) {
         this.categoria = categoria;
@@ -15,6 +17,7 @@ public class Rango {
     public Rango(){
         this.categoria = new Categoria();
         this.importes = new ArrayList<Double>();
+        this.fechas=new ArrayList<String>();
     }
 
     public Categoria getCategoria() {
@@ -29,10 +32,16 @@ public class Rango {
     public void setImportes(List<Double> importes) {
         this.importes = importes;
     }
+    public List<String> getFechas() {return fechas;}
+    public void setFechas(List<String> fechas) {this.fechas = fechas;}
 
 
     @Override
     public String toString() {
-        return "rango";
+
+        return "Categoria: " + categoria
+                + "\nImportes: " + importes
+                + "\nFechas: " + fechas;
+
     }
 }
