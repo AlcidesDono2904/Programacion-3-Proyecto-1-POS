@@ -2,9 +2,9 @@ package pos.presentation.historico;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 
-import pos.logic.Cliente;
-import pos.logic.Factura;
-import pos.logic.Linea;
+import entidades.logic.Cliente;
+import entidades.logic.Factura;
+import entidades.logic.Linea;
 
 
 import javax.swing.*;

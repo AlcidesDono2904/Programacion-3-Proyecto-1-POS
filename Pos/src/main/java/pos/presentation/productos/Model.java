@@ -1,8 +1,8 @@
 package pos.presentation.productos;
 
 import pos.Application;
-import pos.logic.Categoria;
-import pos.logic.Producto;
+import entidades.logic.Categoria;
+import entidades.logic.Producto;
 import pos.presentation.AbstractModel;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;

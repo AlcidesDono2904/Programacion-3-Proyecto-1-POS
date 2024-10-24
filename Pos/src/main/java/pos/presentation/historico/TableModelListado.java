@@ -1,6 +1,6 @@
 package pos.presentation.historico;
 
-import pos.logic.Factura;
+import entidades.logic.Factura;
 import pos.presentation.AbstractTableModel;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package pos.data;
 
-import pos.logic.Producto;
+import entidades.logic.Producto;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

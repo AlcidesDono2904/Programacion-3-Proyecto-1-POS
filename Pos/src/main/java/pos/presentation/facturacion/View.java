@@ -2,11 +2,11 @@ package pos.presentation.facturacion;
 
 
 import pos.Application;
-import pos.logic.Factura;
-import pos.logic.Producto;
+import entidades.logic.Factura;
+import entidades.logic.Producto;
 
-import pos.logic.Cliente;
-import pos.logic.Cajero;
+import entidades.logic.Cliente;
+import entidades.logic.Cajero;
 
 
 import javax.swing.*;

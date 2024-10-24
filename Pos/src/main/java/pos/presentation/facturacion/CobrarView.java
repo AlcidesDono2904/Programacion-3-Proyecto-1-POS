@@ -1,6 +1,6 @@
 package pos.presentation.facturacion;
 
-import pos.logic.Factura;
+import entidades.logic.Factura;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

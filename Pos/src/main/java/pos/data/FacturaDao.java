@@ -1,7 +1,7 @@
 package pos.data;
 
-import pos.logic.Factura;
-import pos.logic.Linea;
+import entidades.logic.Factura;
+import entidades.logic.Linea;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;

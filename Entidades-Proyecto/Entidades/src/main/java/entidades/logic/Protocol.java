@@ -1,4 +1,4 @@
-package pos.logic;
+package entidades.logic;
 
 public class Protocol {
     public static final String SERVER="localhost";
@@ -38,4 +38,8 @@ public class Protocol {
     //factura
     public static final int FACTURA_CREATE=601;
     public static final int FACTURA_SEARCH=605;
+    //aux
+    public static final int IMPORTE_FACTURA=1001;
+    public static final int RANGO_CATEGORIA=1002;
+
 }

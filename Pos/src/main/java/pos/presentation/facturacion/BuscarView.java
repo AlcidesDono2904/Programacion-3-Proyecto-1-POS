@@ -1,6 +1,6 @@
 package pos.presentation.facturacion;
 
-import pos.logic.Producto;
+import entidades.logic.Producto;
 import pos.presentation.productos.TableModel;
 
 import javax.swing.*;

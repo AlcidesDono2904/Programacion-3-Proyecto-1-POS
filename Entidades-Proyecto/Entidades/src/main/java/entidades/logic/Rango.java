@@ -1,4 +1,4 @@
-package pos.logic;
+package entidades.logic;
 
 import java.util.ArrayList;
 import java.util.Date;

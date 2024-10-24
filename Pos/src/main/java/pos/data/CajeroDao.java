@@ -1,7 +1,8 @@
 package pos.data;
 
-import pos.logic.Cajero;
-import pos.logic.Cliente;
+
+import entidades.logic.Cajero;
+
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

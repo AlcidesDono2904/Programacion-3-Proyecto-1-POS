@@ -16,8 +16,8 @@ import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 
-import pos.logic.Factura;
-import pos.logic.Linea;
+import entidades.logic.Factura;
+import entidades.logic.Linea;
 import pos.logic.Service;
 
 import java.util.ArrayList;

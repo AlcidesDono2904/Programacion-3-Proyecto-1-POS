@@ -1,6 +1,6 @@
 package pos.presentation.productos;
 
-import pos.logic.Producto;
+import entidades.logic.Producto;
 import pos.presentation.AbstractTableModel;
 
 import java.util.List;

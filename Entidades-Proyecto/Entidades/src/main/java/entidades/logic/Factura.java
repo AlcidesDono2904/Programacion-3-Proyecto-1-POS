@@ -1,12 +1,9 @@
-package pos.logic;
-
-import jakarta.xml.bind.annotation.*;
-import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+package entidades.logic;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-@XmlAccessorType(XmlAccessType.FIELD)
+
 public class Factura {
 
     private String codigo;

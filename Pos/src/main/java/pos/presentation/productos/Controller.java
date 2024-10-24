@@ -15,9 +15,9 @@ import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
 import pos.Application;
 
-import pos.logic.Cajero;
-import pos.logic.Categoria;
-import pos.logic.Producto;
+import entidades.logic.Cajero;
+import entidades.logic.Categoria;
+import entidades.logic.Producto;
 import pos.logic.Service;
 import java.util.List;
 public class Controller {

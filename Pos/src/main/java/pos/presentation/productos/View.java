@@ -2,8 +2,8 @@ package pos.presentation.productos;
 
 import pos.Application;
 
-import pos.logic.Categoria;
-import pos.logic.Producto;
+import entidades.logic.Categoria;
+import entidades.logic.Producto;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;

@@ -1,6 +1,6 @@
 package pos.presentation.cajeros;
 
-import pos.logic.Cajero;
+import entidades.logic.Cajero;
 import pos.presentation.AbstractTableModel;
 
 import java.util.List;

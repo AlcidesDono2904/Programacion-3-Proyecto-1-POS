@@ -15,7 +15,8 @@ import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
 import pos.Application;
-import pos.logic.*;
+import entidades.logic.*;
+import pos.logic.Service;
 
 import javax.swing.*;
 

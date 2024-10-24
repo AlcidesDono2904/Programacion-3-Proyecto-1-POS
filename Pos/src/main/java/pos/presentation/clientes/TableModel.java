@@ -1,6 +1,6 @@
 package pos.presentation.clientes;
 
-import pos.logic.Cliente;
+import entidades.logic.Cliente;
 import pos.presentation.AbstractTableModel;
 
 import java.util.List;

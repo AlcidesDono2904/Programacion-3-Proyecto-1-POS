@@ -1,7 +1,7 @@
 package pos.presentation.historico;
 
-import pos.logic.Factura;
-import pos.logic.Linea;
+import entidades.logic.Factura;
+import entidades.logic.Linea;
 import pos.presentation.AbstractModel;
 
 import java.beans.PropertyChangeListener;
