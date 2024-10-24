@@ -1,5 +1,6 @@
-package pos.logic;
+package entidades.logic;
 
+import java.util.Date;
 import java.util.List;
 
 public interface IService {
@@ -36,5 +37,7 @@ public interface IService {
 
     //Auxiliares
     double importeFactura(Factura e)throws Exception;
+
+    Rango rangoCategoria(Categoria e, Date inicio, Date fin)throws Exception;
 
 }

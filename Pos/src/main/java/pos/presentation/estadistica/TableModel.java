@@ -1,7 +1,7 @@
 package pos.presentation.estadistica;
 
-import pos.logic.Categoria;
-import pos.logic.Rango;
+import entidades.logic.Categoria;
+import entidades.logic.Rango;
 import pos.presentation.AbstractTableModel;
 
 import java.time.LocalDate;

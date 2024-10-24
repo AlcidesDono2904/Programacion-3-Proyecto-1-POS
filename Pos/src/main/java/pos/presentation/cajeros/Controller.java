@@ -15,8 +15,8 @@ import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
 import pos.Application;
-import pos.logic.Cajero;
-import pos.logic.Cliente;
+
+import entidades.logic.Cajero;
 import pos.logic.Service;
 
 public class Controller {

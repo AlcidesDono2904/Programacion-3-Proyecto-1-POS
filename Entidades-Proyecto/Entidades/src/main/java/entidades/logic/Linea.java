@@ -1,16 +1,9 @@
-package pos.logic;
-
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlID;
-import jakarta.xml.bind.annotation.XmlIDREF;
+package entidades.logic;
 
 import java.util.Objects;
-@XmlAccessorType(XmlAccessType.FIELD)
+
 public class Linea {
-    @XmlID
     private String codigo;
-    @XmlIDREF
     private Producto producto;
     private int cantidad;
     private double descuento;

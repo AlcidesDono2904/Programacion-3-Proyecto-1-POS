@@ -1,7 +1,5 @@
 package pos.presentation.facturacion;
 
-import pos.logic.Linea;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

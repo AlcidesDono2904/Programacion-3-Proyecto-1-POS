@@ -1,5 +1,6 @@
 package pos.logic;
 
+import entidades.logic.*;
 import pos.data.*;
 
 import java.time.LocalDate;
@@ -149,16 +150,6 @@ public class Service implements IService{
 
 
     //estadistica
-    public List<LocalDate> buscarRangoFechas(){
-        List<LocalDate> fechas=new ArrayList<>();
-
-        return fechas;
-    }
-
-    public List<Rango> buscarRango(){
-        List<Rango> rangos=new ArrayList<>();
-        return rangos;
-    }
 
     public Rango rangoCategoria(Categoria c, Date inicio, Date fin)throws Exception{
         Rango r=lineaDao.searchRangoCategoria(c,((inicio.getYear()+1900)+"-"+(inicio.getMonth()+1)),((fin.getYear()+1900)+"-"+(fin.getMonth()+1)));

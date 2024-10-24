@@ -1,9 +1,4 @@
-package pos.logic;
-
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlID;
-import jakarta.xml.bind.annotation.XmlIDREF;
+package entidades.logic;
 
 import java.util.Objects;
 

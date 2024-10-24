@@ -1,7 +1,5 @@
 package pos.presentation;
 
-import pos.logic.Cliente;
-
 import java.util.List;
 
 public abstract class AbstractTableModel<E> extends javax.swing.table.AbstractTableModel implements javax.swing.table.TableModel {

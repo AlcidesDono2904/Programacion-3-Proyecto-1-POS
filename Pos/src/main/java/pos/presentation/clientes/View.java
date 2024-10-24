@@ -1,7 +1,7 @@
 package pos.presentation.clientes;
 
 import pos.Application;
-import pos.logic.Cliente;
+import entidades.logic.Cliente;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;

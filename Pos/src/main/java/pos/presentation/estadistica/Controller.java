@@ -1,8 +1,8 @@
 package pos.presentation.estadistica;
 
-import pos.logic.Categoria;
+import entidades.logic.Categoria;
+import entidades.logic.Rango;
 import pos.logic.Service;
-import pos.logic.Rango;
 
 import java.util.Date;
 import java.util.List;

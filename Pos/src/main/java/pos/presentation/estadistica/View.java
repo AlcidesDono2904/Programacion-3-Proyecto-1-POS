@@ -1,6 +1,6 @@
 package pos.presentation.estadistica;
 
-import pos.logic.Categoria;
+import entidades.logic.Categoria;
 
 import javax.swing.*;
 import java.awt.*;

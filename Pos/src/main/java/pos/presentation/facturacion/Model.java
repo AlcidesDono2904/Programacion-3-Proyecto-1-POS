@@ -2,7 +2,7 @@ package pos.presentation.facturacion;
 
 
 import pos.Application;
-import pos.logic.*;
+import entidades.logic.*;
 import pos.presentation.AbstractModel;
 
 import java.beans.PropertyChangeListener;

@@ -1,7 +1,7 @@
 package pos.presentation.cajeros;
 
 import pos.Application;
-import pos.logic.Cajero;
+import entidades.logic.Cajero;
 import pos.presentation.cajeros.Controller;
 import pos.presentation.cajeros.Model;
 import pos.presentation.cajeros.TableModel;
