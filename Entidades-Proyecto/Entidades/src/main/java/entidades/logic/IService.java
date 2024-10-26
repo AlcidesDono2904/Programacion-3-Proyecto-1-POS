@@ -40,4 +40,6 @@ public interface IService {
 
     Rango rangoCategoria(Categoria e, Date inicio, Date fin)throws Exception;
 
+    boolean login(String usuario, String clave) throws Exception;
+
 }

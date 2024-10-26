@@ -41,5 +41,7 @@ public class Protocol {
     //aux
     public static final int IMPORTE_FACTURA=1001;
     public static final int RANGO_CATEGORIA=1002;
+    public static final int LOGIN=1003;
+    public static final int LOGOUT=1004;
 
 }
