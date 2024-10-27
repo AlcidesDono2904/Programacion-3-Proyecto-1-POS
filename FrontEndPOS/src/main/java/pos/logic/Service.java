@@ -30,7 +30,7 @@ public class Service implements IService {
             e.printStackTrace();
         }
     }
-
+    //CLIENTE
     @Override
     public void create(Cliente cliente) throws Exception {
 
@@ -55,7 +55,7 @@ public class Service implements IService {
     public List<Cliente> search(Cliente cliente) {
         return List.of();
     }
-
+    //CAJERO
     @Override
     public void create(Cajero cajero) throws Exception {
 
@@ -80,35 +80,81 @@ public class Service implements IService {
     public List<Cajero> search(Cajero cajero) {
         return List.of();
     }
-
+    //PRODUCTO
     @Override
     public void create(Producto producto) throws Exception {
-
+        os.writeInt(Protocol.PRODUCTO_CREATE);
+        os.writeObject(producto);
+        os.flush();
+        if(is.readInt()==Protocol.ERROR){
+            throw new Exception("Error al crear el producto/Producto con ese codigo ya existe");
+        }
     }
 
     @Override
     public Producto read(Producto producto) throws Exception {
-        return null;
+        os.writeInt(Protocol.PRODUCTO_READ);
+        os.writeObject(producto);
+        os.flush();
+        if(is.readInt()==Protocol.ERROR_NO_ERROR){
+            return (Producto) is.readObject();
+        }else{
+            throw new Exception("No se encontro el producto con codigo "+producto.getCodigo());
+        }
     }
 
     @Override
     public void update(Producto producto) throws Exception {
-
+        os.writeInt(Protocol.PRODUCTO_UPDATE);
+        os.writeObject(producto);
+        os.flush();
+        if(is.readInt()==Protocol.ERROR){
+            throw new Exception("No se encontro el producto con codigo "+producto.getCodigo());
+        }
     }
 
     @Override
     public void delete(Producto producto) throws Exception {
-
+        os.writeInt(Protocol.PRODUCTO_DELETE);
+        os.writeObject(producto);
+        os.flush();
+        if(is.readInt()==Protocol.ERROR){
+            throw new Exception("No se encontro el producto con codigo "+producto.getCodigo());
+        }
     }
 
     @Override
     public List<Producto> search(Producto producto) {
-        return List.of();
+        List<Producto> result = new ArrayList<>();
+        try{
+            os.writeInt(Protocol.PRODUCTO_SEARCH);
+            os.writeObject(producto);
+            os.flush();
+            if(is.readInt()==Protocol.ERROR_NO_ERROR){
+                result =(List<Producto>) is.readObject();
+            }else{
+                throw new Exception("Error lista productos");
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return result;
     }
-
+    //categoria
     @Override
     public List<Categoria> search(Categoria categoria) {
-        return List.of();
+        List<Categoria> result = new ArrayList<>();
+        try{
+            os.writeInt(Protocol.CATEGORIA_SEARCH);
+            os.writeObject(categoria);
+            os.flush();
+            if(is.readInt()==Protocol.ERROR_NO_ERROR){
+                result =(List<Categoria>) is.readObject();
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return result;
     }
 
     @Override
@@ -144,10 +190,6 @@ public class Service implements IService {
         os.writeInt(Protocol.LOGIN);
         os.writeObject(credenciales);
         os.flush();
-        if(is.readInt()==Protocol.ERROR_NO_ERROR){
-            return true;
-        }else{
-            return false;
-        }
+        return is.readInt() == Protocol.ERROR_NO_ERROR;
     }
 }

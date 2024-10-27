@@ -1,8 +1,9 @@
 package entidades.logic;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Cliente {
+public class Cliente implements Serializable {
     String id;
     String nombre;
     String telefono;

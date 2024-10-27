@@ -1,10 +1,11 @@
 package entidades.logic;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Factura {
+public class Factura implements Serializable {
 
     private String codigo;
     private Cliente cliente;

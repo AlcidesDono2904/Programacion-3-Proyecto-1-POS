@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Server {//TODO
+public class Server {
     ServerSocket srv;
     List<Worker> workers;
 

@@ -3,6 +3,8 @@ package pos.presentation.login;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +25,25 @@ public class View {
                     }
                 }catch (Exception ex){
                     JOptionPane.showMessageDialog(null, ex.getMessage());
+                    ex.printStackTrace();
                 }
             }
+        });
+        clavePF.addKeyListener(new KeyAdapter (){
+           @Override
+           public void keyPressed(KeyEvent e) {
+               if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                   try{
+                       if(validate()){
+                           List<String> credenciales= take();
+                           controller.login(credenciales.getFirst(),credenciales.getLast());
+                       }
+                   }catch (Exception ex){
+                       JOptionPane.showMessageDialog(null, ex.getMessage());
+                       ex.printStackTrace();
+                   }
+               }
+           }
         });
     }
 

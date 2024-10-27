@@ -1,8 +1,9 @@
 package entidades.logic;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Linea {
+public class Linea implements Serializable {
     private String codigo;
     private Producto producto;
     private int cantidad;

@@ -19,25 +19,24 @@ public class Application {
         }
         catch (Exception ex) {};
 
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {
+        loginWindow = new JFrame();
+        loginWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        loginWindow.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
             }
         });
 
-        frame.getContentPane().setLayout(new BorderLayout());
+        loginWindow.getContentPane().setLayout(new BorderLayout());
 
         pos.presentation.login.View viewLogin=new pos.presentation.login.View();
         pos.presentation.login.Controller controllerLogin = new pos.presentation.login.Controller(viewLogin);
 
-        frame.setTitle("Login");
-        frame.setContentPane(viewLogin.getPanel());
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-
+        loginWindow.setTitle("Login");
+        loginWindow.setContentPane(viewLogin.getPanel());
+        loginWindow.pack();
+        loginWindow.setLocationRelativeTo(null);
+        loginWindow.setVisible(true);
 /*
         window = new JFrame();
         JTabbedPane tabbedPane = new JTabbedPane();
@@ -122,6 +121,7 @@ public class Application {
     public static pos.presentation.historico.ControllerHistorico historicoController;
     public static pos.presentation.estadistica.Controller estadisticaController;
     public static JFrame window;
+    public static JFrame loginWindow;
 
     public final static int MODE_CREATE=1;
     public final static int MODE_EDIT=2;

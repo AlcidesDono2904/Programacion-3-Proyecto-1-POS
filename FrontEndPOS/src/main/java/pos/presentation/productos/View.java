@@ -56,7 +56,6 @@ public class View implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-
             }
         });
 
@@ -259,8 +258,7 @@ public class View implements PropertyChangeListener {
                 precio.setText(""+ model.getCurrent().getPrecioUnitario());
                 existencias.setText(""+ model.getCurrent().getExistencias());
 
-                //categorias.setSelectedItem(model.getCurrent().getCategorias());
-
+                categorias.setSelectedItem(model.getCurrent().getCategoria());
                 if (model.getMode() == Application.MODE_EDIT) {
                     codigo.setEnabled(false);
                     delete.setEnabled(true);

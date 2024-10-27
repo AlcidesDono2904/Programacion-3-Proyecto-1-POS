@@ -1,10 +1,11 @@
 package entidades.logic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Rango {
+public class Rango implements Serializable {
     Categoria categoria;
     List<Double> importes;
     List<String> fechas;
