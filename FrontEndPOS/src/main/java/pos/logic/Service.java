@@ -21,6 +21,10 @@ public class Service implements IService {
         return theInstance;
     }
 
+    public void stop(){
+        //TODO
+    }
+
     public Service(){
         try{
             socket = new Socket(Protocol.SERVER, Protocol.PORT);

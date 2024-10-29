@@ -1,5 +1,7 @@
 package pos;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pos.logic.Service;
 import pos.presentation.historico.ModelHistorico;
 import pos.presentation.login.View;
@@ -13,31 +15,38 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class Application {
+    private static final Logger log = LoggerFactory.getLogger(Application.class);
+
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         }
         catch (Exception ex) {};
 
-        loginWindow = new JFrame();
-        loginWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pos.presentation.login.View viewLogin=new pos.presentation.login.View();
+        pos.presentation.login.Model modelLogin= new pos.presentation.login.Model();
+        loginController = new pos.presentation.login.Controller(viewLogin,modelLogin);
+
+        loginWindow = new JDialog();
+        loginWindow.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         loginWindow.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
             }
         });
 
+        loginWindow.setModal(true);
         loginWindow.getContentPane().setLayout(new BorderLayout());
-
-        pos.presentation.login.View viewLogin=new pos.presentation.login.View();
-        pos.presentation.login.Controller controllerLogin = new pos.presentation.login.Controller(viewLogin);
-
         loginWindow.setTitle("Login");
         loginWindow.setContentPane(viewLogin.getPanel());
-        loginWindow.pack();
+        loginWindow.setSize(300,200);
         loginWindow.setLocationRelativeTo(null);
         loginWindow.setVisible(true);
-/*
+
+        if(!modelLogin.isLogeado()){
+            Service.instance().stop();
+            System.exit(0);
+        }
         window = new JFrame();
         JTabbedPane tabbedPane = new JTabbedPane();
         window.setContentPane(tabbedPane);
@@ -111,7 +120,7 @@ public class Application {
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setIconImage((new ImageIcon(Application.class.getResource("presentation/icons/icon.png"))).getImage());
         window.setTitle("POS: Point Of Sale");
-        window.setVisible(true);*/
+        window.setVisible(true);
     }
 
     public static pos.presentation.clientes.Controller clientesController;
@@ -120,8 +129,9 @@ public class Application {
     public static pos.presentation.facturacion.Controller facturacionController;
     public static pos.presentation.historico.ControllerHistorico historicoController;
     public static pos.presentation.estadistica.Controller estadisticaController;
+    public static pos.presentation.login.Controller loginController;
     public static JFrame window;
-    public static JFrame loginWindow;
+    public static JDialog loginWindow;
 
     public final static int MODE_CREATE=1;
     public final static int MODE_EDIT=2;
