@@ -24,18 +24,6 @@ public class CobrarView implements PropertyChangeListener {
         tarjete.setText("0");
         cheque.setText("0");
         sinpe.setText("0");
-        OKButton.addActionListener(new ActionListener() {
-           @Override
-           public void actionPerformed(ActionEvent e) {
-               try{
-                   if(!validate())
-                       throw new Exception("El monto cobrado no es");
-               }catch(Exception ex){
-                   JOptionPane.showMessageDialog(null, ex.getMessage());
-               }
-           }
-        });
-
     }
 
     public JPanel getPanel(){
@@ -50,8 +38,7 @@ public class CobrarView implements PropertyChangeListener {
         return OKButton;
     }
 
-
-    private boolean validate(){
+    public boolean validate(){
         return (Double.parseDouble(efectivo.getText())+Double.parseDouble(sinpe.getText())+Double.parseDouble(tarjete.getText())+Double.parseDouble(cheque.getText()))==model.total();
     }
 

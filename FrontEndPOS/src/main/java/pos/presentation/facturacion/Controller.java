@@ -225,4 +225,22 @@ public class Controller {
             model.refrescar();
         }
     }
+
+    public void selectCliente(Cliente e) {
+        if(e == null){
+            e = new Cliente();
+        }
+        model.selectCliente(e);
+    }
+
+    public void setCajero(Cajero e) {
+        if(e == null){
+            e = new Cajero();
+        }
+        model.setCajero(e);
+    }
+
+    public void clear() {
+        model.clear();
+    }
 }

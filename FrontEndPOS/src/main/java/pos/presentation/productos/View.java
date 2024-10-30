@@ -145,7 +145,6 @@ public class View implements PropertyChangeListener {
                 }
             }
         });
-
     }
 
     private boolean validate() {

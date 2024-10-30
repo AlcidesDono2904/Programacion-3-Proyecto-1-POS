@@ -37,52 +37,120 @@ public class Service implements IService {
     //CLIENTE
     @Override
     public void create(Cliente cliente) throws Exception {
-
+        os.writeInt(Protocol.CLIENTE_CREATE);
+        os.writeObject(cliente);
+        os.flush();
+        if(is.readInt()==Protocol.ERROR){
+            throw new Exception("Ya existe un cliente con ese mismo codigo");
+        }
     }
 
     @Override
     public Cliente read(Cliente cliente) throws Exception {
-        return null;
+        os.writeInt(Protocol.CLIENTE_READ);
+        os.writeObject(cliente);
+        os.flush();
+        if(is.readInt()==Protocol.ERROR){
+            throw new Exception("No existe un cliente con ese codigo");
+        }
+        return (Cliente) is.readObject();
     }
 
     @Override
     public void update(Cliente cliente) throws Exception {
-
+        os.writeInt(Protocol.CLIENTE_UPDATE);
+        os.writeObject(cliente);
+        os.flush();
+        if(is.readInt()==Protocol.ERROR){
+            throw new Exception("Error al modificar");
+        }
     }
 
     @Override
     public void delete(Cliente cliente) throws Exception {
-
+        os.writeInt(Protocol.CLIENTE_DELETE);
+        os.writeObject(cliente);
+        os.flush();
+        if(is.readInt()==Protocol.ERROR){
+            throw new Exception("Error al eliminar");
+        }
     }
 
     @Override
     public List<Cliente> search(Cliente cliente) {
-        return List.of();
+        List<Cliente> r = new ArrayList<>();
+        try{
+            os.writeInt(Protocol.CLIENTE_SEARCH);
+            os.writeObject(cliente);
+            os.flush();
+            if(is.readInt()==Protocol.ERROR_NO_ERROR){
+                r= (List<Cliente>) is.readObject();
+            }else {
+                throw new Exception("Error al buscar");
+            }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return r;
     }
     //CAJERO
     @Override
     public void create(Cajero cajero) throws Exception {
-
+        os.writeInt(Protocol.CAJERO_CREATE);
+        os.writeObject(cajero);
+        os.flush();
+        if(is.readInt()==Protocol.ERROR){
+            throw new Exception("Error al crear");
+        }
     }
 
     @Override
     public Cajero read(Cajero cajero) throws Exception {
-        return null;
+        os.writeInt(Protocol.CAJERO_READ);
+        os.writeObject(cajero);
+        os.flush();
+        if(is.readInt()==Protocol.ERROR){
+            throw new Exception("Error al buscar");
+        }
+        return (Cajero) is.readObject();
     }
 
     @Override
     public void update(Cajero cajero) throws Exception {
-
+        os.writeInt(Protocol.CAJERO_UPDATE);
+        os.writeObject(cajero);
+        os.flush();
+        if(is.readInt()==Protocol.ERROR){
+            throw new Exception("Error al modificar");
+        }
     }
 
     @Override
     public void delete(Cajero cajero) throws Exception {
-
+        os.writeInt(Protocol.CAJERO_DELETE);
+        os.writeObject(cajero);
+        os.flush();
+        if(is.readInt()==Protocol.ERROR){
+            throw new Exception("Error al eliminar");
+        }
     }
 
     @Override
     public List<Cajero> search(Cajero cajero) {
-        return List.of();
+        List<Cajero> r = new ArrayList<>();
+        try{
+            os.writeInt(Protocol.CAJERO_SEARCH);
+            os.writeObject(cajero);
+            os.flush();
+            if(is.readInt()==Protocol.ERROR_NO_ERROR){
+                r= (List<Cajero>) is.readObject();
+            }else{
+                throw new Exception("Error al buscar");
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return r;
     }
     //PRODUCTO
     @Override
@@ -163,27 +231,77 @@ public class Service implements IService {
 
     @Override
     public void create(Factura factura) throws Exception {
-
+        os.writeInt(Protocol.FACTURA_CREATE);
+        os.writeObject(factura);
+        os.flush();
+        if(is.readInt()==Protocol.ERROR){
+            throw new Exception("Error al crear");
+        }
     }
 
     @Override
     public List<Factura> searchFacturas(Factura factura) {
-        return List.of();
+        List<Factura> result = new ArrayList<>();
+        try {
+            os.writeInt(Protocol.FACTURA_SEARCH);
+            os.writeObject(factura);
+            os.flush();
+            if(is.readInt()==Protocol.ERROR_NO_ERROR){
+                result =(List<Factura>) is.readObject();
+            }else {
+                throw new Exception("Error lista facturas");
+            }
+        }catch (Exception ex){
+            System.out.println(ex);
+        }
+        return result;
     }
 
     @Override
     public List<Linea> searchLineas(Factura factura) {
-        return List.of();
+        List<Linea> result = new ArrayList<>();
+        try{
+            os.writeInt(Protocol.LINEA_SEARCH);
+            os.writeObject(factura);
+            os.flush();
+            int n=is.readInt();
+            if(n==Protocol.ERROR_NO_ERROR){
+                result =(List<Linea>) is.readObject();
+            }else{
+                System.out.println(n);
+                throw new Exception("Error EN lista lineas");
+            }
+        }catch (Exception e){
+            System.out.println(e);
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
     public double importeFactura(Factura factura) throws Exception {
-        return 0;
+        os.writeInt(Protocol.IMPORTE_FACTURA);
+        os.writeObject(factura);
+        os.flush();
+        if(is.readInt()==Protocol.ERROR){
+            throw new Exception("Error al buscar importe de factura");
+        }
+        return is.readDouble();
     }
 
     @Override
     public Rango rangoCategoria(Categoria categoria, Date date, Date date1) throws Exception {
-        return null;
+        List<Object> objs=new ArrayList<>();
+        objs.add(categoria);
+        objs.add(date);
+        objs.add(date1);
+        os.writeInt(Protocol.RANGO_CATEGORIA);
+        os.writeObject(objs);
+        os.flush();
+        if(is.readInt()==Protocol.ERROR){
+            throw new Exception("Error al buscar rango de categoria");
+        }
+        return (Rango) is.readObject();
     }
 
     @Override

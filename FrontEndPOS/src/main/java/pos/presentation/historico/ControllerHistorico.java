@@ -144,9 +144,14 @@ public class ControllerHistorico {
     }
     public void editar(int fila ) {
         Factura f = model.getListFactura().get(fila);
-        model.setListLinea(Service.instance().searchLineas(f));
-        model.setCurrentFactura(f);
-        model.setMode(MODE_EDIT);
+        try{
+            model.setListLinea(Service.instance().searchLineas(f));
+            model.setCurrentFactura(f);
+            model.setMode(MODE_EDIT);
+        }catch (Exception e){
+            System.out.println(e);
+            e.printStackTrace();
+        }
     }
     public void eliminar(){
         model.setCurrentFactura(new Factura());
