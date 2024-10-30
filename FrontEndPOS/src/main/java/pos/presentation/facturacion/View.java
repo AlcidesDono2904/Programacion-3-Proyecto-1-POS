@@ -235,7 +235,9 @@ public class View implements PropertyChangeListener {
                         try{
                             if(!cobrarView.validate()){
                                 throw new Exception("El monto cobrado no es valido");
-                            }else {
+                            }else if(!controller.validate()){
+                                JOptionPane.showMessageDialog(null, "Error, unidades de producto(s) a facturar erronea");
+                            }else{
                                 popup.dispose();
                                 //cobrar y hacer la factura al final
                                 try{
@@ -379,7 +381,6 @@ public class View implements PropertyChangeListener {
             System.out.println("Cajero seleccionado: " + cajeroSeleccionado.toString()); // Asegúrate de que toString() esté sobrescrito en Cajero
         }
     }
-
 
     public Factura take(){
         Factura factura = model.getFactura();

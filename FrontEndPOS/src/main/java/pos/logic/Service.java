@@ -22,7 +22,15 @@ public class Service implements IService {
     }
 
     public void stop(){
-        //TODO
+        try{
+            os.writeInt(Protocol.LOGOUT);
+            os.flush();
+            socket.close();
+            os.close();
+            is.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public Service(){
@@ -313,5 +321,15 @@ public class Service implements IService {
         os.writeObject(credenciales);
         os.flush();
         return is.readInt() == Protocol.ERROR_NO_ERROR;
+    }
+
+    public boolean validate(List<Linea> lineas) throws Exception {
+        os.writeInt(Protocol.VALIDATE);
+        os.writeObject(lineas);
+        os.flush();
+        if(is.readInt()==Protocol.ERROR){
+            throw new Exception("Error en el validacion");
+        }
+        return is.readBoolean();
     }
 }

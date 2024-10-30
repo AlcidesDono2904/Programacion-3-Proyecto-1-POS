@@ -243,4 +243,8 @@ public class Controller {
     public void clear() {
         model.clear();
     }
+
+    public boolean validate()throws Exception {
+        return (Service.instance().validate(model.getFactura().getLineas()));
+    }
 }
