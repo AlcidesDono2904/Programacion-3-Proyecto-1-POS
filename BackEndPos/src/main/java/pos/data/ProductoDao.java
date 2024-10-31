@@ -50,19 +50,19 @@ public class ProductoDao {
     public void update(Producto e) throws Exception {
         String sql = "update " +
                 "Producto " +
-                "set descripcion=?, unidadMedida=?, precioUnitario=?, categoria=? " +
+                "set descripcion=?, unidadMedida=?, precioUnitario=?,  existencias=? ,categoria=? " +
                 "where codigo=?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, e.getDescripcion());
         stm.setString(2, e.getUnidadMedida());
         stm.setDouble(3, e.getPrecioUnitario());
-        stm.setString(4, e.getCategoria().getId());
-        stm.setString(5, e.getCodigo());
+        stm.setInt(4,e.getExistencias());
+        stm.setString(5, e.getCategoria().getId());
+        stm.setString(6, e.getCodigo());
         int count = db.executeUpdate(stm);
         if (count == 0) {
             throw new Exception("Producto NO EXISTE");
         }
-
     }
 
     public void delete(Producto e) throws Exception {
@@ -94,6 +94,10 @@ public class ProductoDao {
             resultado.add(r);
         }
         return resultado;
+    }
+
+    public boolean validate(String codigo,int existencias) throws Exception {
+        return(read(codigo).getExistencias()>=existencias);
     }
 
     public Producto from(ResultSet rs, String alias) throws Exception {

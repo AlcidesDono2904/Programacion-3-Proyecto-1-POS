@@ -311,12 +311,10 @@ public class View implements PropertyChangeListener {
 
                 break;
             case Model.CB:
-
                 categoria.removeAll();
                 for(Categoria c: model.getCategorias()){
                     categoria.addItem(c);
                 }
-
                 break;
         }
     }

@@ -2,6 +2,7 @@ package pos.data;
 
 import entidades.logic.Factura;
 import entidades.logic.Linea;
+import entidades.logic.Producto;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -30,6 +31,13 @@ public class FacturaDao {
         LineaDao ldao=new LineaDao();
         for(Linea l:f.getLineas()){
             ldao.create(l,idfactura);
+        }
+        //restar la canitdad de unidades de los prodcutos de las lineas de la factura y mandar update
+        ProductoDao pdao=new ProductoDao();
+        for(Linea l:f.getLineas()){
+            Producto p=pdao.read(l.getProducto().getCodigo());
+            p.setExistencias(p.getExistencias()-l.getCantidad());
+            pdao.update(p);
         }
    }
 
@@ -66,10 +74,12 @@ public class FacturaDao {
        ResultSet rs=db.executeQuery(stm);
        ClienteDao clienteDao=new ClienteDao();
        CajeroDao cajeroDao=new CajeroDao();
+       LineaDao lineaDao=new LineaDao();
        while(rs.next()){
            Factura result=from(rs,"f");
            result.setCliente(clienteDao.from(rs,"cl"));
            result.setCajero(cajeroDao.from(rs,"ca"));
+           result.setLineas(lineaDao.search(result));
            facturas.add(result);
        }
        return facturas;

@@ -154,6 +154,12 @@ public class Service implements IService{
         return usuarioDao.validarUsuario(nombre, clave);
     }
 
+    public boolean validate(List<Linea> lineas) throws Exception{
+        for(Linea l:lineas ){
+            if(!productoDao.validate(l.getProducto().getCodigo(),l.getCantidad())) return false;
+        }
+        return true;
+    }
     //estadistica
 
     public Rango rangoCategoria(Categoria c, Date inicio, Date fin)throws Exception{
@@ -162,4 +168,7 @@ public class Service implements IService{
         return r;
     }
 
+    public List<Usuario> requestUsers() {
+        return null;
+    }
 }

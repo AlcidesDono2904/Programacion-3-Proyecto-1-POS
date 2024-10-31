@@ -37,14 +37,12 @@ public class Model extends AbstractModel {
         super.addPropertyChangeListener(listener);
         firePropertyChange(LINEAS);
         firePropertyChange(CURRENT);
-
     }
 
     public void agregarLinea(Producto p) {
         Linea l = new Linea(p);
         factura.getLineas().add(l);
         firePropertyChange(LINEAS);
-
     }
 
     public void setCurrent(Linea c) {
@@ -110,8 +108,19 @@ public class Model extends AbstractModel {
     }
 
     public void clear(){
-        //todo
+        this.factura=new Factura();
+        firePropertyChange(LINEAS);
     }
+
+    public void selectCliente(Cliente e) {
+        this.factura.setCliente(e);
+        firePropertyChange(LINEAS);
+    }
+    public void setCajero(Cajero e) {
+        this.factura.setCajero(e);
+        firePropertyChange(LINEAS);
+    }
+
     public void refrescar(){
         firePropertyChange(LINEAS);
     }
@@ -120,5 +129,7 @@ public class Model extends AbstractModel {
     public static final String CAJEROS= "cajeros";
     public static final String CLIENTES= "clientes";
     public static final String CURRENT= "current";
+
+
 
 }

@@ -42,4 +42,8 @@ public interface IService {
 
     boolean login(String usuario, String clave) throws Exception;
 
+    boolean validate(List<Linea> lineas)throws Exception;//valida en una lista de lineas si se puede vender el producto de cada linea
+
+    List<Usuario> requestUsers();
+
 }

@@ -122,7 +122,7 @@ public class View implements PropertyChangeListener {
                 cantidadView.setController(getController());
                 cantidadView.setModel(getModel());
 
-                JDialog popup = new JDialog((JFrame) null, "Buscar Producto", true);
+                JDialog popup = new JDialog((JFrame) null, "Cantidad", true);
 
                 popup.add(cantidadView.getPanel());
 
@@ -151,6 +151,7 @@ public class View implements PropertyChangeListener {
         cancelar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                controller.clear();
                 limpiarCampos();
             }
         });
@@ -161,7 +162,7 @@ public class View implements PropertyChangeListener {
                 descuentoView.setController(getController());
                 descuentoView.setModel(getModel());
 
-                JDialog popup = new JDialog((JFrame) null, "Buscar Producto", true);
+                JDialog popup = new JDialog((JFrame) null, "Descuento", true);
 
                 popup.add(descuentoView.getPanel());
 
@@ -214,7 +215,7 @@ public class View implements PropertyChangeListener {
                 cobrarView.setController(getController());
                 cobrarView.setModel(getModel());
 
-                JDialog popup = new JDialog((JFrame) null, "Buscar Producto", true);
+                JDialog popup = new JDialog((JFrame) null, "Cobrar", true);
 
                 popup.add(cobrarView.getPanel());
 
@@ -231,31 +232,42 @@ public class View implements PropertyChangeListener {
                 cobrarView.getOKButton().addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        popup.dispose();
-                        //cobrar y hacer la factura al final
                         try{
-                            controller.print();
-                            String currentDirectory = System.getProperty("user.dir");
+                            if(!cobrarView.validate()){
+                                throw new Exception("El monto cobrado no es valido");
+                            }else if(!controller.validate()){
+                                JOptionPane.showMessageDialog(null, "Error, unidades de producto(s) a facturar erronea");
+                            }else{
+                                popup.dispose();
+                                //cobrar y hacer la factura al final
+                                try{
+                                    controller.print();
+                                    String currentDirectory = System.getProperty("user.dir");
 
-                            // Crea un objeto File con la ruta del archivo PDF
-                            File pdfFile = new File(currentDirectory + File.separator + "pdfs/factura.pdf");
+                                    // Crea un objeto File con la ruta del archivo PDF
+                                    File pdfFile = new File(currentDirectory + File.separator + "pdfs/factura.pdf");
 
-                            if (pdfFile.exists()) {
-                                try {
-                                    Desktop desktop = Desktop.getDesktop();
+                                    if (pdfFile.exists()) {
+                                        try {
+                                            Desktop desktop = Desktop.getDesktop();
 
-                                    desktop.open(pdfFile);
-                                } catch (IOException ex) {
-                                    System.out.println("No se pudo abrir el archivo PDF.");
-                                    ex.printStackTrace();
+                                            desktop.open(pdfFile);
+                                            desktop.open(pdfFile);
+                                        } catch (IOException ex) {
+                                            System.out.println("No se pudo abrir el archivo PDF.");
+                                            ex.printStackTrace();
+                                        }
+                                    } else {
+                                        System.out.println("El archivo PDF no existe en el directorio.");
+                                    }
+
+                                    controller.cobrar(take());
+
+                                }catch(Exception ex){
+                                    JOptionPane.showMessageDialog(null, ex.getMessage());
                                 }
-                            } else {
-                                System.out.println("El archivo PDF no existe en el directorio.");
                             }
-
-                            controller.cobrar(take());
-
-                        }catch(Exception ex){
+                        }catch (Exception ex){
                             JOptionPane.showMessageDialog(null, ex.getMessage());
                         }
                     }
@@ -271,14 +283,14 @@ public class View implements PropertyChangeListener {
         catcliente.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                seleccionarCliente(); // Lógica al seleccionar cliente
+                controller.selectCliente((Cliente)catcliente.getSelectedItem()); // Lógica al seleccionar cliente
             }
         });
 
         catcajero.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                seleccionarCajero(); // Lógica al seleccionar cajero
+                controller.setCajero((Cajero)catcajero.getSelectedItem()); // Lógica al seleccionar cajero
             }
         });
         panel.addComponentListener(new ComponentAdapter() {
@@ -369,7 +381,6 @@ public class View implements PropertyChangeListener {
             System.out.println("Cajero seleccionado: " + cajeroSeleccionado.toString()); // Asegúrate de que toString() esté sobrescrito en Cajero
         }
     }
-
 
     public Factura take(){
         Factura factura = model.getFactura();
