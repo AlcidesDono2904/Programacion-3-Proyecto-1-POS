@@ -6,13 +6,6 @@ public class Protocol {
 
     public static final int ERROR_NO_ERROR=0;
     public static final int ERROR=1;
-    /*producot 1
-    * categoria 2
-    * cliente 3
-    * cajero 4
-    * linea 5
-    * factura 6
-    * */
     //producto
     public static final int PRODUCTO_CREATE=101;
     public static final int PRODUCTO_READ=102;
@@ -43,5 +36,9 @@ public class Protocol {
     public static final int RANGO_CATEGORIA=1002;
     public static final int LOGIN=1003;
     public static final int LOGOUT=1004;
-
+    public static final int VALIDATE=1005;
+    public static final int SYNC=1006;
+    public static final int ASYNC=1007;
+    public static final int SEND_FACTURA=1008;
+    public static final int USERS=1009;
 }

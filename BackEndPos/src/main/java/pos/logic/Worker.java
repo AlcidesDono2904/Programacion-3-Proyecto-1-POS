@@ -7,6 +7,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Worker {//TODO
@@ -22,27 +23,22 @@ public class Worker {//TODO
     ObjectInputStream ais;
     ObjectOutputStream aos;
 
-    Worker(Server srv, Socket s, IService serv){
+    String nombre;
+    Worker(Server srv, Socket s, ObjectOutputStream os,ObjectInputStream is,IService serv,String SID){
         this.srv = srv;
         this.socket = s;
         this.service = serv;
         this.continuar = true;
-        try{
-            this.is=new ObjectInputStream(s.getInputStream());
-            this.os=new ObjectOutputStream(s.getOutputStream());
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        this.sid = SID;
+        this.is=is;
+        this.os=os;
+        this.nombre=" ";
     }
 
     public void setAs(Socket as,ObjectOutputStream os, ObjectInputStream is){
         this.as = as;
         this.os = os;
         this.is = is;
-    }
-
-    public void notifyFactura(){
-
     }
 
     public void start(){
@@ -63,6 +59,7 @@ public class Worker {//TODO
             os.close();
             is.close();
             socket.close();
+            srv.remove(this);
         }catch (Exception ex){ex.printStackTrace();}
     }
     public void listen(){
@@ -77,6 +74,8 @@ public class Worker {//TODO
                         try{
                             if(service.login(usuario.getFirst(),usuario.getLast())){
                                 os.writeInt(Protocol.ERROR_NO_ERROR);
+                                nombre=usuario.getFirst();
+                                srv.notificarLogeo(this,new Usuario(sid,nombre));
                             }else{
                                 os.writeInt(Protocol.ERROR);
                             }
@@ -86,7 +85,8 @@ public class Worker {//TODO
                         }
                         break;
                     case Protocol.LOGOUT:
-                        os.close();
+                        continuar=false;
+                        stop();
                         break;
                     case Protocol.PRODUCTO_CREATE:
                         try{
@@ -151,6 +151,179 @@ public class Worker {//TODO
                             ex.printStackTrace();
                         }
                         break;
+                    case Protocol.CLIENTE_CREATE:
+                        try{
+                            Cliente c=(Cliente)is.readObject();
+                            service.create(c);
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                        }catch (Exception ex){
+                            os.writeInt(Protocol.ERROR);
+                            ex.printStackTrace();
+                        }
+                        break;
+                    case Protocol.CLIENTE_READ:
+                        try{
+                            Cliente c=(Cliente)is.readObject();
+                            Cliente r=service.read(c);
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                            os.writeObject(r);
+                        }catch (Exception ex){
+                            os.writeInt(Protocol.ERROR);
+                        }
+                        break;
+                    case Protocol.CLIENTE_UPDATE:
+                        try{
+                            Cliente c=(Cliente)is.readObject();
+                            service.update(c);
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                        }catch (Exception ex){
+                            os.writeInt(Protocol.ERROR);
+                        }
+                        break;
+                    case Protocol.CLIENTE_DELETE:
+                        try{
+                            Cliente c=(Cliente)is.readObject();
+                            service.delete(c);
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                        }catch (Exception ex){
+                            os.writeInt(Protocol.ERROR);
+                        }
+                        break;
+                    case Protocol.CLIENTE_SEARCH:
+                        try{
+                            Cliente c=(Cliente)is.readObject();
+                            List<Cliente> r=service.search(c);
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                            os.writeObject(r);
+                        }catch (Exception ex){
+                            os.writeInt(Protocol.ERROR);
+                        }
+                        break;
+                    case Protocol.CAJERO_CREATE:
+                        try{
+                            Cliente c=(Cliente)is.readObject();
+                            service.create(c);
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                        }catch (Exception ex){
+                            os.writeInt(Protocol.ERROR);
+                        }
+                        break;
+                    case Protocol.CAJERO_READ:
+                        try{
+                            Cajero c=(Cajero)is.readObject();
+                            Cajero r=service.read(c);
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                            os.writeObject(r);
+                        }catch (Exception ex){
+                            os.writeInt(Protocol.ERROR);
+                        }
+                        break;
+                    case Protocol.CAJERO_UPDATE:
+                        try {
+                            Cajero c=(Cajero)is.readObject();
+                            service.update(c);
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                        }catch (Exception ex){
+                            os.writeInt(Protocol.ERROR);
+                        }
+                        break;
+                    case Protocol.CAJERO_DELETE:
+                        try{
+                            Cajero c=(Cajero)is.readObject();
+                            service.delete(c);
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                        }catch (Exception ex){
+                            os.writeInt(Protocol.ERROR);
+                        }
+                        break;
+                    case Protocol.CAJERO_SEARCH:
+                        try {
+                            Cajero c=(Cajero)is.readObject();
+                            List<Cajero> r=service.search(c);
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                            os.writeObject(r);
+                        }catch (Exception ex){
+                            os.writeInt(Protocol.ERROR);
+                        }
+                        break;
+                    case Protocol.FACTURA_CREATE:
+                        try {
+                            Factura f=(Factura)is.readObject();
+                            service.create(f);
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                        }catch (Exception ex){
+                            os.writeInt(Protocol.ERROR);
+                            ex.printStackTrace();
+                        }
+                        break;
+                    case Protocol.FACTURA_SEARCH:
+                        try{
+                            Factura f=(Factura)is.readObject();
+                            List<Factura> r=service.searchFacturas(f);
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                            os.writeObject(r);
+                        }catch (Exception ex){
+                            os.writeInt(Protocol.ERROR);
+                            ex.printStackTrace();
+                        }
+                        break;
+                    case Protocol.LINEA_SEARCH:
+                        try{
+                            Factura f=(Factura)is.readObject();
+                            List<Linea> r=service.searchLineas(f);
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                            os.writeObject(r);
+                        }catch (Exception ex){
+                            ex.printStackTrace();
+                            os.writeInt(Protocol.ERROR);
+                        }
+                        break;
+                    case Protocol.IMPORTE_FACTURA:
+                        try{
+                            Factura f=(Factura)is.readObject();
+                            double importe=service.importeFactura(f);
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                            os.writeDouble(importe);
+                        }catch (Exception ex){
+                            os.writeInt(Protocol.ERROR);
+                        }
+                        break;
+                    case Protocol.RANGO_CATEGORIA:
+                        try{
+                            List<Object> objs=(List)is.readObject();
+                            Rango r=service.rangoCategoria((Categoria)objs.getFirst(),(Date)objs.get(1),(Date)objs.getLast());
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                            os.writeObject(r);
+                        }catch (Exception ex){
+                            os.writeInt(Protocol.ERROR);
+                            ex.printStackTrace();
+                        }
+                        break;
+                    case Protocol.VALIDATE:
+                        try{
+                            List<Linea> lineas=(List)is.readObject();
+                            boolean b= service.validate(lineas);
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                            os.writeBoolean(b);
+                        }catch (Exception ex){
+                            os.writeInt(Protocol.ERROR);
+                        }
+                        break;
+                    case Protocol.USERS:
+                        try{
+                            List<Usuario> usuarios=srv.users(this);
+
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                            os.writeObject(usuarios);
+                        }catch (Exception ex){
+                            os.writeInt(Protocol.ERROR);
+                            ex.printStackTrace();
+                        }
+                        break;
+                    /*case Protocol.SEND_FACTURA:
+                        try{
+                            Factura f=(Factura)is.readObject();
+                        }*/
                 }
                 os.flush();
             }catch(Exception ex){
@@ -158,5 +331,17 @@ public class Worker {//TODO
                 ex.printStackTrace();
             }
         }
+    }
+
+    public void enviarNotificacion(Object o,int method)throws Exception{
+        if(as==null) throw new Exception("No se puede enviar notificacion, no hay un socket asincronico asignado para "+nombre+" SID:"+sid);
+        switch(method){
+            case Protocol.LOGIN:
+                Usuario u=(Usuario)o;
+                aos.writeInt(Protocol.LOGIN);
+                aos.writeObject(u);
+                break;
+        }
+        aos.flush();
     }
 }

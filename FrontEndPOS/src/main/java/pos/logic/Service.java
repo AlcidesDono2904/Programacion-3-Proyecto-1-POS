@@ -49,6 +49,10 @@ public class Service implements IService {
             System.exit(1);
         }
     }
+
+    public String getSid(){
+        return sid;
+    }
     //CLIENTE
     @Override
     public void create(Cliente cliente) throws Exception {

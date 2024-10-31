@@ -101,12 +101,6 @@ public class Factura implements Serializable {
     }
 
     public double descuento(){//el precio que ha sido descontando (subtotal-(subtotal*descuento))
-        double sum=0;
-        for(Linea l : lineas){
-            double precio=l.getProducto().getPrecioUnitario()*l.getCantidad();
-            sum+=precio-(precio*((100-l.getDescuento())/100));
-        }
-        sum=(sum*(100-cliente.getDescuento())/100);
-        return sum;
+        return subTotal()-importe();
     }
 }

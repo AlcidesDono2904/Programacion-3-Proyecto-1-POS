@@ -17,8 +17,8 @@ public class LineaDao {
     //CRUDS
     public void create(Linea l, int codigo)throws Exception{//crea una linea, recibe la linea y el codigo de la factura correspondiente
         String sql="insert into "+
-                "Factura f "+
-                "producto,cantidad,descuento,factura "+
+                "linea "+
+                "(producto,cantidad,descuento,factura) "+
                 "values(?,?,?,?)";
         PreparedStatement stm=db.prepareStatement(sql);
         stm.setString(1,l.getProducto().getCodigo());
@@ -94,8 +94,6 @@ public class LineaDao {
 
         return rango;
     }
-
-
 
     public Linea from(ResultSet rs, String alias)throws Exception {
         Linea l = new Linea();
