@@ -23,8 +23,8 @@ public class Controller {
         if(Service.instance().login(usuario,clave)){
             JOptionPane.showMessageDialog(null,"login exitoso");
             model.setLogeado(true);
+            model.setId(usuario);
             Application.loginWindow.dispose();
-
         }else{
             JOptionPane.showMessageDialog(null,"credenciales incorrectos");
         }

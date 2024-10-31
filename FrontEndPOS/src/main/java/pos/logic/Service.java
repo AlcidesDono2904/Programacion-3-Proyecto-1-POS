@@ -14,6 +14,7 @@ public class Service implements IService {
     ObjectOutputStream os;
     ObjectInputStream is;
 
+    String sid;
     private static Service theInstance;
 
     public static Service instance(){
@@ -30,16 +31,22 @@ public class Service implements IService {
             is.close();
         }catch(Exception e){
             e.printStackTrace();
+
         }
     }
 
-    public Service(){
+    private Service(){
         try{
             socket = new Socket(Protocol.SERVER, Protocol.PORT);
             os=new ObjectOutputStream(socket.getOutputStream());
             is=new ObjectInputStream(socket.getInputStream());
+            os.writeInt(Protocol.SYNC);
+            os.flush();
+            sid=(String)is.readObject();
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println(e.getMessage());
+            System.exit(1);
         }
     }
     //CLIENTE
@@ -217,6 +224,7 @@ public class Service implements IService {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+            System.out.println(ex.getMessage());
         }
         return result;
     }
@@ -331,5 +339,21 @@ public class Service implements IService {
             throw new Exception("Error en el validacion");
         }
         return is.readBoolean();
+    }
+
+    public List<Usuario> requestUsers(){
+        List<Usuario> result = new ArrayList<>();
+        try {
+            os.writeInt(Protocol.USERS);
+            os.flush();
+            if(is.readInt()==Protocol.ERROR_NO_ERROR){
+                result=(List<Usuario>) is.readObject();
+            }else{
+                throw new Exception("Error buscar usuarios logeados");
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return result;
     }
 }
