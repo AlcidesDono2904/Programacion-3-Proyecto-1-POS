@@ -16,19 +16,19 @@ public class Controller implements ThreadListener {
     SocketListener socketListener;
 
     public Controller(View v,Model m){
-        try{
-            socketListener=new SocketListener(this,Service.instance().getSid());
-            socketListener.start();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
         m.init(Service.instance().requestUsers());
         this.view = v;
         this.model = m;
         view.setController(this);
         view.setModel(model);
 
-
+        try{
+            socketListener=new SocketListener(this,Service.instance().getSid());
+            socketListener.start();
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
     }
 
     public void agregarUsuario(Usuario u){

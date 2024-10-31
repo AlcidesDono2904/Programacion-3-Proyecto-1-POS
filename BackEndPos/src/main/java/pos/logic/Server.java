@@ -27,6 +27,7 @@ public class Server {
 
     public void remove(Worker w){
         workers.remove(w);
+        System.out.println("Worker removido, canidad workers: "+workers.size());
     }
 
     public void run(){
@@ -51,6 +52,7 @@ public class Server {
                         System.out.println("Workers= "+workers.size());
                         w.start();
                         oos.writeObject(sid);
+                        oos.flush();
                         break;
                     case Protocol.ASYNC:
                         sid=(String) iss.readObject();
@@ -58,7 +60,6 @@ public class Server {
                         join(s,oos,iss,sid);
                         break;
                 }
-                oos.flush();
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -66,30 +67,36 @@ public class Server {
     }
 
     public void join(Socket s,ObjectOutputStream oos,ObjectInputStream iss,String sid){
-        for(Worker w:workers){
-            if(w.sid.equals(sid)){
-                w.setAs(s,oos,iss);
+        for (Worker w : workers) {
+            if (w.getSid().equals(sid)) {
+                w.setAs(s, oos, iss);
+                return;
             }
         }
+        System.out.println("Worker no encontrado para el SID: " + sid);
     }
 
     public List<Usuario> users(Worker from){
-        List<Usuario> lista=new ArrayList<>();
-        for(Worker i:workers){
-            if(!from.sid.equals(i.sid)){
-                lista.add(new Usuario(i.sid,i.nombre));
+        List<Usuario> lista = new ArrayList<>();
+        synchronized (workers) {
+            for (Worker i : workers) {
+                if (!from.getSid().equals(i.getSid())) {
+                    lista.add(new Usuario(i.getSid(), i.getNombre()));
+                }
             }
         }
         return lista;
     }
 
     public void notificarLogeo(Worker w,Usuario u){
-        for(Worker i:workers){
-            if(!i.sid.equals(w.sid)){
-                try {
-                    i.enviarNotificacion(u,Protocol.LOGIN);
-                }catch (Exception e){
-                    System.out.println(e.getMessage());
+        synchronized (workers) {
+            for (Worker i : workers) {
+                if (i != w) {
+                    try {
+                        i.enviarNotificacion(u);
+                    } catch (Exception e) {
+                        System.out.println("Error al notificar logeo: " + e.getMessage());
+                    }
                 }
             }
         }

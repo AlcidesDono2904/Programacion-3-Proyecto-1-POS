@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Worker {//TODO
+public class Worker {
     ObjectInputStream is;
     ObjectOutputStream os;
     Server srv;
@@ -37,8 +37,8 @@ public class Worker {//TODO
 
     public void setAs(Socket as,ObjectOutputStream os, ObjectInputStream is){
         this.as = as;
-        this.os = os;
-        this.is = is;
+        this.aos = os;
+        this.ais = is;
     }
 
     public void start(){
@@ -333,15 +333,20 @@ public class Worker {//TODO
         }
     }
 
-    public void enviarNotificacion(Object o,int method)throws Exception{
-        if(as==null) throw new Exception("No se puede enviar notificacion, no hay un socket asincronico asignado para "+nombre+" SID:"+sid);
-        switch(method){
-            case Protocol.LOGIN:
-                Usuario u=(Usuario)o;
+    public synchronized void enviarNotificacion(Usuario u)throws Exception{
+        if(as!=null) {
+            try{
                 aos.writeInt(Protocol.LOGIN);
                 aos.writeObject(u);
-                break;
+                aos.flush();
+            }catch(Exception ex){ex.printStackTrace();}
         }
-        aos.flush();
+    }
+
+    public String getSid() {
+        return sid;
+    }
+    public String getNombre(){
+        return nombre;
     }
 }

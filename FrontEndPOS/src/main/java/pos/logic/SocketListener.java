@@ -16,14 +16,14 @@ public class SocketListener {
     ObjectInputStream ais;
     public SocketListener(ThreadListener listener, String sid)throws Exception{
         this.listener = listener;
-        as=new Socket(Protocol.SERVER,Protocol.PORT);
         this.sid=sid;
+
+        as=new Socket(Protocol.SERVER,Protocol.PORT);
         aos=new ObjectOutputStream(as.getOutputStream());
         ais=new ObjectInputStream(as.getInputStream());
         aos.writeInt(Protocol.ASYNC);
         aos.writeObject(sid);
         aos.flush();
-        System.out.println("Servidor enviado com sucesso");
     }
 
     boolean condition = true;
@@ -44,18 +44,14 @@ public class SocketListener {
         int method;
         while(condition){
             try{
+                System.out.println("listen iteraiocn");
                 method=ais.readInt();
+                System.out.println("SocketListener: "+method);
                 switch(method){
                     case Protocol.LOGIN:
                         try{
                             Usuario u=(Usuario)ais.readObject();
-                            SwingUtilities.invokeLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    listener.agregarUsuario(u);
-                                }
-                            });
-
+                            deliverLogin(u);
                         }catch (Exception e){
                             e.printStackTrace();
                         }
@@ -72,5 +68,13 @@ public class SocketListener {
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void deliverLogin(final Usuario u){
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                listener.agregarUsuario(u);
+            }
+        });
     }
 }

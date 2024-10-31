@@ -40,6 +40,7 @@ public class Service implements IService {
             socket = new Socket(Protocol.SERVER, Protocol.PORT);
             os=new ObjectOutputStream(socket.getOutputStream());
             is=new ObjectInputStream(socket.getInputStream());
+
             os.writeInt(Protocol.SYNC);
             os.flush();
             sid=(String)is.readObject();
@@ -97,6 +98,7 @@ public class Service implements IService {
 
     @Override
     public List<Cliente> search(Cliente cliente) {
+
         List<Cliente> r = new ArrayList<>();
         try{
             os.writeInt(Protocol.CLIENTE_SEARCH);
