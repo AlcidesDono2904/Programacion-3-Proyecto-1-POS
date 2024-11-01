@@ -40,6 +40,7 @@ public class Service implements IService {
             socket = new Socket(Protocol.SERVER, Protocol.PORT);
             os=new ObjectOutputStream(socket.getOutputStream());
             is=new ObjectInputStream(socket.getInputStream());
+
             os.writeInt(Protocol.SYNC);
             os.flush();
             sid=(String)is.readObject();
@@ -97,6 +98,7 @@ public class Service implements IService {
 
     @Override
     public List<Cliente> search(Cliente cliente) {
+
         List<Cliente> r = new ArrayList<>();
         try{
             os.writeInt(Protocol.CLIENTE_SEARCH);
@@ -359,5 +361,15 @@ public class Service implements IService {
             ex.printStackTrace();
         }
         return result;
+    }
+
+    public void sendFactura(MensajeFactura mf) throws Exception {
+        os.writeInt(Protocol.SEND_FACTURA);
+        os.writeObject(mf);
+        os.flush();
+        if(is.readInt()==Protocol.ERROR){
+            throw new Exception("Error en el send de factura");
+        }
+
     }
 }

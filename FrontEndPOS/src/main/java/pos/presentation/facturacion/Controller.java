@@ -21,6 +21,22 @@ import pos.logic.Service;
 import javax.swing.*;
 
 public class Controller {
+    public Model getModel() {
+        return model;
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
+    }
+
+    public View getView() {
+        return view;
+    }
+
+    public void setView(View view) {
+        this.view = view;
+    }
+
     View view;
     Model model;
 
@@ -131,9 +147,6 @@ public class Controller {
     }
 
     public void cobrar(Factura f)throws Exception{
-        for(Linea l: model.getLineas()){
-            l.getProducto().setExistencias(l.getProducto().getExistencias()-l.getCantidad());
-        }
         Service.instance().create(f);
         model.setMode(Application.MODE_CREATE);
         model.setCurrent(null);
