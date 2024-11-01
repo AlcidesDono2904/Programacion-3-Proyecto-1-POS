@@ -7,6 +7,7 @@ import pos.presentation.AbstractModel;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
+
 public class Model extends AbstractModel {
     List<Usuario> usuarios;
     Usuario current;

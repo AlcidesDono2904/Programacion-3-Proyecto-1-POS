@@ -89,3 +89,5 @@ insert into Linea (producto,cantidad,descuento,factura)values('002','20','0.0', 
 insert into Linea (producto,cantidad,descuento,factura)values('002','10','10.0', 3);
 
 insert into Usuario values ('admin','root');
+insert into Usuario values ('u1','root');
+insert into Usuario values ('u2','root');
