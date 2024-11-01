@@ -127,6 +127,11 @@ public class Application {
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setIconImage((new ImageIcon(Application.class.getResource("presentation/icons/icon.png"))).getImage());
         window.setTitle("POS: Point Of Sale - "+modelLogin.getId());
+        window.addWindowListener( new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                usuarioController.getSocketListener().stop();
+            }
+        });
         window.setVisible(true);
     }
 

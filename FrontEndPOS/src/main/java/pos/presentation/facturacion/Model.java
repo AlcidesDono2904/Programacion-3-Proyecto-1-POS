@@ -20,6 +20,8 @@ public class Model extends AbstractModel {
     List<Producto> productos;
     List<Cliente> clientes;
     List<Cajero> cajeros;
+    int cajero;
+    int cliente;
     public Model() {
 
     }
@@ -121,6 +123,12 @@ public class Model extends AbstractModel {
         firePropertyChange(LINEAS);
     }
 
+    public void setFactura(Factura factura) {
+        this.factura = factura;
+        firePropertyChange(LINEAS);
+        firePropertyChange(CC);
+    }
+
     public void refrescar(){
         firePropertyChange(LINEAS);
     }
@@ -129,7 +137,6 @@ public class Model extends AbstractModel {
     public static final String CAJEROS= "cajeros";
     public static final String CLIENTES= "clientes";
     public static final String CURRENT= "current";
-
-
+    public static final String CC= "cc";
 
 }

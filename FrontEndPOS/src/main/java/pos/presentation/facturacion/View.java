@@ -443,6 +443,12 @@ public class View implements PropertyChangeListener {
                     descuento.setEnabled(false);
                     quitar.setEnabled(false);
                 }
+            case Model.CC:
+                Cajero ca=model.getFactura().getCajero();
+                Cliente cl=model.getFactura().getCliente();
+                catcajero.setSelectedItem(ca);
+                catcliente.setSelectedItem(cl);
+                break;
         }
     }
     private void limpiarCampos(){

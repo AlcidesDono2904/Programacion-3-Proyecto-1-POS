@@ -12,6 +12,23 @@ import java.awt.event.WindowEvent;
 
 public class Controller {
     View view;
+
+    public Model getModel() {
+        return model;
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
+    }
+
+    public View getView() {
+        return view;
+    }
+
+    public void setView(View view) {
+        this.view = view;
+    }
+
     Model model;
     public Controller(View v, Model m){
         this.view = v;

@@ -1,5 +1,6 @@
 package pos.logic;
 
+import entidades.logic.MensajeFactura;
 import entidades.logic.Protocol;
 import entidades.logic.Usuario;
 
@@ -44,7 +45,6 @@ public class SocketListener {
         int method;
         while(condition){
             try{
-                System.out.println("listen iteraiocn");
                 method=ais.readInt();
                 System.out.println("SocketListener: "+method);
                 switch(method){
@@ -52,9 +52,19 @@ public class SocketListener {
                         try{
                             Usuario u=(Usuario)ais.readObject();
                             deliverLogin(u);
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
+                        }catch (Exception e){e.printStackTrace();}
+                        break;
+                    case Protocol.LOGOUT:
+                        try{
+                            Usuario u=(Usuario)ais.readObject();
+                            deliverLogout(u);
+                        }catch (Exception e){e.printStackTrace();}
+                        break;
+                    case Protocol.SEND_FACTURA:
+                        try{
+                            MensajeFactura mf=(MensajeFactura)ais.readObject();
+                            deliverFactura(mf);
+                        }catch(Exception e){e.printStackTrace();}
                         break;
                 }
             }catch(Exception e){
@@ -74,6 +84,20 @@ public class SocketListener {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 listener.agregarUsuario(u);
+            }
+        });
+    }
+    public void deliverLogout(final Usuario u){
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                listener.removerUsuario(u);
+            }
+        });
+    }
+    public void deliverFactura(final MensajeFactura mf){
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                listener.deliverFactura(mf);
             }
         });
     }

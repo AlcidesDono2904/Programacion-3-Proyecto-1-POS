@@ -1,5 +1,6 @@
 package pos.logic;
 
+import entidades.logic.MensajeFactura;
 import entidades.logic.Protocol;
 import entidades.logic.Usuario;
 
@@ -96,6 +97,36 @@ public class Server {
                         i.enviarNotificacion(u);
                     } catch (Exception e) {
                         System.out.println("Error al notificar logeo: " + e.getMessage());
+                    }
+                }
+            }
+        }
+    }
+
+    public void notificarDeslogeo(Worker w,Usuario u){
+        synchronized (workers) {
+            for (Worker i : workers) {
+                if(i != w) {
+                    try{
+                        i.enviarNotificacionDeslogeo(u);
+                    }catch (Exception e){
+                        System.out.println("Error al notificar deslogeo: " + e.getMessage());
+                    }
+                }
+            }
+        }
+    }
+
+    public void sendFactura(MensajeFactura mf){
+        synchronized (workers) {
+            for (Worker i : workers) {
+                if(i.sid.equals(mf.usuario.getSid())) {
+                    try{
+                        i.sendFactura(mf);
+                        break;
+                    }catch (Exception e){
+                        System.out.println("Error al enviar factura: " + e.getMessage());
+                        break;
                     }
                 }
             }

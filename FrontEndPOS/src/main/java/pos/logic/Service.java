@@ -362,4 +362,14 @@ public class Service implements IService {
         }
         return result;
     }
+
+    public void sendFactura(MensajeFactura mf) throws Exception {
+        os.writeInt(Protocol.SEND_FACTURA);
+        os.writeObject(mf);
+        os.flush();
+        if(is.readInt()==Protocol.ERROR){
+            throw new Exception("Error en el send de factura");
+        }
+
+    }
 }

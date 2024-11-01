@@ -59,6 +59,9 @@ public class Worker {
             os.close();
             is.close();
             socket.close();
+            as.close();
+            ais.close();
+            aos.close();
             srv.remove(this);
         }catch (Exception ex){ex.printStackTrace();}
     }
@@ -86,6 +89,7 @@ public class Worker {
                         break;
                     case Protocol.LOGOUT:
                         continuar=false;
+                        srv.notificarDeslogeo(this,new Usuario(sid,nombre));
                         stop();
                         break;
                     case Protocol.PRODUCTO_CREATE:
@@ -320,10 +324,15 @@ public class Worker {
                             ex.printStackTrace();
                         }
                         break;
-                    /*case Protocol.SEND_FACTURA:
+                    case Protocol.SEND_FACTURA:
                         try{
-                            Factura f=(Factura)is.readObject();
-                        }*/
+                            MensajeFactura mf=(MensajeFactura)is.readObject();
+                            srv.sendFactura(mf);
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                        }catch (Exception e){
+                            os.writeInt(Protocol.ERROR);
+                        }
+                        break;
                 }
                 os.flush();
             }catch(Exception ex){
@@ -338,6 +347,26 @@ public class Worker {
             try{
                 aos.writeInt(Protocol.LOGIN);
                 aos.writeObject(u);
+                aos.flush();
+            }catch(Exception ex){ex.printStackTrace();}
+        }
+    }
+
+    public synchronized void enviarNotificacionDeslogeo(Usuario u)throws Exception{
+        if(as!=null) {
+            try {
+                aos.writeInt(Protocol.LOGOUT);
+                aos.writeObject(u);
+                aos.flush();
+            }catch (Exception ex){ ex.printStackTrace(); }
+        }
+    }
+
+    public synchronized void sendFactura(MensajeFactura mf)throws Exception{
+        if(as!=null) {
+            try{
+                aos.writeInt(Protocol.SEND_FACTURA);
+                aos.writeObject(mf);
                 aos.flush();
             }catch(Exception ex){ex.printStackTrace();}
         }
